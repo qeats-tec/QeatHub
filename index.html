@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QeatHub v2.1 | Official</title>
+    <style>
+        
+/*    ====================================================================
+
+	
+ █████████▄     ▄████████    ▄████████  ▀███████████▀  ███    ███▀ ███    ███▀ █████████▄   
+ ███    ███    ███    ███   ███    ███       ███       ███    ███  ███    ███  ███    ███  
+ ███    ███    ███    █▀    ███    ███       ███       ███    ███  ███    ███  ███    ███  
+ ███    ███   ▄███▄▄▄       ███    ███       ███       ██████████  ███    ███ ▄███▄▄▄██▀   
+ ███    ███  ▀▀███▀▀▀     ▀███████████       ███       ███    ███  ███    ███ ▀███▀▀▀██▄   
+ ███    ███    ███    █▄    ███    ███       ███       ███    ███  ███    ███  ███    ███  
+ ███  ▄ ███    ███    ███   ███    ███       ███       ███    ███  ███    ███  ███    ███  
+ ▀████████▀     ██████████   ███    █▀      ▄███▄      ███    ███  ▀████████▀ ▄█████████▀   
+      ▀▀
+	====================================================================
+	  - QeatHub Universal
+	====================================================================
+	
+	"Imitation is the sincerest form of flattery."
+
+	 
+	 - Goodbye, ... ;)
+*/
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #08080a; /* Yedek arka plan rengi */
+            background: linear-gradient(rgba(8, 8, 10, 0.85), rgba(8, 8, 10, 0.95)), url('foto.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: #e4e4e7;
+            line-height: 1.6;
+        }
+
+        /* Navigasyon Barı */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(12, 12, 16, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); /* Safari desteği */
+            border-bottom: 1px solid rgba(31, 31, 41, 0.5);
+            z-index: 1000;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            color: #ffcc00;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .logo span {
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 400;
+            background: #1f1f29;
+            padding: 3px 8px;
+            border-radius: 4px;
+            border: 1px solid #2d2d3d;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            color: #a1a1aa;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: #ffcc00;
+        }
+
+        /* Menüye tıklandığında başlıkların üstte sıkışmasını engeller */
+        section {
+            scroll-margin-top: 90px;
+        }
+
+        /* Hero (Giriş) Alanı */
+        .hero {
+            padding: 160px 5% 60px 5%;
+            text-align: center;
+            background: radial-gradient(circle at top, rgba(255, 204, 0, 0.04) 0%, transparent 60%);
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 span {
+            color: #ffcc00;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #a1a1aa;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+        }
+
+        /* Script Kopyala Alanı */
+        .script-box-container {
+            max-width: 650px;
+            margin: 0 auto 30px auto;
+            background-color: rgba(15, 15, 19, 0.9);
+            border: 1px solid #2d2d3d;
+            border-radius: 8px;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .script-code {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            color: #ffcc00;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: left;
+            flex-grow: 1;
+        }
+
+        .copy-btn {
+            background-color: #ffcc00;
+            color: #000000;
+            border: none;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0;
+            user-select: none;
+        }
+
+        .copy-btn:hover {
+            background-color: #ffe066;
+            transform: translateY(-1px);
+        }
+
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+
+        .copy-btn.copied {
+            background-color: #22c55e;
+            color: #ffffff;
+        }
+
+        /* Yükleme Kodu Butonu */
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            font-size: 15px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background-color: transparent;
+            color: #e4e4e7;
+            border: 1px solid rgba(255, 204, 0, 0.3);
+        }
+
+        .btn-primary:hover {
+            border-color: #ffcc00;
+            color: #ffcc00;
+            transform: translateY(-2px);
+        }
+
+        /* İstatistik Alanı */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 900px;
+            margin: 40px auto 0 auto;
+            padding: 20px;
+            background-color: rgba(15, 15, 19, 0.75);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(31, 31, 41, 0.6);
+            border-radius: 12px;
+        }
+
+        .stat-item h3 {
+            font-size: 28px;
+            color: #ffcc00;
+        }
+
+        .stat-item p {
+            font-size: 12px;
+            color: #71717a;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        /* Ana İçerik Konteyneri */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 5%;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 40px;
+            height: 3px;
+            background-color: #ffcc00;
+            border-radius: 2px;
+        }
+
+        /* Özellik Kartları (Grid Yapısı) */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .feature-card {
+            background-color: rgba(15, 15, 19, 0.8);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(31, 31, 41, 0.6);
+            border-radius: 10px;
+            padding: 25px;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: #ffcc00;
+            transform: translateY(-3px);
+        }
+
+        .feature-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .feature-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .tag {
+            font-size: 11px;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .tag-evade { background-color: rgba(234, 179, 8, 0.15); color: #eab308; }
+        .tag-player { background-color: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+        .tag-exclusive { background-color: rgba(168, 85, 247, 0.15); color: #a855f7; }
+
+        .feature-desc {
+            font-size: 14px;
+            color: #a1a1aa;
+            margin-bottom: 15px;
+        }
+
+        /* Detaylı Komut/Özellik Tablosu */
+        .commands-section {
+            background-color: rgba(15, 15, 19, 0.8);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(31, 31, 41, 0.6);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 60px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            padding: 12px 15px;
+            border-bottom: 2px solid #1f1f29;
+            color: #ffcc00;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #1f1f29;
+            font-size: 14px;
+            color: #e4e4e7;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .cmd-name {
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #16161c;
+            padding: 3px 8px;
+            border-radius: 4px;
+            border: 1px solid #232330;
+        }
+
+        /* Nasıl Kullanılır? Alanı */
+        .guide-box {
+            background: linear-gradient(135deg, rgba(15, 15, 19, 0.85) 0%, rgba(19, 19, 26, 0.9) 100%);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(31, 31, 41, 0.6);
+            border-radius: 12px;
+            padding: 35px;
+        }
+
+        .step-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 15px;
+        }
+
+        .step-number {
+            width: 28px;
+            height: 28px;
+            background-color: #ffcc00;
+            color: #000000;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 800;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .step-text h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+
+        .step-text p {
+            font-size: 14px;
+            color: #a1a1aa;
+        }
+
+        /* Alt Bilgi */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid #1f1f29;
+            color: #71717a;
+            font-size: 13px;
+            background-color: rgba(12, 12, 16, 0.95);
+        }
+
+        footer a {
+            color: #ffcc00;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">Qeat Hub <span>v2.1</span></div>
+        <nav>
+            <ul>
+                <li><a href="#ozellikler">Özellikler</a></li>
+                <li><a href="#komut-listesi">Komut Tablosu</a></li>
+                <li><a href="#rehber">Nasıl Çalışır?</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Yeni Geldik <span>Ama Bilgimizle</span></h1>
+        <p>QeatHub v2.1, optimize edilmiş altyapısı ve akıllı mobil buton teknolojisiyle oyun deneyimini en üst seviyeye taşı!</p>
+        
+        <div class="script-box-container">
+            <div class="script-code" id="scriptCode">loadstring(game:HttpGet("https://raw.githubusercontent.com/qeats-tec/QeatHub/refs/heads/main/main.lua"))()</div>
+            <button class="copy-btn" onclick="copyScript()" id="copyBtn">Kodu Kopyala</button>
+        </div>
+
+        <div class="btn-container">
+            <a href="#rehber" class="btn btn-primary">Kurulum Rehberi</a>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <h3>7+</h3>
+                <p>Aktif Sekme</p>
+            </div>
+            <div class="stat-item">
+                <h3>%100</h3>
+                <p>Mobil Uyumlu</p>
+            </div>
+            <div class="stat-item">
+                <h3>0ms</h3>
+                <p>Gecikme Oranı (Abartı)</p>
+            </div>
+        </div>
+    </section>
+
+    <main class="container">
+
+        <section id="ozellikler">
+            <h2 class="section-title">Öne Çıkan Sistemler</h2>
+            <div class="features-grid">
+                
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <span class="feature-name">Akıllı Auto Clicker</span>
+                        <span class="tag tag-exclusive">Özel</span>
+                    </div>
+                    <p class="feature-desc">Ekranda serbestçe sürüklenebilen, aktifliğe göre renk değiştiren şeffaf sanal buton sistemi. İstediğin koordinata milisaniyelik tıklama sinyali gönderir.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <span class="feature-name">Otomatik Canlandırma</span>
+                        <span class="tag tag-evade">Evade</span>
+                    </div>
+                    <p class="feature-desc">Yere düşen takım arkadaşlarınızın yanına yaklaştığınız an, tuş kilidine basmanıza gerek kalmadan server tabanlı otomatik ayağa kaldırma protokolü.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <span class="feature-name">Nextbot ESP</span>
+                        <span class="tag tag-evade">Evade</span>
+                    </div>
+                    <p class="feature-desc">Haritadaki tüm Nextbot'ların anlık koordinatlarını tarayarak duvar arkasından kalın kırmızı 3D kutularla görünür hale getirir.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <span class="feature-name">Air Strafe</span>
+                        <span class="tag tag-player">EVADE</span>
+                    </div>
+                    <p class="feature-desc">Zıplama ve serbest düşüş anlarında karakterin yön değiştirme ivmesini arttırarak nextbot havada kıvrak manevralarla kaçmanızı sağlar.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <span class="feature-name">Otomatik Ödül Toplama</span>
+                        <span class="tag tag-evade">Evade</span>
+                    </div>
+                    <p class="feature-desc">Harita üzerinde rastgele beliren Ticket ve Token objelerinin dokunma eventlerini simüle ederek oturduğunuz yerden hepsini envanterinize çeker.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <span class="feature-name">Safe Zone TP</span>
+                        <span class="tag tag-player">Karakter</span>
+                    </div>
+                    <p class="feature-desc">Sıkıştığınız veya köşeye kapana kısıldığınız acil durumlarda haritanın rakipler tarafından erişilemeyen en uç tepe noktasına anlık ışınlanma.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="komut-listesi">
+            <h2 class="section-title">Detaylı Komut & Arayüz Tablosu</h2>
+            <div class="commands-section">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Özellik / Komut</th>
+                            <th>Arayüz Sekmesi</th>
+                            <th>Çalısma Mantığı & Açıklama</th>
+                            <th>Platform</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="cmd-name">Yürüme Hızı</span></td>
+                            <td>Karakter</td>
+                            <td>Slider üzerinden karakterin WalkSpeed değerini anlık günceller.</td>
+                            <td>Mobil / PC</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cmd-name">Sonsuz Zıplama</span></td>
+                            <td>Karakter</td>
+                            <td>JumpRequest eventini dinleyerek havada sınırsız zıplama sağlar.</td>
+                            <td>Mobil / PC</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cmd-name">Noclip</span></td>
+                            <td>Karakter</td>
+                            <td>Karakter parçalarının CanCollide özelliğini kapatarak duvarlardan geçmeyi sağlar.</td>
+                            <td>Mobil / PC</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cmd-name">Otomatik Canlandırma</span></td>
+                            <td>Evade Özel</td>
+                            <td>ReviveRemote eventini 15 birim menzildeki Downed oyuncular için tetikler.</td>
+                            <td>Mobil / PC</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cmd-name">Anında Yeniden Doğma</span></td>
+                            <td>Evade Özel</td>
+                            <td>Öldüğünüz an lobi bekleme süresini atlayarak Respawn sinyali gönderir.</td>
+                            <td>Mobil / PC</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cmd-name">Akıllı Auto Clicker</span></td>
+                            <td>Auto Clicker</td>
+                            <td>Ekrandaki bağımsız hareketli butonun merkez koordinatına tıklama basar.</td>
+                            <td>Mobil / PC</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cmd-name">Hitbox Genişletici</span></td>
+                            <td>Aimbot</td>
+                            <td>Diğer oyuncuların HumanoidRootPart boyutlarını büyüterek hedef almayı kolaylaştırır.</td>
+                            <td>Mobil / PC</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cmd-name">Nextbot ESP</span></td>
+                            <td>Görsel ESP</td>
+                            <td>Haritadaki "Bot" modellerine kırmızı BoxHandleAdornment objesi ekler.</td>
+                            <td>Mobil / PC</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cmd-name">Anti-AFK</span></td>
+                            <td>Ekstra</td>
+                            <td>Idled eventini dinleyerek oyundan düşmenizi (Error 267) engeller.</td>
+                            <td>Mobil / PC</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="rehber" class="guide-box">
+            <h2 class="section-title">Kurulum ve Çalıştırma Rehberi</h2>
+            <div class="step-list">
+                
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-text">
+                        <h4>Güvenilir Bir Executor Seçin</h4>
+                        <p>Mobil cihazınızda (Tablet/Telefon) veya bilgisayarınızda Roblox üzerinde script çalıştırabilen güncel bir entegratör (Executor) açın.</p>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-text">
+                        <h4>Ana Kodu Kopyalayın ve Çalıştırın</h4>
+                        <p>Yukarıdaki kopyalama alanından tek tıkla script kodunu alın, executor içerisine yapıştırın ve 'Execute' butonuna basın.</p>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-text">
+                        <h4>Arayüzü Yönetin</h4>
+                        <p>Ekranın sol üst köşesine gelen <strong>⚽ (Futbol Topu)</strong> ikonuna dokunarak Rayfield hile menüsünü dilediğiniz an açıp kapatabilirsiniz.</p>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">4</div>
+                    <div class="step-text">
+                        <h4>Akıllı Butonu Sürükleyin</h4>
+                        <p>Auto Clicker sekmesinden sistemi açtığınızda gelen yeşil/kırmızı yuvarlak butonu parmağınızla ekrandaki hedef noktanın üzerine taşıyıp tek dokunuşla başlatın.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Qeat Hub. Tüm hakları saklıdır. Geliştirici: <a href="#">Qeat</a></p>
+    </footer>
+
+    <script>
+        function copyScript() {
+            var codeText = document.getElementById("scriptCode").innerText;
+            var btn = document.getElementById("copyBtn");
+            
+            navigator.clipboard.writeText(codeText).then(function() {
+                btn.innerText = "Kopyalandı! ✓";
+                btn.classList.add("copied");
+                
+                setTimeout(function() {
+                    btn.innerText = "Kodu Kopyala";
+                    btn.classList.remove("copied");
+                }, 2000);
+            }).catch(function(err) {
+                console.error("Kod kopyalanamadı: ", err);
+            });
+        }
+    </script>
+
+</body>
+</html>

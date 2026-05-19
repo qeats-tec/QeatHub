@@ -1,0 +1,1879 @@
+local G2L = {};
+
+G2L["1"] = Instance.new("ScreenGui", game.CoreGui);
+G2L["1"]["Name"] = [[RobloxMainMenu]];
+G2L["1"]["ZIndexBehavior"] = Enum.ZIndexBehavior.Sibling;
+G2L["1"]["ResetOnSpawn"] = false;
+
+G2L["2"] = Instance.new("LocalScript", G2L["1"]);
+G2L["2"]["Name"] = [[start]];
+
+G2L["3"] = Instance.new("Frame", G2L["1"]);
+G2L["3"]["ZIndex"] = 999999998;
+G2L["3"]["BorderSizePixel"] = 0;
+G2L["3"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["3"]["Size"] = UDim2.new(0.26386, 0, 0.66667, 0);
+G2L["3"]["Position"] = UDim2.new(0.00998, 0, 0.24025, 0);
+G2L["3"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["3"]["Name"] = [[LDX]];
+G2L["3"]["BackgroundTransparency"] = 0.2;
+
+
+-- StarterGui.RobloxMainMenu.LDX.UICorner
+G2L["4"] = Instance.new("UICorner", G2L["3"]);
+
+
+
+-- StarterGui.RobloxMainMenu.LDX.UIStroke
+G2L["5"] = Instance.new("UIStroke", G2L["3"]);
+G2L["5"]["Thickness"] = 1.3;
+G2L["5"]["Color"] = Color3.fromRGB(255, 255, 255);
+
+
+-- StarterGui.RobloxMainMenu.LDX.UIStroke.UIGradient
+G2L["6"] = Instance.new("UIGradient", G2L["5"]);
+G2L["6"]["Color"] = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(0, 111, 255)),ColorSequenceKeypoint.new(1.000, Color3.fromRGB(255, 255, 255))};
+
+
+-- StarterGui.RobloxMainMenu.LDX.UIStroke.UIGradient.LocalScript
+G2L["7"] = Instance.new("LocalScript", G2L["6"]);
+
+
+
+-- StarterGui.RobloxMainMenu.LDX.UIGradient
+G2L["8"] = Instance.new("UIGradient", G2L["3"]);
+G2L["8"]["Rotation"] = 41;
+G2L["8"]["Color"] = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(62, 62, 62)),ColorSequenceKeypoint.new(0.469, Color3.fromRGB(17, 17, 17)),ColorSequenceKeypoint.new(1.000, Color3.fromRGB(0, 0, 0))};
+
+
+-- StarterGui.RobloxMainMenu.LDX.titpe
+G2L["9"] = Instance.new("TextLabel", G2L["3"]);
+G2L["9"]["TextWrapped"] = true;
+G2L["9"]["BorderSizePixel"] = 0;
+G2L["9"]["TextSize"] = 13;
+G2L["9"]["TextScaled"] = true;
+G2L["9"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["9"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["9"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["9"]["BackgroundTransparency"] = 1;
+G2L["9"]["Size"] = UDim2.new(0.37985, 0, 0.07873, 0);
+G2L["9"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["9"]["Text"] = [[QeatHUB]];
+G2L["9"]["Name"] = [[titpe]];
+G2L["9"]["Position"] = UDim2.new(0.0156, 0, 0.00227, 0);
+
+
+-- StarterGui.RobloxMainMenu.LDX.titpe.RainbowTextEffect
+G2L["a"] = Instance.new("LocalScript", G2L["9"]);
+G2L["a"]["Name"] = [[RainbowTextEffect]];
+
+
+-- StarterGui.RobloxMainMenu.LDX.line
+G2L["b"] = Instance.new("Frame", G2L["3"]);
+G2L["b"]["BorderSizePixel"] = 0;
+G2L["b"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["b"]["Size"] = UDim2.new(1, 0, -0.00355, 0);
+G2L["b"]["Position"] = UDim2.new(0, 0, 0.08227, 0);
+G2L["b"]["BorderColor3"] = Color3.fromRGB(100, 100, 100);
+G2L["b"]["Name"] = [[line]];
+
+
+-- StarterGui.RobloxMainMenu.LDX.line.SmoothGradientOffsetLoop
+G2L["c"] = Instance.new("LocalScript", G2L["b"]);
+G2L["c"]["Name"] = [[SmoothGradientOffsetLoop]];
+
+
+-- StarterGui.RobloxMainMenu.LDX.line.light
+G2L["d"] = Instance.new("UIGradient", G2L["b"]);
+G2L["d"]["Name"] = [[light]];
+G2L["d"]["Color"] = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(0, 0, 0)),ColorSequenceKeypoint.new(0.149, Color3.fromRGB(0, 0, 0)),ColorSequenceKeypoint.new(0.509, Color3.fromRGB(222, 253, 255)),ColorSequenceKeypoint.new(0.863, Color3.fromRGB(0, 0, 0)),ColorSequenceKeypoint.new(1.000, Color3.fromRGB(0, 0, 0))};
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab
+G2L["e"] = Instance.new("Frame", G2L["3"]);
+G2L["e"]["BorderSizePixel"] = 0;
+G2L["e"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["e"]["Size"] = UDim2.new(1, 0, 0.88462, 0);
+G2L["e"]["Position"] = UDim2.new(0, 0, 0.1007, 0);
+G2L["e"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["e"]["Name"] = [[tab]];
+G2L["e"]["BackgroundTransparency"] = 1;
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.spd
+G2L["f"] = Instance.new("Frame", G2L["e"]);
+G2L["f"]["ZIndex"] = 4;
+G2L["f"]["BorderSizePixel"] = 0;
+G2L["f"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["f"]["Size"] = UDim2.new(0.88719, 0, 0.10909, 0);
+G2L["f"]["Position"] = UDim2.new(0.05707, 0, 0.05667, 0);
+G2L["f"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["f"]["Name"] = [[spd]];
+G2L["f"]["BackgroundTransparency"] = 1;
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.spd.UIStroke
+G2L["10"] = Instance.new("UIStroke", G2L["f"]);
+G2L["10"]["Thickness"] = 1.3;
+G2L["10"]["Color"] = Color3.fromRGB(255, 255, 255);
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.spd.UIStroke.UIGradient
+G2L["11"] = Instance.new("UIGradient", G2L["10"]);
+G2L["11"]["Color"] = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(0, 154, 255)),ColorSequenceKeypoint.new(1.000, Color3.fromRGB(255, 255, 255))};
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.spd.UIStroke.UIGradient.LocalScript
+G2L["12"] = Instance.new("LocalScript", G2L["11"]);
+
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.spd.UIGradient
+G2L["13"] = Instance.new("UIGradient", G2L["f"]);
+G2L["13"]["Rotation"] = 41;
+G2L["13"]["Color"] = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(62, 62, 62)),ColorSequenceKeypoint.new(0.469, Color3.fromRGB(17, 17, 17)),ColorSequenceKeypoint.new(1.000, Color3.fromRGB(0, 0, 0))};
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.spd.UICorner
+G2L["14"] = Instance.new("UICorner", G2L["f"]);
+
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.spd.wspeed
+G2L["15"] = Instance.new("TextBox", G2L["f"]);
+G2L["15"]["Name"] = [[wspeed]];
+G2L["15"]["PlaceholderColor3"] = Color3.fromRGB(131, 131, 131);
+G2L["15"]["BorderSizePixel"] = 0;
+G2L["15"]["TextWrapped"] = true;
+G2L["15"]["TextSize"] = 20;
+G2L["15"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["15"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["15"]["FontFace"] = Font.new([[rbxasset://fonts/families/Jura.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["15"]["MultiLine"] = true;
+G2L["15"]["ClearTextOnFocus"] = false;
+G2L["15"]["PlaceholderText"] = [[normal val 1500.....]];
+G2L["15"]["Size"] = UDim2.new(1, 0, 1, 0);
+G2L["15"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["15"]["Text"] = [[1500]];
+G2L["15"]["BackgroundTransparency"] = 1;
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.spd.wspeed.NumericOnlyTextBox
+G2L["16"] = Instance.new("LocalScript", G2L["15"]);
+G2L["16"]["Name"] = [[NumericOnlyTextBox]];
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.set
+G2L["17"] = Instance.new("Frame", G2L["e"]);
+G2L["17"]["ZIndex"] = 4;
+G2L["17"]["BorderSizePixel"] = 0;
+G2L["17"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["17"]["Size"] = UDim2.new(0.83426, 0, 0.11413, 0);
+G2L["17"]["Position"] = UDim2.new(0.08471, 0, 0.77989, 0);
+G2L["17"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["17"]["Name"] = [[set]];
+G2L["17"]["BackgroundTransparency"] = 1;
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.set.UIStroke
+G2L["18"] = Instance.new("UIStroke", G2L["17"]);
+G2L["18"]["Thickness"] = 1.3;
+G2L["18"]["Color"] = Color3.fromRGB(255, 255, 255);
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.set.UIStroke.UIGradient
+G2L["19"] = Instance.new("UIGradient", G2L["18"]);
+G2L["19"]["Color"] = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(0, 77, 255)),ColorSequenceKeypoint.new(1.000, Color3.fromRGB(255, 255, 255))};
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.set.UIGradient
+G2L["1a"] = Instance.new("UIGradient", G2L["17"]);
+G2L["1a"]["Rotation"] = 41;
+G2L["1a"]["Color"] = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(62, 62, 62)),ColorSequenceKeypoint.new(0.469, Color3.fromRGB(17, 17, 17)),ColorSequenceKeypoint.new(1.000, Color3.fromRGB(0, 0, 0))};
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.set.UICorner
+G2L["1b"] = Instance.new("UICorner", G2L["17"]);
+
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.set.set
+G2L["1c"] = Instance.new("TextButton", G2L["17"]);
+G2L["1c"]["TextWrapped"] = true;
+G2L["1c"]["BorderSizePixel"] = 0;
+G2L["1c"]["TextSize"] = 14;
+G2L["1c"]["TextScaled"] = true;
+G2L["1c"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["1c"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["1c"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["1c"]["BackgroundTransparency"] = 1;
+G2L["1c"]["Size"] = UDim2.new(1, 0, 1, 0);
+G2L["1c"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["1c"]["Text"] = [[              SET              ]];
+G2L["1c"]["Name"] = [[set]];
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.set.set.sett
+G2L["1d"] = Instance.new("LocalScript", G2L["1c"]);
+G2L["1d"]["Name"] = [[sett]];
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.set.set.sett.ser
+G2L["1e"] = Instance.new("Sound", G2L["1d"]);
+G2L["1e"]["Volume"] = 1.54449;
+G2L["1e"]["Name"] = [[ser]];
+G2L["1e"]["SoundId"] = [[rbxassetid://654933978]];
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.air
+G2L["1f"] = Instance.new("Frame", G2L["e"]);
+G2L["1f"]["ZIndex"] = 4;
+G2L["1f"]["BorderSizePixel"] = 0;
+G2L["1f"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["1f"]["Size"] = UDim2.new(0.88719, 0, 0.10909, 0);
+G2L["1f"]["Position"] = UDim2.new(0.057, 0, 0.21433, 0);
+G2L["1f"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["1f"]["Name"] = [[air]];
+G2L["1f"]["BackgroundTransparency"] = 1;
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.air.UIStroke
+G2L["20"] = Instance.new("UIStroke", G2L["1f"]);
+G2L["20"]["Thickness"] = 1.3;
+G2L["20"]["Color"] = Color3.fromRGB(255, 255, 255);
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.air.UIStroke.UIGradient
+G2L["21"] = Instance.new("UIGradient", G2L["20"]);
+G2L["21"]["Color"] = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(0, 154, 255)),ColorSequenceKeypoint.new(1.000, Color3.fromRGB(255, 255, 255))};
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.air.UIStroke.UIGradient.LocalScript
+G2L["22"] = Instance.new("LocalScript", G2L["21"]);
+
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.air.UIGradient
+G2L["23"] = Instance.new("UIGradient", G2L["1f"]);
+G2L["23"]["Rotation"] = 41;
+G2L["23"]["Color"] = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(62, 62, 62)),ColorSequenceKeypoint.new(0.469, Color3.fromRGB(17, 17, 17)),ColorSequenceKeypoint.new(1.000, Color3.fromRGB(0, 0, 0))};
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.air.UICorner
+G2L["24"] = Instance.new("UICorner", G2L["1f"]);
+
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.air.aiii
+G2L["25"] = Instance.new("TextBox", G2L["1f"]);
+G2L["25"]["Name"] = [[aiii]];
+G2L["25"]["PlaceholderColor3"] = Color3.fromRGB(131, 131, 131);
+G2L["25"]["BorderSizePixel"] = 0;
+G2L["25"]["TextWrapped"] = true;
+G2L["25"]["TextSize"] = 20;
+G2L["25"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["25"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["25"]["FontFace"] = Font.new([[rbxasset://fonts/families/Jura.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["25"]["MultiLine"] = true;
+G2L["25"]["ClearTextOnFocus"] = false;
+G2L["25"]["PlaceholderText"] = [[normal val 187.....]];
+G2L["25"]["Size"] = UDim2.new(1, 0, 1, 0);
+G2L["25"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["25"]["Text"] = [[187]];
+G2L["25"]["BackgroundTransparency"] = 1;
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.air.aiii.NumericOnlyTextBox
+G2L["26"] = Instance.new("LocalScript", G2L["25"]);
+G2L["26"]["Name"] = [[NumericOnlyTextBox]];
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.jumcap
+G2L["27"] = Instance.new("Frame", G2L["e"]);
+G2L["27"]["ZIndex"] = 4;
+G2L["27"]["BorderSizePixel"] = 0;
+G2L["27"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["27"]["Size"] = UDim2.new(0.88719, 0, 0.10909, 0);
+G2L["27"]["Position"] = UDim2.new(0.057, 0, 0.37533, 0);
+G2L["27"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["27"]["Name"] = [[jumcap]];
+G2L["27"]["BackgroundTransparency"] = 1;
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.jumcap.UIStroke
+G2L["28"] = Instance.new("UIStroke", G2L["27"]);
+G2L["28"]["Thickness"] = 1.3;
+G2L["28"]["Color"] = Color3.fromRGB(255, 255, 255);
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.jumcap.UIStroke.UIGradient
+G2L["29"] = Instance.new("UIGradient", G2L["28"]);
+G2L["29"]["Color"] = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(0, 154, 255)),ColorSequenceKeypoint.new(1.000, Color3.fromRGB(255, 255, 255))};
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.jumcap.UIStroke.UIGradient.LocalScript
+G2L["2a"] = Instance.new("LocalScript", G2L["29"]);
+
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.jumcap.UIGradient
+G2L["2b"] = Instance.new("UIGradient", G2L["27"]);
+G2L["2b"]["Rotation"] = 41;
+G2L["2b"]["Color"] = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(62, 62, 62)),ColorSequenceKeypoint.new(0.469, Color3.fromRGB(17, 17, 17)),ColorSequenceKeypoint.new(1.000, Color3.fromRGB(0, 0, 0))};
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.jumcap.UICorner
+G2L["2c"] = Instance.new("UICorner", G2L["27"]);
+
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.jumcap.cacap
+G2L["2d"] = Instance.new("TextBox", G2L["27"]);
+G2L["2d"]["Name"] = [[cacap]];
+G2L["2d"]["PlaceholderColor3"] = Color3.fromRGB(131, 131, 131);
+G2L["2d"]["BorderSizePixel"] = 0;
+G2L["2d"]["TextWrapped"] = true;
+G2L["2d"]["TextSize"] = 20;
+G2L["2d"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["2d"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["2d"]["FontFace"] = Font.new([[rbxasset://fonts/families/Jura.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["2d"]["MultiLine"] = true;
+G2L["2d"]["ClearTextOnFocus"] = false;
+G2L["2d"]["PlaceholderText"] = [[normal val 1.....]];
+G2L["2d"]["Size"] = UDim2.new(1, 0, 1, 0);
+G2L["2d"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["2d"]["Text"] = [[1]];
+G2L["2d"]["BackgroundTransparency"] = 1;
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.jumcap.cacap.NumericOnlyTextBox
+G2L["2e"] = Instance.new("LocalScript", G2L["2d"]);
+G2L["2e"]["Name"] = [[NumericOnlyTextBox]];
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.TextLabel
+G2L["2f"] = Instance.new("TextLabel", G2L["e"]);
+G2L["2f"]["TextWrapped"] = true;
+G2L["2f"]["BorderSizePixel"] = 0;
+G2L["2f"]["TextSize"] = 14;
+G2L["2f"]["TextScaled"] = true;
+G2L["2f"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["2f"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["2f"]["TextColor3"] = Color3.fromRGB(108, 140, 255);
+G2L["2f"]["BackgroundTransparency"] = 1;
+G2L["2f"]["Size"] = UDim2.new(1.004, 0, 0.045, 0);
+G2L["2f"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["2f"]["Text"] = [[Speed]];
+G2L["2f"]["Position"] = UDim2.new(-0.00368, 0, 0.0145, 0);
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.TextLabel
+G2L["30"] = Instance.new("TextLabel", G2L["e"]);
+G2L["30"]["TextWrapped"] = true;
+G2L["30"]["BorderSizePixel"] = 0;
+G2L["30"]["TextSize"] = 14;
+G2L["30"]["TextScaled"] = true;
+G2L["30"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["30"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["30"]["TextColor3"] = Color3.fromRGB(108, 140, 255);
+G2L["30"]["BackgroundTransparency"] = 1;
+G2L["30"]["Size"] = UDim2.new(1.004, 0, 0.045, 0);
+G2L["30"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["30"]["Text"] = [[Air Stafe]];
+G2L["30"]["Position"] = UDim2.new(-0.00737, 0, 0.16667, 0);
+
+
+-- StarterGui.RobloxMainMenu.LDX.tab.TextLabel
+G2L["31"] = Instance.new("TextLabel", G2L["e"]);
+G2L["31"]["TextWrapped"] = true;
+G2L["31"]["BorderSizePixel"] = 0;
+G2L["31"]["TextSize"] = 14;
+G2L["31"]["TextScaled"] = true;
+G2L["31"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["31"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["31"]["TextColor3"] = Color3.fromRGB(108, 140, 255);
+G2L["31"]["BackgroundTransparency"] = 1;
+G2L["31"]["Size"] = UDim2.new(1.004, 0, 0.045, 0);
+G2L["31"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["31"]["Text"] = [[Jump Cap]];
+G2L["31"]["Position"] = UDim2.new(-0.008, 0, 0.33, 0);
+
+
+-- StarterGui.RobloxMainMenu.LDX.supa
+G2L["32"] = Instance.new("Frame", G2L["3"]);
+G2L["32"]["BorderSizePixel"] = 0;
+G2L["32"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["32"]["Size"] = UDim2.new(0.26812, 0, 0.18462, 0);
+G2L["32"]["Position"] = UDim2.new(1.0206, 0, 0.0021, 0);
+G2L["32"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["32"]["Name"] = [[supa]];
+G2L["32"]["BackgroundTransparency"] = 0.65;
+
+
+-- StarterGui.RobloxMainMenu.LDX.supa.UIStroke
+G2L["33"] = Instance.new("UIStroke", G2L["32"]);
+G2L["33"]["Thickness"] = 1.3;
+G2L["33"]["Color"] = Color3.fromRGB(255, 255, 255);
+
+
+-- StarterGui.RobloxMainMenu.LDX.supa.UIStroke.UIGradient
+G2L["34"] = Instance.new("UIGradient", G2L["33"]);
+G2L["34"]["Color"] = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(0, 175, 255)),ColorSequenceKeypoint.new(1.000, Color3.fromRGB(255, 255, 255))};
+
+
+-- StarterGui.RobloxMainMenu.LDX.supa.UIStroke.UIGradient.LocalScript
+G2L["35"] = Instance.new("LocalScript", G2L["34"]);
+
+
+
+-- StarterGui.RobloxMainMenu.LDX.supa.UIGradient
+G2L["36"] = Instance.new("UIGradient", G2L["32"]);
+G2L["36"]["Rotation"] = 41;
+G2L["36"]["Color"] = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(62, 62, 62)),ColorSequenceKeypoint.new(0.469, Color3.fromRGB(17, 17, 17)),ColorSequenceKeypoint.new(1.000, Color3.fromRGB(0, 0, 0))};
+
+
+-- StarterGui.RobloxMainMenu.LDX.supa.UICorner
+G2L["37"] = Instance.new("UICorner", G2L["32"]);
+
+
+
+-- StarterGui.RobloxMainMenu.LDX.supa.UIAspectRatioConstraint
+G2L["38"] = Instance.new("UIAspectRatioConstraint", G2L["32"]);
+
+
+
+-- StarterGui.RobloxMainMenu.LDX.supa.bobo
+G2L["39"] = Instance.new("ImageLabel", G2L["32"]);
+G2L["39"]["BorderSizePixel"] = 0;
+G2L["39"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+-- [ERROR] cannot convert ImageContent, please report to "https://github.com/uniquadev/GuiToLuaConverter/issues"
+G2L["39"]["Image"] = [[rbxassetid://11535789796]];
+G2L["39"]["Size"] = UDim2.new(1, 0, 1, 0);
+G2L["39"]["Visible"] = false;
+G2L["39"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["39"]["BackgroundTransparency"] = 1;
+G2L["39"]["Name"] = [[bobo]];
+
+
+-- StarterGui.RobloxMainMenu.LDX.supa.bobo.vse
+G2L["3a"] = Instance.new("LocalScript", G2L["39"]);
+G2L["3a"]["Name"] = [[vse]];
+
+
+-- StarterGui.RobloxMainMenu.LDX.supa.ran
+G2L["3b"] = Instance.new("TextLabel", G2L["32"]);
+G2L["3b"]["TextWrapped"] = true;
+G2L["3b"]["BorderSizePixel"] = 0;
+G2L["3b"]["TextSize"] = 14;
+G2L["3b"]["TextScaled"] = true;
+G2L["3b"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["3b"]["FontFace"] = Font.new([[rbxasset://fonts/families/FredokaOne.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["3b"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["3b"]["BackgroundTransparency"] = 1;
+G2L["3b"]["Size"] = UDim2.new(0.97727, 0, 0.15909, 0);
+G2L["3b"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["3b"]["Text"] = [[EPIC DASH]];
+G2L["3b"]["Name"] = [[ran]];
+G2L["3b"]["Position"] = UDim2.new(0.01136, 0, 0.84091, 0);
+
+
+-- StarterGui.RobloxMainMenu.LDX.supa.ran.RainbowTextEffect
+G2L["3c"] = Instance.new("LocalScript", G2L["3b"]);
+G2L["3c"]["Name"] = [[RainbowTextEffect]];
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama
+G2L["3d"] = Instance.new("Frame", G2L["3"]);
+G2L["3d"]["ZIndex"] = 999999998;
+G2L["3d"]["BorderSizePixel"] = 0;
+G2L["3d"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["3d"]["Size"] = UDim2.new(0.90076, 0, 0.36107, 0);
+G2L["3d"]["Position"] = UDim2.new(1.02049, 0, 0.2509, 0);
+G2L["3d"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["3d"]["Name"] = [[maamama]];
+G2L["3d"]["BackgroundTransparency"] = 0.2;
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.UICorner
+G2L["3e"] = Instance.new("UICorner", G2L["3d"]);
+
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.UIStroke
+G2L["3f"] = Instance.new("UIStroke", G2L["3d"]);
+G2L["3f"]["Thickness"] = 1.3;
+G2L["3f"]["Color"] = Color3.fromRGB(255, 255, 255);
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.UIStroke.UIGradient
+G2L["40"] = Instance.new("UIGradient", G2L["3f"]);
+G2L["40"]["Color"] = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(0, 111, 255)),ColorSequenceKeypoint.new(1.000, Color3.fromRGB(255, 255, 255))};
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.UIStroke.UIGradient.LocalScript
+G2L["41"] = Instance.new("LocalScript", G2L["40"]);
+
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.UIGradient
+G2L["42"] = Instance.new("UIGradient", G2L["3d"]);
+G2L["42"]["Rotation"] = 41;
+G2L["42"]["Color"] = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(62, 62, 62)),ColorSequenceKeypoint.new(0.469, Color3.fromRGB(17, 17, 17)),ColorSequenceKeypoint.new(1.000, Color3.fromRGB(0, 0, 0))};
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.titpe
+G2L["43"] = Instance.new("TextLabel", G2L["3d"]);
+G2L["43"]["TextWrapped"] = true;
+G2L["43"]["BorderSizePixel"] = 0;
+G2L["43"]["TextSize"] = 13;
+G2L["43"]["TextScaled"] = true;
+G2L["43"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["43"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["43"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["43"]["BackgroundTransparency"] = 1;
+G2L["43"]["Size"] = UDim2.new(0.20959, 0, 0.14045, 0);
+G2L["43"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["43"]["Text"] = [[ESP]];
+G2L["43"]["Name"] = [[titpe]];
+G2L["43"]["Position"] = UDim2.new(0.0156, 0, 0.00227, 0);
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.titpe.RainbowTextEffect
+G2L["44"] = Instance.new("LocalScript", G2L["43"]);
+G2L["44"]["Name"] = [[RainbowTextEffect]];
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.line
+G2L["45"] = Instance.new("Frame", G2L["3d"]);
+G2L["45"]["BorderSizePixel"] = 0;
+G2L["45"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["45"]["Size"] = UDim2.new(1, 0, 0.015, 0);
+G2L["45"]["Position"] = UDim2.new(0, 0, 0.14499, 0);
+G2L["45"]["BorderColor3"] = Color3.fromRGB(100, 100, 100);
+G2L["45"]["Name"] = [[line]];
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.line.SmoothGradientOffsetLoop
+G2L["46"] = Instance.new("LocalScript", G2L["45"]);
+G2L["46"]["Name"] = [[SmoothGradientOffsetLoop]];
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.line.light
+G2L["47"] = Instance.new("UIGradient", G2L["45"]);
+G2L["47"]["Name"] = [[light]];
+G2L["47"]["Color"] = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(0, 0, 0)),ColorSequenceKeypoint.new(0.149, Color3.fromRGB(0, 0, 0)),ColorSequenceKeypoint.new(0.509, Color3.fromRGB(222, 253, 255)),ColorSequenceKeypoint.new(0.863, Color3.fromRGB(0, 0, 0)),ColorSequenceKeypoint.new(1.000, Color3.fromRGB(0, 0, 0))};
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab
+G2L["48"] = Instance.new("Frame", G2L["3d"]);
+G2L["48"]["BorderSizePixel"] = 0;
+G2L["48"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["48"]["Size"] = UDim2.new(1, 0, 0.77873, 0);
+G2L["48"]["Position"] = UDim2.new(0, 0, 0.20658, 0);
+G2L["48"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["48"]["Name"] = [[tab]];
+G2L["48"]["BackgroundTransparency"] = 1;
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.switcww
+G2L["49"] = Instance.new("Frame", G2L["48"]);
+G2L["49"]["BorderSizePixel"] = 0;
+G2L["49"]["BackgroundColor3"] = Color3.fromRGB(85, 85, 85);
+G2L["49"]["Size"] = UDim2.new(0.99649, 0, 0.2911, 0);
+G2L["49"]["Position"] = UDim2.new(0.0035, 0, 0.017, 0);
+G2L["49"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["49"]["Name"] = [[switcww]];
+G2L["49"]["BackgroundTransparency"] = 1;
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.switcww.dd
+G2L["4a"] = Instance.new("Frame", G2L["49"]);
+G2L["4a"]["BorderSizePixel"] = 0;
+G2L["4a"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["4a"]["Size"] = UDim2.new(0.17454, 0, 0.822, 0);
+G2L["4a"]["Position"] = UDim2.new(0.76982, 0, 0.085, 0);
+G2L["4a"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["4a"]["Name"] = [[dd]];
+G2L["4a"]["BackgroundTransparency"] = 0.9;
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.switcww.dd.ees
+G2L["4b"] = Instance.new("TextButton", G2L["4a"]);
+G2L["4b"]["BorderSizePixel"] = 0;
+G2L["4b"]["TextSize"] = 14;
+G2L["4b"]["TextColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["4b"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["4b"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["4b"]["BackgroundTransparency"] = 1;
+G2L["4b"]["Size"] = UDim2.new(1, 0, 1, 0);
+G2L["4b"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["4b"]["Text"] = [[]];
+G2L["4b"]["Name"] = [[ees]];
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.switcww.dd.ees.LocalScript
+G2L["4c"] = Instance.new("LocalScript", G2L["4b"]);
+
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.switcww.dd.ees.LocalScript.onn
+G2L["4d"] = Instance.new("Sound", G2L["4c"]);
+G2L["4d"]["Volume"] = 1.5;
+G2L["4d"]["Name"] = [[onn]];
+G2L["4d"]["SoundId"] = [[rbxassetid://17208361335]];
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.switcww.dd.ees.LocalScript.onn.offf
+G2L["4e"] = Instance.new("Sound", G2L["4d"]);
+G2L["4e"]["Volume"] = 1.5;
+G2L["4e"]["Name"] = [[offf]];
+G2L["4e"]["SoundId"] = [[rbxassetid://16480549841]];
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.switcww.dd.ees.stat
+G2L["4f"] = Instance.new("Frame", G2L["4b"]);
+G2L["4f"]["BorderSizePixel"] = 0;
+G2L["4f"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["4f"]["Size"] = UDim2.new(0.52013, 0, 1, 0);
+G2L["4f"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["4f"]["Name"] = [[stat]];
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.switcww.dd.ees.stat.UICorner
+G2L["50"] = Instance.new("UICorner", G2L["4f"]);
+G2L["50"]["CornerRadius"] = UDim.new(0, 1000);
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.switcww.dd.ees.stat.UIStroke
+G2L["51"] = Instance.new("UIStroke", G2L["4f"]);
+G2L["51"]["Thickness"] = 1.3;
+G2L["51"]["Color"] = Color3.fromRGB(255, 255, 255);
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.switcww.dd.ees.stat.UIStroke.UIGradient
+G2L["52"] = Instance.new("UIGradient", G2L["51"]);
+G2L["52"]["Color"] = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(0, 111, 255)),ColorSequenceKeypoint.new(1.000, Color3.fromRGB(255, 255, 255))};
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.switcww.dd.ees.stat.UIStroke.UIGradient.LocalScript
+G2L["53"] = Instance.new("LocalScript", G2L["52"]);
+
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.switcww.dd.UICorner
+G2L["54"] = Instance.new("UICorner", G2L["4a"]);
+G2L["54"]["CornerRadius"] = UDim.new(0, 1000);
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.switcww.dd.UIStroke
+G2L["55"] = Instance.new("UIStroke", G2L["4a"]);
+G2L["55"]["Thickness"] = 1.3;
+G2L["55"]["Color"] = Color3.fromRGB(255, 255, 255);
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.switcww.dd.UIStroke.UIGradient
+G2L["56"] = Instance.new("UIGradient", G2L["55"]);
+G2L["56"]["Color"] = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(0, 111, 255)),ColorSequenceKeypoint.new(1.000, Color3.fromRGB(255, 255, 255))};
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.switcww.dd.UIStroke.UIGradient.LocalScript
+G2L["57"] = Instance.new("LocalScript", G2L["56"]);
+
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.switcww.TextLabel
+G2L["58"] = Instance.new("TextLabel", G2L["49"]);
+G2L["58"]["TextWrapped"] = true;
+G2L["58"]["BorderSizePixel"] = 0;
+G2L["58"]["TextSize"] = 17;
+G2L["58"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+G2L["58"]["TextScaled"] = true;
+G2L["58"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["58"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["58"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["58"]["BackgroundTransparency"] = 1;
+G2L["58"]["Size"] = UDim2.new(0.53992, 0, 1, 0);
+G2L["58"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["58"]["Text"] = [[ESP DOWNED PLAYER]];
+G2L["58"]["Position"] = UDim2.new(0.04215, 0, 0, 0);
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.pla
+G2L["59"] = Instance.new("Frame", G2L["48"]);
+G2L["59"]["BorderSizePixel"] = 0;
+G2L["59"]["BackgroundColor3"] = Color3.fromRGB(85, 85, 85);
+G2L["59"]["Size"] = UDim2.new(0.99649, 0, 0.2911, 0);
+G2L["59"]["Position"] = UDim2.new(0.004, 0, 0.4, 0);
+G2L["59"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["59"]["Name"] = [[pla]];
+G2L["59"]["BackgroundTransparency"] = 1;
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.pla.sssst
+G2L["5a"] = Instance.new("Frame", G2L["59"]);
+G2L["5a"]["BorderSizePixel"] = 0;
+G2L["5a"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["5a"]["Size"] = UDim2.new(0.17454, 0, 0.822, 0);
+G2L["5a"]["Position"] = UDim2.new(0.76982, 0, 0.085, 0);
+G2L["5a"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["5a"]["Name"] = [[sssst]];
+G2L["5a"]["BackgroundTransparency"] = 0.9;
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.pla.sssst.ees
+G2L["5b"] = Instance.new("TextButton", G2L["5a"]);
+G2L["5b"]["BorderSizePixel"] = 0;
+G2L["5b"]["TextSize"] = 14;
+G2L["5b"]["TextColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["5b"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["5b"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["5b"]["BackgroundTransparency"] = 1;
+G2L["5b"]["Size"] = UDim2.new(1, 0, 1, 0);
+G2L["5b"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["5b"]["Text"] = [[]];
+G2L["5b"]["Name"] = [[ees]];
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.pla.sssst.ees.LocalScript
+G2L["5c"] = Instance.new("LocalScript", G2L["5b"]);
+
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.pla.sssst.ees.LocalScript.onn
+G2L["5d"] = Instance.new("Sound", G2L["5c"]);
+G2L["5d"]["Volume"] = 1.5;
+G2L["5d"]["Name"] = [[onn]];
+G2L["5d"]["SoundId"] = [[rbxassetid://17208361335]];
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.pla.sssst.ees.LocalScript.onn.offf
+G2L["5e"] = Instance.new("Sound", G2L["5d"]);
+G2L["5e"]["Volume"] = 1.5;
+G2L["5e"]["Name"] = [[offf]];
+G2L["5e"]["SoundId"] = [[rbxassetid://16480549841]];
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.pla.sssst.ees.stat
+G2L["5f"] = Instance.new("Frame", G2L["5b"]);
+G2L["5f"]["BorderSizePixel"] = 0;
+G2L["5f"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["5f"]["Size"] = UDim2.new(0.52013, 0, 1, 0);
+G2L["5f"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["5f"]["Name"] = [[stat]];
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.pla.sssst.ees.stat.UICorner
+G2L["60"] = Instance.new("UICorner", G2L["5f"]);
+G2L["60"]["CornerRadius"] = UDim.new(0, 1000);
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.pla.sssst.ees.stat.UIStroke
+G2L["61"] = Instance.new("UIStroke", G2L["5f"]);
+G2L["61"]["Thickness"] = 1.3;
+G2L["61"]["Color"] = Color3.fromRGB(255, 255, 255);
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.pla.sssst.ees.stat.UIStroke.UIGradient
+G2L["62"] = Instance.new("UIGradient", G2L["61"]);
+G2L["62"]["Color"] = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(0, 111, 255)),ColorSequenceKeypoint.new(1.000, Color3.fromRGB(255, 255, 255))};
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.pla.sssst.ees.stat.UIStroke.UIGradient.LocalScript
+G2L["63"] = Instance.new("LocalScript", G2L["62"]);
+
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.pla.sssst.UICorner
+G2L["64"] = Instance.new("UICorner", G2L["5a"]);
+G2L["64"]["CornerRadius"] = UDim.new(0, 1000);
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.pla.sssst.UIStroke
+G2L["65"] = Instance.new("UIStroke", G2L["5a"]);
+G2L["65"]["Thickness"] = 1.3;
+G2L["65"]["Color"] = Color3.fromRGB(255, 255, 255);
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.pla.sssst.UIStroke.UIGradient
+G2L["66"] = Instance.new("UIGradient", G2L["65"]);
+G2L["66"]["Color"] = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(0, 111, 255)),ColorSequenceKeypoint.new(1.000, Color3.fromRGB(255, 255, 255))};
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.pla.sssst.UIStroke.UIGradient.LocalScript
+G2L["67"] = Instance.new("LocalScript", G2L["66"]);
+
+
+
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.pla.TextLabel
+G2L["68"] = Instance.new("TextLabel", G2L["59"]);
+G2L["68"]["TextWrapped"] = true;
+G2L["68"]["BorderSizePixel"] = 0;
+G2L["68"]["TextSize"] = 17;
+G2L["68"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+G2L["68"]["TextScaled"] = true;
+G2L["68"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["68"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["68"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["68"]["BackgroundTransparency"] = 1;
+G2L["68"]["Size"] = UDim2.new(0.68394, 0, 1, 0);
+G2L["68"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["68"]["Text"] = [[ESP PLAYER                 CLASSIC]];
+G2L["68"]["Position"] = UDim2.new(0.04215, 0, 0, 0);
+
+
+-- StarterGui.RobloxMainMenu.toggleF
+G2L["69"] = Instance.new("Frame", G2L["1"]);
+G2L["69"]["ZIndex"] = 999999999;
+G2L["69"]["BorderSizePixel"] = 0;
+G2L["69"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["69"]["Size"] = UDim2.new(0, 75, 0, 38);
+G2L["69"]["Position"] = UDim2.new(0.01012, 0, 0.90748, 0);
+G2L["69"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["69"]["Name"] = [[toggleF]];
+G2L["69"]["BackgroundTransparency"] = 0.2;
+
+
+-- StarterGui.RobloxMainMenu.toggleF.UIAspectRatioConstraint
+G2L["6a"] = Instance.new("UIAspectRatioConstraint", G2L["69"]);
+
+
+
+-- StarterGui.RobloxMainMenu.toggleF.UICorner
+G2L["6b"] = Instance.new("UICorner", G2L["69"]);
+
+
+
+-- StarterGui.RobloxMainMenu.toggleF.UIStroke
+G2L["6c"] = Instance.new("UIStroke", G2L["69"]);
+G2L["6c"]["Thickness"] = 1.3;
+G2L["6c"]["Color"] = Color3.fromRGB(255, 255, 255);
+
+
+-- StarterGui.RobloxMainMenu.toggleF.UIStroke.UIGradient
+G2L["6d"] = Instance.new("UIGradient", G2L["6c"]);
+G2L["6d"]["Color"] = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(61, 0, 255)),ColorSequenceKeypoint.new(1.000, Color3.fromRGB(255, 255, 255))};
+
+
+-- StarterGui.RobloxMainMenu.toggleF.UIStroke.UIGradient.LocalScript
+G2L["6e"] = Instance.new("LocalScript", G2L["6d"]);
+
+
+
+-- StarterGui.RobloxMainMenu.toggleF.tgtg
+G2L["6f"] = Instance.new("ImageButton", G2L["69"]);
+G2L["6f"]["BorderSizePixel"] = 0;
+G2L["6f"]["Visible"] = false;
+G2L["6f"]["BackgroundTransparency"] = 1;
+-- [ERROR] cannot convert ImageContent, please report to "https://github.com/uniquadev/GuiToLuaConverter/issues"
+G2L["6f"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["6f"]["Image"] = [[rbxassetid://279461710]];
+G2L["6f"]["Size"] = UDim2.new(1, 0, 1, 0);
+G2L["6f"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["6f"]["Name"] = [[tgtg]];
+
+
+-- StarterGui.RobloxMainMenu.toggleF.tgtg.LocalScript
+G2L["70"] = Instance.new("LocalScript", G2L["6f"]);
+
+
+
+-- StarterGui.RobloxMainMenu.toggleF.tgtg.vse
+G2L["71"] = Instance.new("LocalScript", G2L["6f"]);
+G2L["71"]["Name"] = [[vse]];
+
+
+-- StarterGui.RobloxMainMenu.toggleF.tgtg.UICorner
+G2L["72"] = Instance.new("UICorner", G2L["6f"]);
+
+
+
+-- StarterGui.RobloxMainMenu.AssetsM
+G2L["73"] = Instance.new("Folder", G2L["1"]);
+G2L["73"]["Name"] = [[AssetsM]];
+
+
+-- StarterGui.RobloxMainMenu.AssetsM.sou
+G2L["74"] = Instance.new("Folder", G2L["73"]);
+G2L["74"]["Name"] = [[sou]];
+
+
+-- StarterGui.RobloxMainMenu.AssetsM.sou.noti
+G2L["75"] = Instance.new("Sound", G2L["74"]);
+G2L["75"]["Name"] = [[noti]];
+G2L["75"]["SoundId"] = [[rbxassetid://8486683243]];
+
+
+-- StarterGui.RobloxMainMenu.AssetsM.sou.bn
+G2L["76"] = Instance.new("Sound", G2L["74"]);
+G2L["76"]["Name"] = [[bn]];
+G2L["76"]["SoundId"] = [[rbxassetid://9083627113]];
+
+
+-- StarterGui.RobloxMainMenu.noti
+G2L["77"] = Instance.new("Frame", G2L["1"]);
+G2L["77"]["BorderSizePixel"] = 0;
+G2L["77"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["77"]["Size"] = UDim2.new(0.25705, 0, 0.12371, 0);
+G2L["77"]["Position"] = UDim2.new(-2, 0, 0, 0);
+G2L["77"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["77"]["Name"] = [[noti]];
+G2L["77"]["BackgroundTransparency"] = 0.45;
+
+
+-- StarterGui.RobloxMainMenu.noti.LocalScript
+G2L["78"] = Instance.new("LocalScript", G2L["77"]);
+
+
+
+-- StarterGui.RobloxMainMenu.noti.UICorner
+G2L["79"] = Instance.new("UICorner", G2L["77"]);
+
+
+
+-- StarterGui.RobloxMainMenu.noti.UIStroke
+G2L["7a"] = Instance.new("UIStroke", G2L["77"]);
+G2L["7a"]["Thickness"] = 1.3;
+G2L["7a"]["Color"] = Color3.fromRGB(255, 255, 255);
+
+
+-- StarterGui.RobloxMainMenu.noti.UIStroke.UIGradient
+G2L["7b"] = Instance.new("UIGradient", G2L["7a"]);
+G2L["7b"]["Color"] = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(0, 111, 255)),ColorSequenceKeypoint.new(1.000, Color3.fromRGB(255, 255, 255))};
+
+
+-- StarterGui.RobloxMainMenu.noti.UIStroke.UIGradient.LocalScript
+G2L["7c"] = Instance.new("LocalScript", G2L["7b"]);
+
+
+
+-- StarterGui.RobloxMainMenu.noti.titt
+G2L["7d"] = Instance.new("TextLabel", G2L["77"]);
+G2L["7d"]["TextWrapped"] = true;
+G2L["7d"]["BorderSizePixel"] = 0;
+G2L["7d"]["TextSize"] = 31;
+G2L["7d"]["TextScaled"] = true;
+G2L["7d"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["7d"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["7d"]["TextColor3"] = Color3.fromRGB(0, 133, 255);
+G2L["7d"]["BackgroundTransparency"] = 1;
+G2L["7d"]["Size"] = UDim2.new(1, 0, 1, 0);
+G2L["7d"]["Visible"] = false;
+G2L["7d"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["7d"]["Text"] = [[          WELCOME !         ]];
+G2L["7d"]["Name"] = [[titt]];
+
+
+-- StarterGui.RobloxMainMenu.noti.titt.RainbowTextEffect
+G2L["7e"] = Instance.new("LocalScript", G2L["7d"]);
+G2L["7e"]["Name"] = [[RainbowTextEffect]];
+
+
+-- StarterGui.RobloxMainMenu.noti.titt.vse
+G2L["7f"] = Instance.new("LocalScript", G2L["7d"]);
+G2L["7f"]["Name"] = [[vse]];
+
+
+-- StarterGui.RobloxMainMenu.start
+local function C_2()
+	local script = G2L["2"];
+	local gets = script.Parent.AssetsM.sou.noti
+
+	gets:Play()
+end;
+task.spawn(C_2);
+-- StarterGui.RobloxMainMenu.LDX.UIStroke.UIGradient.LocalScript
+local function C_7()
+	local script = G2L["7"];
+	local get = script.Parent
+
+	while true do
+		task.wait()
+		get.Rotation += 1
+
+	end
+end;
+task.spawn(C_7);
+-- StarterGui.RobloxMainMenu.LDX.titpe.RainbowTextEffect
+local function C_a()
+	local script = G2L["a"];
+	local textLabel = script.Parent
+
+	-- Animate TextColor3 using HSV for a rainbow effect
+	local hue = 0
+	local speed = 0.2 -- change for faster/slower color cycling
+
+	while true do
+		hue = (hue + speed * task.wait()) % 1
+		textLabel.TextColor3 = Color3.fromHSV(hue, 1, 1)
+	end
+
+
+end;
+task.spawn(C_a);
+-- StarterGui.RobloxMainMenu.LDX.line.SmoothGradientOffsetLoop
+local function C_c()
+	local script = G2L["c"];
+	local frame = script.Parent
+	local gradient = frame:FindFirstChild("light")
+	if not gradient then return end
+
+	local minOffset = -2
+	local maxOffset = 2
+	local speed = 2 -- change for faster/slower movement
+
+	local direction = 1
+	local offset = minOffset
+
+	while true do
+		offset = offset + direction * speed * task.wait()
+		gradient.Offset = Vector2.new(offset, 0)
+		if offset >= maxOffset then
+			offset = maxOffset
+			direction = -1
+		elseif offset <= minOffset then
+			offset = minOffset
+			direction = 1
+		end
+	end
+
+
+end;
+task.spawn(C_c);
+-- StarterGui.RobloxMainMenu.LDX.tab.spd.UIStroke.UIGradient.LocalScript
+local function C_12()
+	local script = G2L["12"];
+	local get = script.Parent
+
+	while true do
+		task.wait()
+		get.Rotation += 1
+
+	end
+end;
+task.spawn(C_12);
+-- StarterGui.RobloxMainMenu.LDX.tab.spd.wspeed.NumericOnlyTextBox
+local function C_16()
+	local script = G2L["16"];
+	local textBox = script.Parent
+
+	local function filterNumeric(text)
+		-- Only allow digits and one decimal point
+		local filtered = ""
+		local decimalAdded = false
+		for i = 1, #text do
+			local char = text:sub(i, i)
+			if char:match("%d") then
+				filtered = filtered .. char
+			elseif char == "." and not decimalAdded then
+				filtered = filtered .. char
+				decimalAdded = true
+			end
+		end
+		return filtered
+	end
+
+	textBox:GetPropertyChangedSignal("Text"):Connect(function()
+		local filtered = filterNumeric(textBox.Text)
+		if textBox.Text ~= filtered then
+			textBox.Text = filtered
+		end
+	end)
+
+
+end;
+task.spawn(C_16);
+-- StarterGui.RobloxMainMenu.LDX.tab.set.set.sett
+local function C_1d()
+	local script = G2L["1d"];
+	local get = script.Parent
+	local tabb = script.Parent.Parent.Parent.Parent.Parent.LDX.tab
+
+	local wspeeds = 1500
+	local airs = 187
+	local jjacp = 1
+
+	local requiredFields = {
+		Friction=true, AirStrafeAcceleration=true, JumpHeight=true, RunDeaccel=true,
+		JumpSpeedMultiplier=true, JumpCap=true, SprintCap=true, WalkSpeedMultiplier=true,
+		BhopEnabled=true, Speed=true, AirAcceleration=true, RunAccel=true, SprintAcceleration=true
+	}
+
+	local function getMatchingTables()
+		local matched = {}
+		for _, obj in pairs(getgc(true)) do
+			if typeof(obj) == "table" then
+				local ok = true
+				for field in pairs(requiredFields) do
+					if rawget(obj, field) == nil then ok = false; break end
+				end
+				if ok then table.insert(matched, obj) end
+			end
+		end
+		return matched
+	end
+
+	local function setModuleValue(field, value)
+		for _, t in ipairs(getMatchingTables()) do
+			pcall(function()
+				if rawget(t, field) ~= nil then
+					t[field] = value
+				end
+			end)
+		end
+	end
+
+	get.MouseButton1Click:Connect(function()
+		-- Defensive checks for UI elements
+		local spdFrame = tabb:FindFirstChild("spd")
+		local airFrame = tabb:FindFirstChild("air")
+		local jumcapFrame = tabb:FindFirstChild("jumcap")
+
+		if spdFrame and spdFrame:FindFirstChild("wspeed") and airFrame and airFrame:FindFirstChild("aiii") and jumcapFrame and jumcapFrame:FindFirstChild("cacap") then
+			local wspeedText = spdFrame.wspeed.Text
+			local airText = airFrame.aiii.Text
+			local jumcapText = jumcapFrame.cacap.Text
+
+			wspeeds = tonumber(wspeedText) or 1500
+			airs = tonumber(airText) or 187
+			jjacp = tonumber(jumcapText) or 1
+		else
+			warn("Some UI elements are missing! Using default values.")
+			wspeeds = 1500
+			airs = 187
+			jjacp = 1
+		end
+
+		task.wait()
+
+		if script:FindFirstChild("ser") then
+			script.ser:Play()
+		else
+			warn("Sound object 'ser' not found in script!")
+		end
+
+		run()
+	end)
+
+	function run()
+		setModuleValue("Speed", wspeeds)
+		setModuleValue("JumpCap", jjacp)
+		setModuleValue("AirStrafeAcceleration", airs)
+	end
+
+
+end;
+task.spawn(C_1d);
+-- StarterGui.RobloxMainMenu.LDX.tab.air.UIStroke.UIGradient.LocalScript
+local function C_22()
+	local script = G2L["22"];
+	local get = script.Parent
+
+	while true do
+		task.wait()
+		get.Rotation += 1
+
+	end
+end;
+task.spawn(C_22);
+-- StarterGui.RobloxMainMenu.LDX.tab.air.aiii.NumericOnlyTextBox
+local function C_26()
+	local script = G2L["26"];
+	local textBox = script.Parent
+
+	local function filterNumeric(text)
+		-- Only allow digits and one decimal point
+		local filtered = ""
+		local decimalAdded = false
+		for i = 1, #text do
+			local char = text:sub(i, i)
+			if char:match("%d") then
+				filtered = filtered .. char
+			elseif char == "." and not decimalAdded then
+				filtered = filtered .. char
+				decimalAdded = true
+			end
+		end
+		return filtered
+	end
+
+	textBox:GetPropertyChangedSignal("Text"):Connect(function()
+		local filtered = filterNumeric(textBox.Text)
+		if textBox.Text ~= filtered then
+			textBox.Text = filtered
+		end
+	end)
+
+
+end;
+task.spawn(C_26);
+-- StarterGui.RobloxMainMenu.LDX.tab.jumcap.UIStroke.UIGradient.LocalScript
+local function C_2a()
+	local script = G2L["2a"];
+	local get = script.Parent
+
+	while true do
+		task.wait()
+		get.Rotation += 1
+
+	end
+end;
+task.spawn(C_2a);
+-- StarterGui.RobloxMainMenu.LDX.tab.jumcap.cacap.NumericOnlyTextBox
+local function C_2e()
+	local script = G2L["2e"];
+	local textBox = script.Parent
+
+	local function filterNumeric(text)
+		-- Only allow digits and one decimal point
+		local filtered = ""
+		local decimalAdded = false
+		for i = 1, #text do
+			local char = text:sub(i, i)
+			if char:match("%d") then
+				filtered = filtered .. char
+			elseif char == "." and not decimalAdded then
+				filtered = filtered .. char
+				decimalAdded = true
+			end
+		end
+		return filtered
+	end
+
+	textBox:GetPropertyChangedSignal("Text"):Connect(function()
+		local filtered = filterNumeric(textBox.Text)
+		if textBox.Text ~= filtered then
+			textBox.Text = filtered
+		end
+	end)
+
+
+end;
+task.spawn(C_2e);
+-- StarterGui.RobloxMainMenu.LDX.supa.UIStroke.UIGradient.LocalScript
+local function C_35()
+	local script = G2L["35"];
+	local get = script.Parent
+
+	while true do
+		task.wait()
+		get.Rotation += 1
+
+	end
+end;
+task.spawn(C_35);
+-- StarterGui.RobloxMainMenu.LDX.supa.bobo.vse
+local function C_3a()
+	local script = G2L["3a"];
+	script.Parent.Visible = true
+end;
+task.spawn(C_3a);
+-- StarterGui.RobloxMainMenu.LDX.supa.ran.RainbowTextEffect
+local function C_3c()
+	local script = G2L["3c"];
+	local textLabel = script.Parent
+
+	-- Animate TextColor3 using HSV for a rainbow effect
+	local hue = 0
+	local speed = 0.2 -- change for faster/slower color cycling
+
+	while true do
+		hue = (hue + speed * task.wait()) % 1
+		textLabel.TextColor3 = Color3.fromHSV(hue, 1, 1)
+	end
+
+
+end;
+task.spawn(C_3c);
+-- StarterGui.RobloxMainMenu.LDX.maamama.UIStroke.UIGradient.LocalScript
+local function C_41()
+	local script = G2L["41"];
+	local get = script.Parent
+
+	while true do
+		task.wait()
+		get.Rotation += 1
+
+	end
+end;
+task.spawn(C_41);
+-- StarterGui.RobloxMainMenu.LDX.maamama.titpe.RainbowTextEffect
+local function C_44()
+	local script = G2L["44"];
+	local textLabel = script.Parent
+
+	-- Animate TextColor3 using HSV for a rainbow effect
+	local hue = 0
+	local speed = 0.2 -- change for faster/slower color cycling
+
+	while true do
+		hue = (hue + speed * task.wait()) % 1
+		textLabel.TextColor3 = Color3.fromHSV(hue, 1, 1)
+	end
+
+
+end;
+task.spawn(C_44);
+-- StarterGui.RobloxMainMenu.LDX.maamama.line.SmoothGradientOffsetLoop
+local function C_46()
+	local script = G2L["46"];
+	local frame = script.Parent
+	local gradient = frame:FindFirstChild("light")
+	if not gradient then return end
+
+	local minOffset = -2
+	local maxOffset = 2
+	local speed = 2 -- change for faster/slower movement
+
+	local direction = 1
+	local offset = minOffset
+
+	while true do
+		offset = offset + direction * speed * task.wait()
+		gradient.Offset = Vector2.new(offset, 0)
+		if offset >= maxOffset then
+			offset = maxOffset
+			direction = -1
+		elseif offset <= minOffset then
+			offset = minOffset
+			direction = 1
+		end
+	end
+
+
+end;
+task.spawn(C_46);
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.switcww.dd.ees.LocalScript
+local function C_4c()
+	local script = G2L["4c"];
+	local button = script.Parent
+	local statFrame = button:FindFirstChild("stat")
+	local soundOn = script:FindFirstChild("onn")
+
+	local toggled = false
+
+	button.MouseButton1Click:Connect(function()
+		if not statFrame or not soundOn then return end
+
+		if not toggled then
+			statFrame:TweenPosition(
+				UDim2.new(0.474, 0, 0, 0),
+				Enum.EasingDirection.Out,
+				Enum.EasingStyle.Quad,
+				0.2,
+				true
+			)
+			toggled = true
+			enableESP()
+		else
+			statFrame:TweenPosition(
+				UDim2.new(0, 0, 0, 0),
+				Enum.EasingDirection.Out,
+				Enum.EasingStyle.Quad,
+				0.2,
+				true
+			)
+			toggled = false
+			disableESP()
+		end
+	end)
+
+	local espEnabled = false
+	local espConnections = {}
+	local playerHighlights = {}
+	local playerNameGuis = {}
+
+	local Players = game:GetService("Players")
+	local LocalPlayer = Players.LocalPlayer
+
+	local function clearESP()
+		for _, highlight in pairs(playerHighlights) do
+			if highlight then highlight:Destroy() end
+		end
+		for _, gui in pairs(playerNameGuis) do
+			if gui then gui:Destroy() end
+		end
+		playerHighlights = {}
+		playerNameGuis = {}
+
+		for _, conn in ipairs(espConnections) do
+			conn:Disconnect()
+		end
+		espConnections = {}
+	end
+
+	local function removeESPForPlayer(player)
+		if playerHighlights[player] then
+			playerHighlights[player]:Destroy()
+			playerHighlights[player] = nil
+		end
+		if playerNameGuis[player] then
+			playerNameGuis[player]:Destroy()
+			playerNameGuis[player] = nil
+		end
+	end
+
+	local function createESPForPlayer(player)
+		if player == LocalPlayer then return end
+		if playerHighlights[player] then return end
+
+		local character = player.Character
+		if not character then return end
+		local humanoid = character:FindFirstChildOfClass("Humanoid")
+		if not humanoid or humanoid.Health >= 1 then return end
+
+		local highlight = Instance.new("Highlight")
+		highlight.Adornee = character
+		highlight.FillColor = Color3.new(1, 0, 0)
+		highlight.OutlineColor = Color3.new(1, 0, 0)
+		highlight.FillTransparency = 0.5
+		highlight.OutlineTransparency = 0
+		highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+		highlight.Parent = game:GetService("CoreGui")
+		playerHighlights[player] = highlight
+
+		local head = character:FindFirstChild("Head") or character:WaitForChild("Head", 5)
+		if head then
+			local nameGui = Instance.new("BillboardGui")
+			nameGui.Name = "ESPName"
+			nameGui.Adornee = head
+			nameGui.Size = UDim2.new(0, 150, 0, 30)
+			nameGui.StudsOffset = Vector3.new(0, 2, 0)
+			nameGui.AlwaysOnTop = true
+			nameGui.Parent = game:GetService("CoreGui")
+
+			local nameLabel = Instance.new("TextLabel")
+			nameLabel.Size = UDim2.new(1, 0, 1, 0)
+			nameLabel.BackgroundTransparency = 1
+			nameLabel.Text = "DOWNED"
+			nameLabel.TextColor3 = Color3.new(1, 0, 0)
+			nameLabel.TextStrokeTransparency = 0
+			nameLabel.Font = Enum.Font.SourceSansBold
+			nameLabel.TextScaled = true
+			nameLabel.Parent = nameGui
+
+			playerNameGuis[player] = nameGui
+		end
+	end
+
+	local function onCharacterAdded(character)
+		if not espEnabled then return end
+		local humanoid = character:WaitForChild("Humanoid", 5)
+		if not humanoid then return end
+
+		local player = Players:GetPlayerFromCharacter(character)
+		if not player or player == LocalPlayer then return end
+
+		if humanoid.Health < 1 then
+			createESPForPlayer(player)
+		else
+			removeESPForPlayer(player)
+		end
+
+		local healthConn = humanoid.HealthChanged:Connect(function(health)
+			if not espEnabled then
+				removeESPForPlayer(player)
+				return
+			end
+			if health < 1 then
+				createESPForPlayer(player)
+			else
+				removeESPForPlayer(player)
+			end
+		end)
+		table.insert(espConnections, healthConn)
+	end
+
+	function enableESP()
+		if espEnabled then return end
+		espEnabled = true
+
+		for _, player in ipairs(Players:GetPlayers()) do
+			if player ~= LocalPlayer then
+				if player.Character then
+					onCharacterAdded(player.Character)
+				end
+				local charConn = player.CharacterAdded:Connect(onCharacterAdded)
+				table.insert(espConnections, charConn)
+			end
+		end
+
+		local playerConn = Players.PlayerAdded:Connect(function(player)
+			if player == LocalPlayer then return end
+			local charConn = player.CharacterAdded:Connect(onCharacterAdded)
+			table.insert(espConnections, charConn)
+		end)
+		table.insert(espConnections, playerConn)
+	end
+
+	function disableESP()
+		if not espEnabled then return end
+		espEnabled = false
+		clearESP()
+	end
+
+
+end;
+task.spawn(C_4c);
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.switcww.dd.ees.stat.UIStroke.UIGradient.LocalScript
+local function C_53()
+	local script = G2L["53"];
+	local get = script.Parent
+
+	while true do
+		task.wait()
+		get.Rotation += 1
+
+	end
+end;
+task.spawn(C_53);
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.switcww.dd.UIStroke.UIGradient.LocalScript
+local function C_57()
+	local script = G2L["57"];
+	local get = script.Parent
+
+	while true do
+		task.wait()
+		get.Rotation += 1
+
+	end
+end;
+task.spawn(C_57);
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.pla.sssst.ees.LocalScript
+local function C_5c()
+	local script = G2L["5c"];
+
+	local button = script.Parent
+	local statFrame = button:FindFirstChild("stat")
+	local soundOn = script:FindFirstChild("onn")
+
+	local toggled = false
+
+	button.MouseButton1Click:Connect(function()
+		if not statFrame or not soundOn then return end
+
+		if not toggled then
+			statFrame:TweenPosition(
+				UDim2.new(0.474, 0, 0, 0),
+				Enum.EasingDirection.Out,
+				Enum.EasingStyle.Quad,
+				0.2,
+				true
+			)
+			toggled = true
+			esp_normal()
+
+
+		else
+			statFrame:TweenPosition(
+				UDim2.new(0, 0, 0, 0),
+				Enum.EasingDirection.Out,
+				Enum.EasingStyle.Quad,
+				0.2,
+				true
+			)
+			toggled = false
+			esp_normal()
+
+		end
+	end)
+
+
+
+	-- ✅ ESP สีขาวเวอร์ชันเสถียรสุด (แก้ปิดแล้วยังโผล่)
+	local espEnabled = false
+	local espConnections = {}
+	local playerHighlights = {}
+	local playerNameGuis = {}
+
+	local Players = game:GetService("Players")
+	local LocalPlayer = Players.LocalPlayer
+
+	local function getSafeParent()
+		local playerGui = LocalPlayer:FindFirstChildOfClass("PlayerGui")
+		if playerGui then
+			return playerGui
+		else
+			return game:GetService("CoreGui")
+		end
+	end
+
+	local function clearESP()
+		for _, highlight in pairs(playerHighlights) do
+			if highlight then highlight:Destroy() end
+		end
+		for _, gui in pairs(playerNameGuis) do
+			if gui then gui:Destroy() end
+		end
+		playerHighlights = {}
+		playerNameGuis = {}
+
+		for _, conn in ipairs(espConnections) do
+			conn:Disconnect()
+		end
+		espConnections = {}
+	end
+
+	local function removeESPForPlayer(player)
+		if playerHighlights[player] then
+			playerHighlights[player]:Destroy()
+			playerHighlights[player] = nil
+		end
+		if playerNameGuis[player] then
+			playerNameGuis[player]:Destroy()
+			playerNameGuis[player] = nil
+		end
+	end
+
+	local function createESPForPlayer(player)
+		if not espEnabled then return end -- ❗ ถ้า ESP ปิดอยู่ ไม่สร้าง
+		if player == LocalPlayer then return end
+		if playerHighlights[player] then return end
+
+		local character = player.Character
+		if not character or not character.Parent then return end
+
+		local humanoid = character:FindFirstChildOfClass("Humanoid") or character:WaitForChild("Humanoid", 10)
+		if not humanoid or humanoid.Health < 1 then return end
+		local head = character:FindFirstChild("Head") or character:WaitForChild("Head", 10)
+		if not head then return end
+
+		local highlight = Instance.new("Highlight")
+		highlight.Adornee = character
+		highlight.FillColor = Color3.new(1, 1, 1)
+		highlight.OutlineColor = Color3.new(1, 1, 1)
+		highlight.FillTransparency = 0.5
+		highlight.OutlineTransparency = 0
+		highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+		highlight.Parent = getSafeParent()
+		playerHighlights[player] = highlight
+
+		local nameGui = Instance.new("BillboardGui")
+		nameGui.Name = "ESPName"
+		nameGui.Adornee = head
+		nameGui.Size = UDim2.new(0, 150, 0, 30)
+		nameGui.StudsOffset = Vector3.new(0, 2, 0)
+		nameGui.AlwaysOnTop = true
+		nameGui.Parent = getSafeParent()
+
+		local nameLabel = Instance.new("TextLabel")
+		nameLabel.Size = UDim2.new(1, 0, 1, 0)
+		nameLabel.BackgroundTransparency = 1
+		nameLabel.Text = player.Name
+		nameLabel.TextColor3 = Color3.new(1, 1, 1)
+		nameLabel.TextStrokeTransparency = 0
+		nameLabel.Font = Enum.Font.SourceSansBold
+		nameLabel.TextScaled = true
+		nameLabel.Parent = nameGui
+
+		playerNameGuis[player] = nameGui
+	end
+
+	function esp_normal()
+		espEnabled = not espEnabled
+
+		if not espEnabled then
+			clearESP()
+			return
+		end
+
+		local function onCharacterAdded(character)
+			task.spawn(function()
+				if not espEnabled then return end -- ❗ ถ้า ESP ถูกปิดระหว่างโหลด จะไม่ทำอะไรเลย
+				local humanoid = character:WaitForChild("Humanoid", 10)
+				if not humanoid then return end
+				local player = Players:GetPlayerFromCharacter(character)
+				if not player or player == LocalPlayer then return end
+
+				if humanoid.Health >= 1 then
+					createESPForPlayer(player)
+				else
+					removeESPForPlayer(player)
+				end
+
+				local healthConn = humanoid.HealthChanged:Connect(function(health)
+					if not espEnabled then return end -- ❗ ถ้า ESP ปิดอยู่ หยุดอัปเดต
+					if health >= 1 then
+						createESPForPlayer(player)
+					else
+						removeESPForPlayer(player)
+					end
+				end)
+				table.insert(espConnections, healthConn)
+			end)
+		end
+
+		for _, player in ipairs(Players:GetPlayers()) do
+			if player ~= LocalPlayer then
+				if player.Character then
+					onCharacterAdded(player.Character)
+				end
+				local charConn = player.CharacterAdded:Connect(onCharacterAdded)
+				table.insert(espConnections, charConn)
+			end
+		end
+
+		local playerConn = Players.PlayerAdded:Connect(function(player)
+			if not espEnabled then return end -- ❗ ป้องกันสร้างใหม่ตอนปิด
+			if player == LocalPlayer then return end
+			local charConn = player.CharacterAdded:Connect(onCharacterAdded)
+			table.insert(espConnections, charConn)
+		end)
+		table.insert(espConnections, playerConn)
+	end
+
+end;
+task.spawn(C_5c);
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.pla.sssst.ees.stat.UIStroke.UIGradient.LocalScript
+local function C_63()
+	local script = G2L["63"];
+	local get = script.Parent
+
+	while true do
+		task.wait()
+		get.Rotation += 1
+
+	end
+end;
+task.spawn(C_63);
+-- StarterGui.RobloxMainMenu.LDX.maamama.tab.pla.sssst.UIStroke.UIGradient.LocalScript
+local function C_67()
+	local script = G2L["67"];
+	local get = script.Parent
+
+	while true do
+		task.wait()
+		get.Rotation += 1
+
+	end
+end;
+task.spawn(C_67);
+-- StarterGui.RobloxMainMenu.toggleF.UIStroke.UIGradient.LocalScript
+local function C_6e()
+	local script = G2L["6e"];
+	local get = script.Parent
+
+	while true do
+		task.wait()
+		get.Rotation += 1
+
+	end
+end;
+task.spawn(C_6e);
+-- StarterGui.RobloxMainMenu.toggleF.tgtg.LocalScript
+local function C_70()
+	local script = G2L["70"];
+	local sdf = script.Parent.Parent.Parent.AssetsM.sou.bn
+	local cc = script.Parent
+	local tg = script.Parent.Parent.Parent.LDX
+	local vc = true
+
+	local op = tg.Position.Y
+	local yy = tg.Position.Y
+
+
+	cc.MouseButton1Click:Connect(function()
+		ttog()
+	end)
+
+	function ofv()
+		tg.Transparency = 0.5
+		task.wait()
+		tg.Transparency = 0.4
+		task.wait()
+		tg.Transparency = 0.2
+		task.wait()
+		tg.Transparency = 0.1
+		task.wait()
+		tg.Transparency = 0.15
+	end
+	function onn()
+		tg.Transparency = 0
+		task.wait()
+		tg.Transparency = 0.1
+		task.wait()
+		tg.Transparency = 0.2
+		task.wait()
+		tg.Transparency = 0.4
+		task.wait()
+		tg.Transparency = 1
+	end
+
+	function ttog ()
+		if vc == true then 
+
+
+
+			onn()
+
+			task.wait()
+			tg.Visible = false
+			vc = false
+			sdf:Play()
+		else
+
+
+
+			ofv()
+
+			task.wait()
+			tg.Visible = true
+			vc = true
+			sdf:Play()
+		end
+	end
+end;
+task.spawn(C_70);
+-- StarterGui.RobloxMainMenu.toggleF.tgtg.vse
+local function C_71()
+	local script = G2L["71"];
+	script.Parent.Visible = true
+end;
+task.spawn(C_71);
+-- StarterGui.RobloxMainMenu.noti.LocalScript
+local function C_78()
+	local script = G2L["78"];
+	script.Parent:TweenPosition(UDim2.new(0.005, 0, 0, 0), "Out", 0.1, true)
+	wait(2.5)
+	script.Parent:TweenPosition(UDim2.new(-2, 0, 0, 0), "Out",  0.5, true)
+	wait(0.5)
+	script.Parent:Destroy()
+end;
+task.spawn(C_78);
+-- StarterGui.RobloxMainMenu.noti.UIStroke.UIGradient.LocalScript
+local function C_7c()
+	local script = G2L["7c"];
+	local get = script.Parent
+
+	while true do
+		task.wait()
+		get.Rotation += 1
+
+	end
+end;
+task.spawn(C_7c);
+-- StarterGui.RobloxMainMenu.noti.titt.RainbowTextEffect
+local function C_7e()
+	local script = G2L["7e"];
+	local textLabel = script.Parent
+
+	-- Animate TextColor3 using HSV for a rainbow effect
+	local hue = 0
+	local speed = 2 -- change for faster/slower color cycling
+
+	while true do
+		hue = (hue + speed * task.wait()) % 1
+		textLabel.TextColor3 = Color3.fromHSV(hue, 1, 1)
+	end
+
+
+end;
+task.spawn(C_7e);
+-- StarterGui.RobloxMainMenu.noti.titt.vse
+local function C_7f()
+	local script = G2L["7f"];
+	script.Parent.Visible = true
+end;
+task.spawn(C_7f);
+
+return G2L["1"], require;
+
