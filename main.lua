@@ -76,6 +76,7 @@ local currentTab = nil
 -- SEKMELERİ OLUŞTURAN MOTOR
 local function CreateTab(name)
     local Page = Instance.new("ScrollingFrame")
+    Page.Name = name .. "Page"
     Page.Size = UDim2.new(1, 0, 1, 0)
     Page.BackgroundTransparency = 1
     Page.BorderSizePixel = 0
@@ -126,7 +127,7 @@ local function CreateTab(name)
     end
 end
 
--- STANDARD BUTON EKLEME (Callback'e butonun kendisini paslıyoruz)
+-- STANDARD BUTON EKLEME
 local function NewButton(tab, name, callback)
     local targetPage = pages[tab]
     if not targetPage then return end
@@ -145,7 +146,7 @@ local function NewButton(tab, name, callback)
     Corner.Parent = Btn
 
     Btn.MouseButton1Click:Connect(function()
-        callback(Btn) -- Hata düzeltmesi: self yerine doğrudan Btn objesini gönderiyoruz
+        callback(Btn)
     end)
 end
 
@@ -215,9 +216,14 @@ NewInput("⚡ Player", "Hız (Örn: 60)", "⚡ Hızı Değiştir", function(val)
     end
 end)
 
-LocalPlayer.CharacterAdded:Connect(function(char)
-    local hum = char:WaitForChild("Humanoid", 5)
-    if hum then hum.WalkSpeed = currentSpeed end
+-- Öldükten sonra hızı koruma döngüsü
+game:GetService("RunService").Heartbeat:Connect(function()
+    if LocalPlayer.Character then
+        local hum = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+        if hum and hum.WalkSpeed ~= currentSpeed and currentSpeed ~= 16 then
+            hum.WalkSpeed = currentSpeed
+        end
+    end
 end)
 
 -- [2] INFINITE JUMP MODÜLÜ
@@ -234,7 +240,9 @@ end)
 UserInputService.JumpRequest:Connect(function()
     if infJumpActive then
         local hum = LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-        if hum then hum:ChangeState("Jumping") end
+        if hum then 
+            hum:ChangeState(Enum.HumanoidStateType.Jumping) 
+        end
     end
 end)
 
@@ -253,7 +261,6 @@ NewButton("🎯 Combat", "⭕ Hitbox Genişletici Aç/Kapat", function(buttonObj
     if hitboxEnabled then
         buttonObj.Text = "⭕ Hitbox Genişletici: AKTİF"
         task.spawn(function()
-            -- Döngünün çakışmasını engellemek için mevcut durumu kontrol ediyoruz
             while hitboxEnabled do
                 task.wait(0.5)
                 for _, p in pairs(Players:GetPlayers()) do
@@ -355,7 +362,7 @@ end)
 -- [7] SYSTEM BACKDOORS
 NewButton("🛠️ System", "💻 Infinite Yield Panel Yükle", function()
     pcall(function()
-        loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeY/infiniteyield/master/source'))()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeYoshi/InfiniteYield/master/source'))()
     end)
 end)
 
