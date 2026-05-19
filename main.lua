@@ -1,5 +1,5 @@
 -- ====================================================================
---  💛 QEATHUB UNIVERSAL v3.6 - FULLY INDEPENDENT REBUILT (2026)
+-- 💛 QEATHUB UNIVERSAL v3.6 - FULLY INDEPENDENT REBUILT (2026)
 -- ====================================================================
 
 local Players = game:GetService("Players")
@@ -126,7 +126,7 @@ local function CreateTab(name)
     end
 end
 
--- STANDARD BUTON EKLEME
+-- STANDARD BUTON EKLEME (Callback'e butonun kendisini paslıyoruz)
 local function NewButton(tab, name, callback)
     local targetPage = pages[tab]
     if not targetPage then return end
@@ -144,7 +144,9 @@ local function NewButton(tab, name, callback)
     Corner.CornerRadius = UDim.new(0, 4)
     Corner.Parent = Btn
 
-    Btn.MouseButton1Click:Connect(callback)
+    Btn.MouseButton1Click:Connect(function()
+        callback(Btn) -- Hata düzeltmesi: self yerine doğrudan Btn objesini gönderiyoruz
+    end)
 end
 
 -- INPUT (VERİ GİRİŞLİ) BUTON EKLEME
@@ -199,7 +201,7 @@ CreateTab("🗺️ World")
 CreateTab("🛠️ System")
 
 -- ==========================================
---  🔥 EXPLOIT MODÜLLERİ
+--  🔥 MODÜLLER
 -- ==========================================
 
 -- [1] WALKSPEED MODÜLÜ
@@ -220,12 +222,12 @@ end)
 
 -- [2] INFINITE JUMP MODÜLÜ
 local infJumpActive = false
-NewButton("⚡ Player", "🎚️ Sonsuz Zıplama: KAPALI", function(self)
+NewButton("⚡ Player", "🎚️ Sonsuz Zıplama: KAPALI", function(buttonObj)
     infJumpActive = not infJumpActive
     if infJumpActive then
-        self.Text = "🎚️ Sonsuz Zıplama: AKTİF"
+        buttonObj.Text = "🎚️ Sonsuz Zıplama: AKTİF"
     else
-        self.Text = "🎚️ Sonsuz Zıplama: KAPALI"
+        buttonObj.Text = "🎚️ Sonsuz Zıplama: KAPALI"
     end
 end)
 
@@ -246,10 +248,12 @@ end)
 -- [4] HITBOX EXPANDER
 local hitboxEnabled = false
 local hitboxSize = 15
-NewButton("🎯 Combat", "⭕ Hitbox Genişletici Aç/Kapat", function(self)
+NewButton("🎯 Combat", "⭕ Hitbox Genişletici Aç/Kapat", function(buttonObj)
     hitboxEnabled = not hitboxEnabled
     if hitboxEnabled then
+        buttonObj.Text = "⭕ Hitbox Genişletici: AKTİF"
         task.spawn(function()
+            -- Döngünün çakışmasını engellemek için mevcut durumu kontrol ediyoruz
             while hitboxEnabled do
                 task.wait(0.5)
                 for _, p in pairs(Players:GetPlayers()) do
@@ -266,6 +270,7 @@ NewButton("🎯 Combat", "⭕ Hitbox Genişletici Aç/Kapat", function(self)
             end
         end)
     else
+        buttonObj.Text = "⭕ Hitbox Genişletici: KAPALI"
         for _, p in pairs(Players:GetPlayers()) do
             if p ~= LocalPlayer and p.Character and p.Character:FindFirstChild("HumanoidRootPart") then
                 pcall(function()
