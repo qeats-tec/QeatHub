@@ -11,7 +11,7 @@
 
 	====================================================================
 	  - QeatHub Universal Premium
-	  - Edition: v3.1 [STABLE FIXED + MM2 ALARM INTEGRATED]
+	  - Edition: v3.2 [SHERIFF AUTO-AIM REWRITTEN]
 	====================================================================
 	
 	"Imitation is the sincerest form of flattery."
@@ -43,7 +43,7 @@ if LocalPlayer:WaitForChild("PlayerGui"):FindFirstChild("QeatHUB_Premium") then
     LocalPlayer.PlayerGui.QeatHUB_Premium:Destroy()
 end
 
--- Config Yapısı (MM2 Toggles'ları Entegre Edildi)
+-- Config Yapısı
 local Config = {
     WalkSpeed = 16,
     JumpPower = 50,
@@ -59,13 +59,13 @@ local Config = {
     }
 }
 
--- [[ UI TASARIMI (PREMIUM NEON SARI & SİBER KARANLIK) ]] --
+-- [[ UI TASARIMI ]] --
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "QeatHUB_Premium"
 ScreenGui.ResetOnSpawn = false
 ScreenGui.Parent = LocalPlayer.PlayerGui
 
--- 🔪 FIXED: MM2 Bıçak Çekme Uyarı Ses ve Yazı Nesneleri
+-- MM2 Bıçak Çekme Uyarı Ses ve Yazı Nesneleri
 local WarningSound = Instance.new("Sound", workspace)
 WarningSound.SoundId = "rbxassetid://1222213261"
 WarningSound.Volume = 2
@@ -124,7 +124,7 @@ local TitleText = Instance.new("TextLabel")
 TitleText.Size = UDim2.new(0.8, 0, 1, 0)
 TitleText.Position = UDim2.new(0.04, 0, 0, 0)
 TitleText.BackgroundTransparency = 1
-TitleText.Text = "⚡ QEATHUB v3.1 [" .. string.upper(CurrentGame) .. " EDITION]"
+TitleText.Text = "⚡ QEATHUB v3.2 [" .. string.upper(CurrentGame) .. " EDITION]"
 TitleText.TextColor3 = Color3.fromRGB(255, 215, 0)
 TitleText.Font = Enum.Font.Code
 TitleText.TextSize = 13
@@ -189,7 +189,6 @@ local function CreatePage(name)
     return Page
 end
 
--- Dinamik Sayfa Oluşturma Mantığı
 local CombatPage = CreatePage("Combat")
 local PlayerPage = CreatePage("Player")
 local WorldPage = CreatePage("World")
@@ -229,7 +228,6 @@ AddTab("Combat")
 AddTab("Player")
 AddTab("World")
 
--- Eğer MM2'deysek MM2 sekmesini aktif et ve ilk onu göster, yoksa gizle
 if CurrentGame == "MM2" then
     AddTab("MM2")
     Pages["MM2"].Visible = true
@@ -638,7 +636,7 @@ RunService.RenderStepped:Connect(function()
         hrp.CFrame = CFrame.new(hrp.Position, Vector3.new(hrp.Position.X + camLook.X, hrp.Position.Y, hrp.Position.Z + camLook.Z))
         Camera.CameraOffset = Vector3.new(1.75, 0, 0)
     else
-        if not Config.Toggles.AutoAim then Camera.CameraOffset = Vector3.new(0, 0, 0) end
+        if not Config.Toggles.AutoAim and not Config.Toggles.MM2SheriffAim then Camera.CameraOffset = Vector3.new(0, 0, 0) end
     end
 end)
 
@@ -656,7 +654,6 @@ end)
 -- ==========================================================
 
 CreateToggle(WorldPage, "Visual ESP Box", "ESP", function(state)
-    -- 🔪 FIXED: ESP kapatıldığında Highlight kalıntılarını da temizle
     if not state then
         for _, p in ipairs(Players:GetPlayers()) do
             local oldHighlight = p.Character and p.Character:FindFirstChild("QeatHighlight")
@@ -697,7 +694,6 @@ RunService.RenderStepped:Connect(function()
                 if CurrentGame == "Rivals" then
                     adorn.Visible = Config.Toggles.ESP and (p.Team ~= LocalPlayer.Team)
                 else
-                    -- MM2 modunda kutu ESP yerine gelişmiş Highlight devralacağı için kutuyu pasif yapıyoruz
                     if CurrentGame == "MM2" and Config.Toggles.MM2RoleESP then
                         adorn.Visible = false
                     else
@@ -771,7 +767,7 @@ if CurrentGame == "MM2" then
 
     -- 🔫 SHERIFF MODULE
     CreateSectionTitle(MM2Page, "SHERIFF FEATURES")
-    CreateToggle(MM2Page, "Murderer Silent Aim", "MM2SheriffAim", function() end)
+    CreateToggle(MM2Page, "Murderer Predictive Aim", "MM2SheriffAim", function() end)
     CreateToggle(MM2Page, "Counter Teleport & Shoot", "MM2CounterKill", function() end)
 
     -- 🔴 MURDERER MODULE
@@ -779,10 +775,14 @@ if CurrentGame == "MM2" then
     CreateToggle(MM2Page, "Kill Aura (Teleport Loop)", "MM2KillAura", function() end)
     CreateToggle(MM2Page, "Highlight Sheriff (Green)", "MM2HighlightSheriff", function() end)
 
-    -- 🔪 FIXED: MM2 Gelişmiş Rol Analizi, Dinamik Highlight Çizimi ve Bıçak Alarm Motoru
+    -- Paylaşımlı Değişken: Katili algılayan ana motorun değerini aimbot kullansın diye yerel tuttuk
+    local detectedMurdererPlayer = nil
+
+    -- MM2 Gelişmiş Rol Analizi, Dinamik Highlight Çizimi ve Bıçak Alarm Motoru
     RunService.RenderStepped:Connect(function()
         if not Config.Toggles.MM2RoleESP and not Config.Toggles.MM2HighlightSheriff and not Config.Toggles.MM2CounterKill and not Config.Toggles.MM2KillAura and not Config.Toggles.MM2SheriffAim then 
             WarningLabel.Visible = false
+            detectedMurdererPlayer = nil
             return 
         end
         
@@ -823,6 +823,9 @@ if CurrentGame == "MM2" then
             end
         end
 
+        -- Küresel paylaşımlı değişkene katili aktar (Aimbot'un görebilmesi için önbellek)
+        detectedMurdererPlayer = currentMurderer
+
         -- 🚨 BIÇAK ÇEKME ANLIK UYARI TETİKLEYİCİSİ
         if currentMurderer and currentMurderer.Character then
             if currentMurderer.Character:FindFirstChildOfClass("Tool") and (not AlertedForThisRound or LastMurderer ~= currentMurderer) then
@@ -860,7 +863,7 @@ if CurrentGame == "MM2" then
                         highlight.OutlineColor = Color3.fromRGB(255, 0, 0)
                     elseif p == currentSheriff then
                         if Config.Toggles.MM2HighlightSheriff then
-                            highlight.FillColor = Color3.fromRGB(0, 255, 0)   -- Şerif: Katil Gözünden Yeşil
+                            highlight.FillColor = Color3.fromRGB(0, 255, 0)   -- Şerif: Yeşil
                             highlight.OutlineColor = Color3.fromRGB(0, 255, 0)
                         else
                             highlight.FillColor = Color3.fromRGB(0, 0, 255)   -- Şerif: Mavi
@@ -874,8 +877,7 @@ if CurrentGame == "MM2" then
             end
         end
 
-        -- 🛡️ OTOMATİK SİSTEM TETİKLEYİCİLERİ (Gecikmesiz Döngü Entegrasyonu)
-        -- Counter Kill Aktifse:
+        -- 🛡️ OTOMATİK SİSTEM TETİKLEYİCİLERİ
         if Config.Toggles.MM2CounterKill and currentMurderer and currentMurderer.Character and currentMurderer.Character:FindFirstChild("Knife") then
             local myHRP = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
             local targetHRP = currentMurderer.Character:FindFirstChild("HumanoidRootPart")
@@ -887,7 +889,6 @@ if CurrentGame == "MM2" then
             end
         end
 
-        -- Kill Aura Aktifse:
         if Config.Toggles.MM2KillAura and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Knife") then
             for _, p in ipairs(Players:GetPlayers()) do
                 if p ~= LocalPlayer and p.Character and p.Character:FindFirstChild("HumanoidRootPart") and p.Character:FindFirstChild("Humanoid") and p.Character.Humanoid.Health > 0 then
@@ -903,27 +904,27 @@ if CurrentGame == "MM2" then
         end
     end)
 
-    -- Şerif İçin Katile Odaklanan Silent Aim Motoru
+    -- 🎯 Gelişmiş Önceden Rol Tespitli Şerif Auto Aim Motoru (GÜNCELLENDİ)
     RunService.RenderStepped:Connect(function()
         if Config.Toggles.MM2SheriffAim and CurrentGame == "MM2" then
-            local murdererPlayer
-            for _, p in ipairs(Players:GetPlayers()) do
-                if p.Character and (p.Character:FindFirstChild("Knife") or (p:FindFirstChild("Backpack") and p.Backpack:FindFirstChild("Knife"))) then
-                    murdererPlayer = p
-                    break
-                end
-            end
-            if murdererPlayer and murdererPlayer.Character and murdererPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                local targetHRP = murdererPlayer.Character.HumanoidRootPart
+            -- Önceden tespit edilen bir katil varsa ve karakteri haritadaysa doğrudan kilitlen
+            if detectedMurdererPlayer and detectedMurdererPlayer.Character and detectedMurdererPlayer.Character:FindFirstChild("HumanoidRootPart") and detectedMurdererPlayer.Character:FindFirstChild("Humanoid") and detectedMurdererPlayer.Character.Humanoid.Health > 0 then
+                
+                -- Hedef parça (Gövde seçildi, vurması daha kolay ve güvenlidir)
+                local targetPart = detectedMurdererPlayer.Character:FindFirstChild("Chest") or detectedMurdererPlayer.Character:FindFirstChild("HumanoidRootPart")
                 local myHRP = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-                if myHRP then
-                    Camera.CFrame = Camera.CFrame:Lerp(CFrame.new(Camera.CFrame.Position, targetHRP.Position), Config.AimSmoothness)
+                
+                -- Sadece elinde silah olan/Şerif olan durumları kontrol etmek veya masumken de katili izlemek için çalışır
+                if myHRP and targetPart then
+                    local targetPosition = targetPart.Position
+                    -- Yumuşak bir kilitlenme geçişi (Lerp)
+                    Camera.CFrame = Camera.CFrame:Lerp(CFrame.new(Camera.CFrame.Position, targetPosition), Config.AimSmoothness)
                 end
             end
         end
     end)
 
-    -- Harita Değişimini İzleyen Döngü (Tur Başı Hafıza Sıfırlama)
+    -- Harita Değişimini İzleyen Döngü
     workspace.ChildAdded:Connect(function(child)
         if child.Name == "Normal" or child:IsA("Model") then
             AlertedForThisRound = false
@@ -940,7 +941,7 @@ if CurrentGame == "MM2" then
     end)
 end
 
--- SYSTEM BUTTONS (World Sayfası Altı)
+-- SYSTEM BUTTONS
 CreateSysButton(WorldPage, " [>] Inject Infinite Yield", Color3.fromRGB(255, 165, 0), function()
     loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeY/infiniteyield/master/source'))()
 end)
