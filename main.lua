@@ -2,7 +2,7 @@
 	
  ________  _______   ________  _________  ___  ___  ___  ___  ________     
 |\   __  \|\  ___ \ |\   __  \|\___   ___\\  \|\  \|\  \|\  \|\   __  \    
-\ \  \|\  \ \   __/|\ \  \|\  \|___ \  \_\ \  \\\  \ \  \\\  \ \  \|\ /_   
+\ \  \|\  \ \   __/|\ \  \|\  \|___ \  \_\ \  \\\  \ \  \\\  \ \  \\\  \ \  \|\ /_   
  \ \  \\\  \ \  \_|/_\ \   __  \   \ \  \ \ \   __  \ \  \\\  \ \   __  \  
   \ \  \\\  \ \  \_|\ \ \  \ \  \   \ \  \ \ \  \ \  \ \  \\\  \ \  \|\  \ 
    \ \_____  \ \_______\ \__\ \__\   \ \__\ \ \__\ \__\ \_______\ \_______\
@@ -11,7 +11,7 @@
 
 	====================================================================
 	  - QeatHub Universal Premium
-	  - Edition: v3.1 [STABLE FIXED]
+	  - Edition: v3.1 [STABLE FIXED + MM2 ALARM INTEGRATED]
 	====================================================================
 	
 	"Imitation is the sincerest form of flattery."
@@ -65,6 +65,25 @@ ScreenGui.Name = "QeatHUB_Premium"
 ScreenGui.ResetOnSpawn = false
 ScreenGui.Parent = LocalPlayer.PlayerGui
 
+-- 🔪 FIXED: MM2 Bıçak Çekme Uyarı Ses ve Yazı Nesneleri
+local WarningSound = Instance.new("Sound", workspace)
+WarningSound.SoundId = "rbxassetid://1222213261"
+WarningSound.Volume = 2
+
+local WarningLabel = Instance.new("TextLabel")
+WarningLabel.Size = UDim2.new(1, 0, 0, 40)
+WarningLabel.Position = UDim2.new(0, 0, 0.12, 0)
+WarningLabel.BackgroundTransparency = 1
+WarningLabel.Text = ""
+WarningLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+WarningLabel.Font = Enum.Font.Code
+WarningLabel.TextSize = 22
+WarningLabel.Visible = false
+WarningLabel.Parent = ScreenGui
+
+local LastMurderer = nil
+local AlertedForThisRound = false
+
 local MainFrame = Instance.new("Frame")
 MainFrame.Size = UDim2.new(0, 400, 0, 290)
 MainFrame.Position = UDim2.new(0.15, 0, 0.25, 0)
@@ -105,7 +124,7 @@ local TitleText = Instance.new("TextLabel")
 TitleText.Size = UDim2.new(0.8, 0, 1, 0)
 TitleText.Position = UDim2.new(0.04, 0, 0, 0)
 TitleText.BackgroundTransparency = 1
-TitleText.Text = "⚡ QEATHUB v2.4 [" .. string.upper(CurrentGame) .. " EDITION]"
+TitleText.Text = "⚡ QEATHUB v3.1 [" .. string.upper(CurrentGame) .. " EDITION]"
 TitleText.TextColor3 = Color3.fromRGB(255, 215, 0)
 TitleText.Font = Enum.Font.Code
 TitleText.TextSize = 13
@@ -636,7 +655,16 @@ end)
 -- 🗺️ WORLD MODULE (ESP & XRAY)
 -- ==========================================================
 
-CreateToggle(WorldPage, "Visual ESP Box", "ESP", function() end)
+CreateToggle(WorldPage, "Visual ESP Box", "ESP", function(state)
+    -- 🔪 FIXED: ESP kapatıldığında Highlight kalıntılarını da temizle
+    if not state then
+        for _, p in ipairs(Players:GetPlayers()) do
+            local oldHighlight = p.Character and p.Character:FindFirstChild("QeatHighlight")
+            if oldHighlight then oldHighlight:Destroy() end
+        end
+    end
+end)
+
 local function CreateESP(player)
     if ScreenGui:FindFirstChild(player.Name .. "_QeatESP") then return end
     local Box = Instance.new("BoxHandleAdornment")
@@ -669,7 +697,12 @@ RunService.RenderStepped:Connect(function()
                 if CurrentGame == "Rivals" then
                     adorn.Visible = Config.Toggles.ESP and (p.Team ~= LocalPlayer.Team)
                 else
-                    adorn.Visible = Config.Toggles.ESP
+                    -- MM2 modunda kutu ESP yerine gelişmiş Highlight devralacağı için kutuyu pasif yapıyoruz
+                    if CurrentGame == "MM2" and Config.Toggles.MM2RoleESP then
+                        adorn.Visible = false
+                    else
+                        adorn.Visible = Config.Toggles.ESP
+                    end
                 end
             end
         end
@@ -727,7 +760,14 @@ if CurrentGame == "MM2" then
             if plat then plat:Destroy() end
         end
     end)
-    CreateToggle(MM2Page, "Dynamic Role ESP", "MM2RoleESP", function() end)
+    CreateToggle(MM2Page, "Dynamic Role ESP", "MM2RoleESP", function(state)
+        if not state then
+            for _, p in ipairs(Players:GetPlayers()) do
+                local oldHighlight = p.Character and p.Character:FindFirstChild("QeatHighlight")
+                if oldHighlight then oldHighlight:Destroy() end
+            end
+        end
+    end)
 
     -- 🔫 SHERIFF MODULE
     CreateSectionTitle(MM2Page, "SHERIFF FEATURES")
@@ -739,70 +779,124 @@ if CurrentGame == "MM2" then
     CreateToggle(MM2Page, "Kill Aura (Teleport Loop)", "MM2KillAura", function() end)
     CreateToggle(MM2Page, "Highlight Sheriff (Green)", "MM2HighlightSheriff", function() end)
 
-    -- MM2 Ana Mantık Döngüsü (Rol Analizi ve Eşya Kontrolleri)
-    task.spawn(function()
-        while true do task.wait(0.1)
-            if not Config.Toggles.MM2RoleESP and not Config.Toggles.MM2HighlightSheriff and not Config.Toggles.MM2CounterKill and not Config.Toggles.MM2KillAura and not Config.Toggles.MM2SheriffAim then continue end
-            
-            local currentMurderer, currentSheriff
-            
-            -- Gerçek zamanlı rol tarayıcı
+    -- 🔪 FIXED: MM2 Gelişmiş Rol Analizi, Dinamik Highlight Çizimi ve Bıçak Alarm Motoru
+    RunService.RenderStepped:Connect(function()
+        if not Config.Toggles.MM2RoleESP and not Config.Toggles.MM2HighlightSheriff and not Config.Toggles.MM2CounterKill and not Config.Toggles.MM2KillAura and not Config.Toggles.MM2SheriffAim then 
+            WarningLabel.Visible = false
+            return 
+        end
+        
+        local currentMurderer, currentSheriff = nil, nil
+        
+        -- Bypass'lı Tarama Algoritması
+        for _, p in ipairs(Players:GetPlayers()) do
+            if p ~= LocalPlayer and p.Character then
+                -- Elinde kontrolü
+                if p.Character:FindFirstChild("Knife") or p.Character:FindFirstChild("RealKnife") then
+                    currentMurderer = p
+                elseif p.Character:FindFirstChild("Gun") or p.Character:FindFirstChild("Python") then
+                    currentSheriff = p
+                end
+                
+                -- İçerik tarama kontrolü (Gizli Tool isimleri için)
+                for _, child in ipairs(p.Character:GetChildren()) do
+                    if child:IsA("Tool") then
+                        if string.find(string.lower(child.Name), "knife") or string.find(string.lower(child.Name), "slash") or child:FindFirstChild("KnifeScript") then
+                            currentMurderer = p
+                        elseif string.find(string.lower(child.Name), "gun") or string.find(string.lower(child.Name), "shoot") then
+                            currentSheriff = p
+                        end
+                    end
+                end
+                
+                -- Backpack çanta kontrolü
+                local backpack = p:FindFirstChild("Backpack")
+                if backpack then
+                    for _, item in ipairs(backpack:GetChildren()) do
+                        if string.find(string.lower(item.Name), "knife") then
+                            currentMurderer = p
+                        elseif string.find(string.lower(item.Name), "gun") then
+                            currentSheriff = p
+                        end
+                    end
+                end
+            end
+        end
+
+        -- 🚨 BIÇAK ÇEKME ANLIK UYARI TETİKLEYİCİSİ
+        if currentMurderer and currentMurderer.Character then
+            if currentMurderer.Character:FindFirstChildOfClass("Tool") and (not AlertedForThisRound or LastMurderer ~= currentMurderer) then
+                LastMurderer = currentMurderer
+                AlertedForThisRound = true
+                
+                WarningLabel.Text = "⚠️ DIKKAT: " .. string.upper(currentMurderer.Name) .. " BICAK CEKTI! ⚠️"
+                WarningLabel.Visible = true
+                WarningSound:Play()
+                
+                task.delay(4, function()
+                    if LastMurderer == currentMurderer then
+                        WarningLabel.Visible = false
+                    end
+                end)
+            end
+        end
+
+        -- 🎨 HIGHLIGHT RENKLENDİRME MOTORU
+        if Config.Toggles.MM2RoleESP then
             for _, p in ipairs(Players:GetPlayers()) do
-                if p ~= LocalPlayer and p.Character then
-                    if p.Character:FindFirstChild("Knife") or (p:FindFirstChild("Backpack") and p.Backpack:FindFirstChild("Knife")) then
-                        currentMurderer = p
+                if p ~= LocalPlayer and p.Character and p.Character:FindFirstChild("HumanoidRootPart") then
+                    local highlight = p.Character:FindFirstChild("QeatHighlight")
+                    if not highlight then
+                        highlight = Instance.new("Highlight")
+                        highlight.Name = "QeatHighlight"
+                        highlight.FillTransparency = 0.5
+                        highlight.OutlineTransparency = 0
+                        highlight.Adornee = p.Character
+                        highlight.Parent = p.Character
                     end
-                    if p.Character:FindFirstChild("Gun") or (p:FindFirstChild("Backpack") and p.Backpack:FindFirstChild("Gun")) then
-                        currentSheriff = p
-                    end
-                end
-            end
 
-            -- 1. Rol Bazlı ESP Renklendirmesi
-            if Config.Toggles.MM2RoleESP then
-                for _, p in ipairs(Players:GetPlayers()) do
-                    local adorn = ScreenGui:FindFirstChild(p.Name .. "_QeatESP")
-                    if adorn then
-                        if p == currentMurderer then
-                            adorn.Color3 = Color3.fromRGB(255, 0, 0) -- Katil Kırmızı
-                        elseif p == currentSheriff then
-                            adorn.Color3 = Color3.fromRGB(0, 0, 255) -- Şerif Mavi
+                    if p == currentMurderer then
+                        highlight.FillColor = Color3.fromRGB(255, 0, 0)       -- Katil: Kırmızı
+                        highlight.OutlineColor = Color3.fromRGB(255, 0, 0)
+                    elseif p == currentSheriff then
+                        if Config.Toggles.MM2HighlightSheriff then
+                            highlight.FillColor = Color3.fromRGB(0, 255, 0)   -- Şerif: Katil Gözünden Yeşil
+                            highlight.OutlineColor = Color3.fromRGB(0, 255, 0)
                         else
-                            adorn.Color3 = Color3.fromRGB(255, 215, 0) -- Masum Sarı/Altın
+                            highlight.FillColor = Color3.fromRGB(0, 0, 255)   -- Şerif: Mavi
+                            highlight.OutlineColor = Color3.fromRGB(0, 0, 255)
                         end
+                    else
+                        highlight.FillColor = Color3.fromRGB(255, 215, 0)     -- Masum: Altın Sarı
+                        highlight.OutlineColor = Color3.fromRGB(255, 215, 0)
                     end
                 end
             end
+        end
 
-            -- 2. Katil Modu: Şerifi Yeşil Yapma Önceliği
-            if Config.Toggles.MM2HighlightSheriff and currentSheriff then
-                local adorn = ScreenGui:FindFirstChild(currentSheriff.Name .. "_QeatESP")
-                if adorn then adorn.Color3 = Color3.fromRGB(0, 255, 0) end
+        -- 🛡️ OTOMATİK SİSTEM TETİKLEYİCİLERİ (Gecikmesiz Döngü Entegrasyonu)
+        -- Counter Kill Aktifse:
+        if Config.Toggles.MM2CounterKill and currentMurderer and currentMurderer.Character and currentMurderer.Character:FindFirstChild("Knife") then
+            local myHRP = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+            local targetHRP = currentMurderer.Character:FindFirstChild("HumanoidRootPart")
+            if myHRP and targetHRP then
+                myHRP.CFrame = targetHRP.CFrame * CFrame.new(0, 0, 4)
+                VirtualInputManager:SendMouseButtonEvent(0, 0, 0, true, game, 1)
+                task.wait(0.01)
+                VirtualInputManager:SendMouseButtonEvent(0, 0, 0, false, game, 1)
             end
+        end
 
-            -- 3. Şerif Modu: Katil Bıçağı Çekince Arkasına Işınlanıp Vurma
-            if Config.Toggles.MM2CounterKill and currentMurderer and currentMurderer.Character and currentMurderer.Character:FindFirstChild("Knife") then
-                local myHRP = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-                local targetHRP = currentMurderer.Character:FindFirstChild("HumanoidRootPart")
-                if myHRP and targetHRP then
-                    myHRP.CFrame = targetHRP.CFrame * CFrame.new(0, 0, 4) -- Güvenli mesafe arkası
-                    VirtualInputManager:SendMouseButtonEvent(0, 0, 0, true, game, 1)
-                    task.wait(0.01)
-                    VirtualInputManager:SendMouseButtonEvent(0, 0, 0, false, game, 1)
-                end
-            end
-
-            -- 4. Katil Modu: Kill Aura (Tüm Masumları Işınlanarak Temizleme)
-            if Config.Toggles.MM2KillAura and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Knife") then
-                for _, p in ipairs(Players:GetPlayers()) do
-                    if p ~= LocalPlayer and p.Character and p.Character:FindFirstChild("HumanoidRootPart") and p.Character:FindFirstChild("Humanoid") and p.Character.Humanoid.Health > 0 then
-                        if p ~= currentSheriff or (currentSheriff and not currentSheriff.Character:FindFirstChild("Gun")) then -- Şerif silahlıysa risk alma, önce masumlar
-                            local myHRP = LocalPlayer.Character.HumanoidRootPart
-                            myHRP.CFrame = p.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 1)
-                            task.wait(0.06) -- Anti-cheat lag koruması
-                            VirtualInputManager:SendMouseButtonEvent(0, 0, 0, true, game, 1)
-                            VirtualInputManager:SendMouseButtonEvent(0, 0, 0, false, game, 1)
-                        end
+        -- Kill Aura Aktifse:
+        if Config.Toggles.MM2KillAura and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Knife") then
+            for _, p in ipairs(Players:GetPlayers()) do
+                if p ~= LocalPlayer and p.Character and p.Character:FindFirstChild("HumanoidRootPart") and p.Character:FindFirstChild("Humanoid") and p.Character.Humanoid.Health > 0 then
+                    if p ~= currentSheriff or (currentSheriff and not currentSheriff.Character:FindFirstChild("Gun")) then
+                        local myHRP = LocalPlayer.Character.HumanoidRootPart
+                        myHRP.CFrame = p.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 1)
+                        task.wait(0.02)
+                        VirtualInputManager:SendMouseButtonEvent(0, 0, 0, true, game, 1)
+                        VirtualInputManager:SendMouseButtonEvent(0, 0, 0, false, game, 1)
                     end
                 end
             end
@@ -829,10 +923,16 @@ if CurrentGame == "MM2" then
         end
     end)
 
-    -- Harita Değişimini İzleyen Döngü (Her Turda Safe Zone'a Işınlama Çözümü)
+    -- Harita Değişimini İzleyen Döngü (Tur Başı Hafıza Sıfırlama)
     workspace.ChildAdded:Connect(function(child)
+        if child.Name == "Normal" or child:IsA("Model") then
+            AlertedForThisRound = false
+            LastMurderer = nil
+            WarningLabel.Visible = false
+        end
+        
         if Config.Toggles.MM2SafeZone then
-            task.wait(2.5) -- Haritanın ve karakterlerin yüklenmesini bekle
+            task.wait(2.5)
             if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                 LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 805, 0)
             end
@@ -849,5 +949,9 @@ CreateSysButton(WorldPage, " [!] TERMINATE QEATHUB", Color3.fromRGB(255, 50, 50)
     for k, _ in pairs(Config.Toggles) do Config.Toggles[k] = false end
     local plat = workspace:FindFirstChild("QeatSafePlatform")
     if plat then plat:Destroy() end
+    for _, p in ipairs(Players:GetPlayers()) do
+        local oldHighlight = p.Character and p.Character:FindFirstChild("QeatHighlight")
+        if oldHighlight then oldHighlight:Destroy() end
+    end
     ScreenGui:Destroy()
 end)
