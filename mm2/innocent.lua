@@ -4,11 +4,27 @@ local Workspace = game:GetService("Workspace")
 local LocalPlayer = Players.LocalPlayer
 
 local SafePlatform = nil
-local GunDropHighlight = nil
+local CurrentGunDrop = nil
+local GunESPBox = nil
 local GunDropAlerted = false
 
+-- Yere Düşen Silahı Haritanın En Derinliklerinde Bile Olsa Bulan Tarayıcı Fonksiyon
+local function FindGunDrop()
+    -- Önce dış katmanda ara
+    local gun = Workspace:FindFirstChild("GunDrop")
+    if gun then return gun end
+    
+    -- Eğer bulamazsa haritanın içindeki tüm nesnelere bak (Kesin Çözüm)
+    for _, desc in ipairs(Workspace:GetDescendants()) do
+        if desc.Name == "GunDrop" and desc:IsA("BasePart") then
+            return desc
+        end
+    end
+    return nil
+end
+
 RunService.Heartbeat:Connect(function()
-    -- Anti-Reset Safe Zone
+    -- 1️⃣ ANTI-RESET SAFE ZONE MOTORU
     if _G.Config.Toggles.MM2SafeZone and _G.CurrentGame == "MM2" then
         if not SafePlatform or not SafePlatform.Parent then
             SafePlatform = Instance.new("Part")
@@ -28,30 +44,46 @@ RunService.Heartbeat:Connect(function()
         if SafePlatform then SafePlatform:Destroy() SafePlatform = nil end
     end
 
-    -- Gun Drop ESP Fix
+    -- 2️⃣ KUSURSUZ GUN DROP ESP MOTORU (Asla Kaçırmaz)
     if _G.CurrentGame == "MM2" and _G.Config.Toggles.MM2GunESP then
-        local gunDrop = Workspace:FindFirstChild("GunDrop")
-        if gunDrop and gunDrop:IsA("BasePart") then
-            if not GunDropHighlight or not GunDropHighlight.Parent then
-                GunDropHighlight = Instance.new("Highlight")
-                GunDropHighlight.Name = "QeatGunDropESP"
-                GunDropHighlight.FillColor = Color3.fromRGB(255, 165, 0)
-                GunDropHighlight.FillTransparency = 0.2
-                GunDropHighlight.Parent = gunDrop
+        local gunDrop = FindGunDrop()
+        
+        if gunDrop then
+            -- Silah bulunduysa ve henüz ESP kutusu çizilmediyse çiz
+            if not GunESPBox or GunESPBox.Parent ~= gunDrop then
+                if GunESPBox then GunESPBox:Destroy() end
+                
+                -- Duvarların arkasından bile gözüken Premium 3D Box ESP Sistemi
+                GunESPBox = Instance.new("BoxHandleAdornment")
+                GunESPBox.Name = "QeatGunBox"
+                GunESPBox.Size = gunDrop.Size + Vector3.new(0.5, 0.5, 0.5) -- Silahı tamamen kaplasın
+                GunESPBox.Color3 = Color3.fromRGB(255, 140, 0) -- Parlak Turuncu Renk
+                GunESPBox.AlwaysOnTop = true -- Duvar arkasından görmeyi sağlar (X-Ray Etkisi)
+                GunESPBox.ZIndex = 10
+                GunESPBox.Adornee = gunDrop
+                GunESPBox.Parent = gunDrop
             end
+            
+            -- Ekranın üstünde büyük kırmızı uyarı yazısı çıkartır ve ses çalar
             if not GunDropAlerted then
-                _G.ShowWarning("SİLAH YERE DÜŞTÜ! ALMAYA GİDİN!")
+                if _G.ShowWarning then
+                    _G.ShowWarning("🚨 SİLAH YERE DÜŞTÜ! HEMEN ALMAYA GİDİN! 🚨")
+                end
                 GunDropAlerted = true
             end
+        else
+            -- Ortada silah yoksa veya birisi aldıysa ESP'yi temizle
+            if GunESPBox then GunESPBox:Destroy() GunESPBox = nil end
         end
     else
-        if GunDropHighlight then GunDropHighlight:Destroy() GunDropHighlight = nil end
+        if GunESPBox then GunESPBox:Destroy() GunESPBox = nil end
     end
 end)
 
--- Harita yenilendiğinde alarmı sıfırla
+-- Yeni el başladığında veya harita değiştiğinde uyarı kilidini sıfırla
 Workspace.ChildAdded:Connect(function(child)
     if child.Name == "Normal" or child:IsA("Model") then
         GunDropAlerted = false
+        if GunESPBox then GunESPBox:Destroy() GunESPBox = nil end
     end
 end)
