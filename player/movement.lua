@@ -28,30 +28,54 @@ RunService.Stepped:Connect(function()
     end
 end)
 
--- 3D Yukarı/Aşağı Destekli Gelişmiş Uçma Motoru (Fly Fix)
+-- 📱 GLOBAL 360° KAMERA YÖNLÜ FLY MOTORU (Mobil + PC %100 Uyumlu)
 local FlyBV, FlyBG
 RunService.RenderStepped:Connect(function()
     local char = LocalPlayer.Character
+    local hum = char and char:FindFirstChildOfClass("Humanoid")
     local hrp = char and char:FindFirstChild("HumanoidRootPart")
-    if hrp and _G.Config.Toggles.Fly then
+    
+    if hrp and hum and _G.Config.Toggles.Fly then
         if not FlyBV then
             FlyBV = Instance.new("BodyVelocity", hrp)
             FlyBV.MaxForce = Vector3.new(1e5, 1e5, 1e5)
             FlyBG = Instance.new("BodyGyro", hrp)
             FlyBG.MaxTorque = Vector3.new(1e5, 1e5, 1e5)
         end
+        -- Karakter uçarken kameranın baktığı yöne doğru 360 derece dönebilsin
         FlyBG.CFrame = Camera.CFrame
         
-        local moveDir = Vector3.new(0,0,0)
-        if UserInputService:IsKeyDown(Enum.KeyCode.W) then moveDir = moveDir + Camera.CFrame.LookVector end
-        if UserInputService:IsKeyDown(Enum.KeyCode.S) then moveDir = moveDir - Camera.CFrame.LookVector end
-        if UserInputService:IsKeyDown(Enum.KeyCode.D) then moveDir = moveDir + Camera.CFrame.RightVector end
-        if UserInputService:IsKeyDown(Enum.KeyCode.A) then moveDir = moveDir - Camera.CFrame.RightVector end
-        if UserInputService:IsKeyDown(Enum.KeyCode.Space) then moveDir = moveDir + Vector3.new(0, 1, 0) end -- YUKARI
-        if UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) then moveDir = moveDir - Vector3.new(0, 1, 0) end -- AŞAĞI
+        -- Karakterin hareket doğrultusunu sıfırlayarak baştan hesaplıyoruz
+        local finalVelocity = Vector3.new(0, 0, 0)
         
-        FlyBV.Velocity = moveDir.Unit * _G.Config.FlySpeed
-        if moveDir == Vector3.new(0,0,0) then FlyBV.Velocity = Vector3.new(0,0,0) end
+        -- ⌨️ BİLGİSAYAR (WASD) KONTROLLERİ
+        if not UserInputService:GetFocusedTextBox() then
+            if UserInputService:IsKeyDown(Enum.KeyCode.W) then finalVelocity = finalVelocity + Camera.CFrame.LookVector end
+            if UserInputService:IsKeyDown(Enum.KeyCode.S) then finalVelocity = finalVelocity - Camera.CFrame.LookVector end
+            if UserInputService:IsKeyDown(Enum.KeyCode.D) then finalVelocity = finalVelocity + Camera.CFrame.RightVector end
+            if UserInputService:IsKeyDown(Enum.KeyCode.A) then finalVelocity = finalVelocity - Camera.CFrame.RightVector end
+        end
+        
+        -- 📱 MOBİL (JOYSTICK) KONTROLLERİ (PC tuşlarına basılmıyorsa devreye girer)
+        if finalVelocity.Magnitude == 0 and hum.MoveDirection.Magnitude > 0 then
+            -- Oyunun kendi joystick yönünü alıyoruz
+            local joystickDir = hum.MoveDirection
+            
+            -- Joystick'in İLERİ/GERİ ve SAĞ/SOL basılma oranını kameraya göre hesaplıyoruz
+            local forwardAmount = Camera.CFrame.LookVector:Dot(joystickDir)
+            local rightAmount = Camera.CFrame.RightVector:Dot(joystickDir)
+            
+            -- Tamamen kameranın LookVector (bakış açısı) üzerinden dikey eksen dahil hızı veriyoruz!
+            finalVelocity = (Camera.CFrame.LookVector * forwardAmount) + (Camera.CFrame.RightVector * rightAmount)
+        end
+        
+        -- Hızı uygula
+        if finalVelocity.Magnitude > 0 then
+            FlyBV.Velocity = finalVelocity.Unit * _G.Config.FlySpeed
+        else
+            -- Dokunulmadığında havada çakılı kalsın
+            FlyBV.Velocity = Vector3.new(0, 0, 0)
+        end
     else
         if FlyBV then FlyBV:Destroy() FlyBV = nil end
         if FlyBG then FlyBG:Destroy() FlyBG = nil end
