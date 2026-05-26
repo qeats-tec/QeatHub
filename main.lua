@@ -1,24 +1,11 @@
 --[[
-	
- ________  _______   ________  _________  ___  ___  ___  ___  ________     
-|\   __  \|\  ___ \ |\   __  \|\___   ___\\  \|\  \|\  \|\  \|\   __  \    
-\ \  \|\  \ \   __/|\ \  \|\  \|___ \  \_\ \  \\\  \ \  \\\  \ \  \|\  \ \  \|\ /_   
- \ \  \\\  \ \  \_|/_\ \   __  \   \ \  \ \ \   __  \ \  \\\  \ \   __  \  
-  \ \  \\\  \ \  \_|\ \ \  \ \  \   \ \  \ \ \  \ \  \ \  \\\  \ \  \|\  \ 
-   \ \_____  \ \_______\ \__\ \__\   \ \__\ \ \__\ \__\ \_______\ \_______\
-    \|___| \__\|_______|\|__|\|__|    \|__|  \|__|\|__|\|_______|\|_______|
-          \|__|                                                            
-
 	====================================================================
 	  - QeatHub Universal Premium
-	  - Edition: v3.3 [GUN DROP ESP INTEGRATED]
+	  - Edition: v3.4 [FINAL REPO OPTIMIZED]
 	====================================================================
-	
-	"Imitation is the sincerest form of flattery."
-	 
-	 - Goodbye, .... ;)
-	
 ]]
+
+local BaseURL = "https://raw.githubusercontent.com/qeats-tec/QeatHub/refs/heads/main/"
 
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -27,19 +14,6 @@ local TweenService = game:GetService("TweenService")
 local Workspace = game:GetService("Workspace")
 local LocalPlayer = Players.LocalPlayer
 local Camera = Workspace.CurrentCamera
-
--- ==========================================================
--- 🛠️ OTOMATİK GITHUB BULUCU MOTORU (TAK-ÇALIŞTIR)
--- ==========================================================
-local BaseURL = "https://raw.githubusercontent.com/KendiGithubKullaniciAdin/YeniRepoAdin/main/"
-
--- Eğer loadstring url'sinden çalıştırılıyorsa repo yolunu otomatik algıla
-local scriptUrl = (getfenv and getfenv().script and getfenv().script.ClassName == "StringValue" and getfenv().script.Value) or ""
-if string.find(scriptUrl, "raw.githubusercontent.com") then
-    local cleanUrl = string.gsub(scriptUrl, "main.lua", "")
-    if string.sub(cleanUrl, -1) ~= "/" then cleanUrl = cleanUrl .. "/" end
-    BaseURL = cleanUrl
-end
 
 -- Oyun Tespiti
 _G.CurrentGame = "Universal"
@@ -226,7 +200,7 @@ ClickWidget.MouseButton1Click:Connect(function()
     ClickWidget.TextColor3 = _G.ClickingActive and Color3.fromRGB(15, 15, 15) or Color3.fromRGB(255, 215, 0)
 end)
 
--- UI Elemanlarının İnşası
+-- UI Elemanlarının Yapılandırılması
 CreateToggle(CombatPage, "Rivals Auto Aim 2.0", "AutoAim")
 CreateToggle(CombatPage, "Hitbox Extender", "Hitbox")
 CreateSlider(CombatPage, "Hitbox Size Slider", 2, 50, 12, function(v) _G.Config.HitboxSize = v end)
@@ -259,14 +233,14 @@ if _G.CurrentGame == "MM2" then
 end
 
 -- ==========================================================
--- 🚀 SUB-MODULE INJECTION ENGINE
+-- 🚀 ALT MOTORLARI GITHUB REPO ÜZERİNDEN YÜKLEME MOTORU
 -- ==========================================================
 local function InjectModule(path)
     local s, res = pcall(function() return loadstring(game:HttpGet(BaseURL .. path))() end)
     if not s then warn("QeatHub Engine Error [" .. path .. "]: " .. tostring(res)) end
 end
 
--- Tüm hile alt dosyalarını arka planda sırayla çekip entegre et
+-- Repodaki modülleri sırasıyla çağır
 InjectModule("combat/autoaim.lua")
 InjectModule("combat/hitbox.lua")
 InjectModule("combat/autoclicker.lua")
@@ -280,7 +254,7 @@ if _G.CurrentGame == "MM2" then
     InjectModule("mm2/sheriff_murderer.lua")
 end
 
--- Sistem Buton Bağlantıları
+-- Alt Buton Sistemleri
 CreateSysButton(WorldPage, " [>] Inject Infinite Yield", Color3.fromRGB(255, 165, 0), function()
     InjectModule("other/inf_yield.lua")
 end)
