@@ -1,11 +1,9 @@
 --[[
 	====================================================================
 	  - QeatHub Universal Premium
-	  - Edition: v3.4 [FINAL REPO OPTIMIZED]
+	  - Edition: v3.6 [MODULAR SYSTEM - FIXED & OPTIMIZED]
 	====================================================================
 ]]
-
-local BaseURL = "https://raw.githubusercontent.com/qeats-tec/QeatHub/refs/heads/main/"
 
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -14,6 +12,9 @@ local TweenService = game:GetService("TweenService")
 local Workspace = game:GetService("Workspace")
 local LocalPlayer = Players.LocalPlayer
 local Camera = Workspace.CurrentCamera
+
+-- Senin Net GitHub Raw Bağlantın
+local BaseURL = "https://raw.githubusercontent.com/qeats-tec/QeatHub/refs/heads/main/"
 
 -- Oyun Tespiti
 _G.CurrentGame = "Universal"
@@ -25,9 +26,9 @@ if LocalPlayer:WaitForChild("PlayerGui"):FindFirstChild("QeatHUB_Premium") then
     LocalPlayer.PlayerGui.QeatHUB_Premium:Destroy()
 end
 
--- Global Konfigürasyon Yapısı
+-- 🛠️ GLOBAL CONFIG (Alt klasörlerdeki dosyalar bu değerleri anında okuyabilir!)
 _G.Config = {
-    WalkSpeed = 16, JumpPower = 50, FlySpeed = 50, HitboxSize = 12, AimSmoothness = 0.32,
+    WalkSpeed = 45, JumpPower = 85, FlySpeed = 50, HitboxSize = 12, AimSmoothness = 0.32,
     Toggles = {
         Hitbox = false, AutoClicker = false, Speed = false, JumpPowerToggle = false,
         Xray = false, ESP = false, Noclip = false, AutoAim = false, Fly = false, DoubleJump = false,
@@ -64,34 +65,38 @@ _G.ShowWarning = function(text)
     task.delay(4, function() if WarningLabel.Text == text then WarningLabel.Visible = false end end)
 end
 
+-- ANA FRAME (YUVARLATILMIŞ PREMIUM KÖŞELER)
 local MainFrame = Instance.new("Frame", ScreenGui)
-MainFrame.Size = UDim2.new(0, 400, 0, 290)
+MainFrame.Size = UDim2.new(0, 420, 0, 310)
 MainFrame.Position = UDim2.new(0.15, 0, 0.25, 0)
 MainFrame.BackgroundColor3 = Color3.fromRGB(12, 12, 12)
 MainFrame.BorderSizePixel = 0
 MainFrame.Active = true; MainFrame.Draggable = true
-Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 8)
+Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 14) -- Yuvarlatılmış köşeler
 local UIStroke = Instance.new("UIStroke", MainFrame)
 UIStroke.Color = Color3.fromRGB(255, 215, 0); UIStroke.Thickness = 1.5
 
 local TitleBar = Instance.new("Frame", MainFrame)
-TitleBar.Size = UDim2.new(1, 0, 0, 32); TitleBar.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
+TitleBar.Size = UDim2.new(1, 0, 0, 36); TitleBar.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
+Instance.new("UICorner", TitleBar).CornerRadius = UDim.new(0, 14)
+
 local TitleText = Instance.new("TextLabel", TitleBar)
 TitleText.Size = UDim2.new(0.8, 0, 1, 0); TitleText.Position = UDim2.new(0.04, 0, 0, 0)
-TitleText.BackgroundTransparency = 1; TitleText.Text = "⚡ QEATHUB v3.4 [" .. string.upper(_G.CurrentGame) .. " EDITION]"
+TitleText.BackgroundTransparency = 1; TitleText.Text = "⚡ QEATHUB v3.6 [" .. string.upper(_G.CurrentGame) .. " PREMIUM]"
 TitleText.TextColor3 = Color3.fromRGB(255, 215, 0); TitleText.Font = Enum.Font.Code
 
 local MinimizeBtn = Instance.new("TextButton", TitleBar)
-MinimizeBtn.Size = UDim2.new(0, 32, 0, 32); MinimizeBtn.Position = UDim2.new(1, -36, 0, 0)
+MinimizeBtn.Size = UDim2.new(0, 32, 0, 32); MinimizeBtn.Position = UDim2.new(1, -38, 0, 2)
 MinimizeBtn.BackgroundTransparency = 1; MinimizeBtn.Text = "[-]"; MinimizeBtn.TextColor3 = Color3.fromRGB(255, 215, 0); MinimizeBtn.Font = Enum.Font.Code
 
 local ContentFrame = Instance.new("Frame", MainFrame)
-ContentFrame.Size = UDim2.new(1, -125, 1, -40); ContentFrame.Position = UDim2.new(0, 120, 0, 36)
+ContentFrame.Size = UDim2.new(1, -135, 1, -46); ContentFrame.Position = UDim2.new(0, 125, 0, 42)
 ContentFrame.BackgroundTransparency = 1
 
 local TabBar = Instance.new("Frame", MainFrame)
-TabBar.Size = UDim2.new(0, 110, 1, -40); TabBar.Position = UDim2.new(0, 6, 0, 36)
+TabBar.Size = UDim2.new(0, 110, 1, -46); TabBar.Position = UDim2.new(0, 8, 0, 42)
 TabBar.BackgroundColor3 = Color3.fromRGB(16, 16, 16)
+Instance.new("UICorner", TabBar).CornerRadius = UDim.new(0, 10)
 local TabListLayout = Instance.new("UIListLayout", TabBar); TabListLayout.Padding = UDim.new(0, 4)
 
 local Pages, Tabs = {}, {}
@@ -114,6 +119,7 @@ local function AddTab(name)
     local Btn = Instance.new("TextButton", TabBar)
     Btn.Size = UDim2.new(1, 0, 0, 32); Btn.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
     Btn.Text = " " .. name; Btn.TextColor3 = Color3.fromRGB(150, 150, 150); Btn.Font = Enum.Font.Code
+    Instance.new("UICorner", Btn).CornerRadius = UDim.new(0, 6)
     Tabs[name] = Btn
     Btn.MouseButton1Click:Connect(function()
         for k, p in pairs(Pages) do p.Visible = false; Tabs[k].TextColor3 = Color3.fromRGB(150, 150, 150) end
@@ -129,24 +135,28 @@ MinimizeBtn.MouseButton1Click:Connect(function()
     isMinimized = not isMinimized
     if isMinimized then
         ContentFrame.Visible = false; TabBar.Visible = false
-        MainFrame:TweenSize(UDim2.new(0, 400, 0, 32), "Out", "Quad", 0.15, true)
+        MainFrame:TweenSize(UDim2.new(0, 420, 0, 36), "Out", "Quad", 0.15, true)
         MinimizeBtn.Text = "[+]"
     else
-        MainFrame:TweenSize(UDim2.new(0, 400, 0, 290), "Out", "Quad", 0.15, true, function() ContentFrame.Visible = true; TabBar.Visible = true end)
+        MainFrame:TweenSize(UDim2.new(0, 420, 0, 310), "Out", "Quad", 0.15, true, function() ContentFrame.Visible = true; TabBar.Visible = true end)
         MinimizeBtn.Text = "[-]"
     end
 end)
 
+-- TOGGLE & SLIDER FUNCTIONALITIES
 local function CreateToggle(parent, text, configKey, callback)
     local Frame = Instance.new("Frame", parent)
     Frame.Size = UDim2.new(1, -10, 0, 34); Frame.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
+    Instance.new("UICorner", Frame).CornerRadius = UDim.new(0, 8)
     local Label = Instance.new("TextLabel", Frame)
     Label.Size = UDim2.new(0.7, 0, 1, 0); Label.Position = UDim2.new(0.04, 0, 0, 0)
     Label.BackgroundTransparency = 1; Label.Text = text; Label.TextColor3 = Color3.fromRGB(220, 220, 220); Label.Font = Enum.Font.Code
     local Indicator = Instance.new("Frame", Frame)
     Indicator.Size = UDim2.new(0, 30, 0, 14); Indicator.Position = UDim2.new(0.95, -30, 0.5, -7); Indicator.BackgroundColor3 = Color3.fromRGB(35, 15, 15)
+    Instance.new("UICorner", Indicator).CornerRadius = UDim.new(1, 0)
     local Dot = Instance.new("Frame", Indicator)
     Dot.Size = UDim2.new(0, 10, 0, 10); Dot.Position = UDim2.new(0, 2, 0.5, -5); Dot.BackgroundColor3 = Color3.fromRGB(150, 50, 50)
+    Instance.new("UICorner", Dot).CornerRadius = UDim.new(1, 0)
     local btn = Instance.new("TextButton", Frame)
     btn.Size = UDim2.new(1, 0, 1, 0); btn.BackgroundTransparency = 1; btn.Text = ""
     btn.MouseButton1Click:Connect(function()
@@ -166,6 +176,7 @@ end
 local function CreateSlider(parent, text, min, max, default, callback)
     local Frame = Instance.new("Frame", parent)
     Frame.Size = UDim2.new(1, -10, 0, 42); Frame.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
+    Instance.new("UICorner", Frame).CornerRadius = UDim.new(0, 8)
     local Label = Instance.new("TextLabel", Frame)
     Label.Size = UDim2.new(0.6, 0, 0, 18); Label.Position = UDim2.new(0.04, 0, 0, 3); Label.BackgroundTransparency = 1; Label.Text = text; Label.TextColor3 = Color3.fromRGB(180, 180, 180); Label.Font = Enum.Font.Code
     local ValueLabel = Instance.new("TextLabel", Frame)
@@ -174,37 +185,30 @@ local function CreateSlider(parent, text, min, max, default, callback)
     SliderBar.Size = UDim2.new(0.92, 0, 0, 4); SliderBar.Position = UDim2.new(0.04, 0, 0.75, -2); SliderBar.BackgroundColor3 = Color3.fromRGB(35, 35, 35); SliderBar.Text = ""
     local SliderFill = Instance.new("Frame", SliderBar)
     SliderFill.Size = UDim2.new((default - min) / (max - min), 0, 1, 0); SliderFill.BackgroundColor3 = Color3.fromRGB(255, 215, 0)
+    
     local function UpdateSlider(input)
         local ratio = math.clamp(input.Position.X - SliderBar.AbsolutePosition.X, 0, SliderBar.AbsoluteSize.X) / SliderBar.AbsoluteSize.X
         local finalVal = math.floor(min + (max - min) * ratio)
-        ValueLabel.Text = tostring(finalVal); SliderFill.Size = UDim2.new(ratio, 0, 1, 0); callback(finalVal)
+        ValueLabel.Text = tostring(finalVal); SliderFill.Size = UDim2.new(ratio, 0, 1, 0)
+        callback(finalVal)
     end
     local conn
-    SliderBar.InputBegan:Connect(function(i) if i.UserInputType == Enum.UserInputType.MouseButton1 then UpdateSlider(i) conn = game:GetService("UserInputService").InputChanged:Connect(function(c) if c.UserInputType == Enum.UserInputType.MouseMovement then UpdateSlider(c) end end) end end)
-    game:GetService("UserInputService").InputEnded:Connect(function(i) if i.UserInputType == Enum.UserInputType.MouseButton1 and conn then conn:Disconnect() conn = nil end end)
+    SliderBar.InputBegan:Connect(function(i) if i.UserInputType == Enum.UserInputType.MouseButton1 then UpdateSlider(i) conn = UserInputService.InputChanged:Connect(function(c) if c.UserInputType == Enum.UserInputType.MouseMovement then UpdateSlider(c) end end) end end)
+    UserInputService.InputEnded:Connect(function(i) if i.UserInputType == Enum.UserInputType.MouseButton1 and conn then conn:Disconnect() conn = nil end end)
 end
 
 local function CreateSysButton(parent, text, color, callback)
     local Btn = Instance.new("TextButton", parent)
     Btn.Size = UDim2.new(1, -10, 0, 32); Btn.BackgroundColor3 = Color3.fromRGB(22, 22, 22); Btn.Text = text; Btn.TextColor3 = color; Btn.Font = Enum.Font.Code
+    Instance.new("UICorner", Btn).CornerRadius = UDim.new(0, 8)
     Btn.MouseButton1Click:Connect(callback)
 end
 
-local ClickWidget = Instance.new("TextButton", ScreenGui)
-ClickWidget.Size = UDim2.new(0, 45, 0, 45); ClickWidget.Position = UDim2.new(0.85, 0, 0.5, 0); ClickWidget.BackgroundColor3 = Color3.fromRGB(20, 20, 20); ClickWidget.Text = "TAP"; ClickWidget.TextColor3 = Color3.fromRGB(255, 215, 0); ClickWidget.Font = Enum.Font.Code; ClickWidget.Visible = false; ClickWidget.Active = true; ClickWidget.Draggable = true
-Instance.new("UICorner", ClickWidget).CornerRadius = UDim.new(1,0)
-_G.ClickingActive = false
-ClickWidget.MouseButton1Click:Connect(function()
-    _G.ClickingActive = not _G.ClickingActive
-    ClickWidget.BackgroundColor3 = _G.ClickingActive and Color3.fromRGB(255, 215, 0) or Color3.fromRGB(20, 20, 20)
-    ClickWidget.TextColor3 = _G.ClickingActive and Color3.fromRGB(15, 15, 15) or Color3.fromRGB(255, 215, 0)
-end)
-
--- UI Elemanlarının Yapılandırılması
+-- UI INTERFACE ELEMENTS MAP
 CreateToggle(CombatPage, "Rivals Auto Aim 2.0", "AutoAim")
 CreateToggle(CombatPage, "Hitbox Extender", "Hitbox")
 CreateSlider(CombatPage, "Hitbox Size Slider", 2, 50, 12, function(v) _G.Config.HitboxSize = v end)
-CreateToggle(CombatPage, "Auto Clicker Widget", "AutoClicker", function(s) ClickWidget.Visible = s end)
+CreateToggle(CombatPage, "Auto Clicker Widget", "AutoClicker")
 
 CreateToggle(PlayerPage, "Enable Speed Changer", "Speed")
 CreateSlider(PlayerPage, "Set Speed Value", 16, 150, 45, function(v) _G.Config.WalkSpeed = v end)
@@ -233,28 +237,32 @@ if _G.CurrentGame == "MM2" then
 end
 
 -- ==========================================================
--- 🚀 ALT MOTORLARI GITHUB REPO ÜZERİNDEN YÜKLEME MOTORU
+-- 🚀 FOTOĞRAFTAKİ KLASÖRLERDEN SCRIPT ENJEKTE EDEN MOTOR
 -- ==========================================================
 local function InjectModule(path)
-    local s, res = pcall(function() return loadstring(game:HttpGet(BaseURL .. path))() end)
-    if not s then warn("QeatHub Engine Error [" .. path .. "]: " .. tostring(res)) end
+    local success, result = pcall(function()
+        return loadstring(game:HttpGet(BaseURL .. path))()
+    end)
+    if not success then
+        warn("🔴 QeatHub Klasör Motoru Hatası [" .. path .. "]: " .. tostring(result))
+    end
 end
 
--- Repodaki modülleri sırasıyla çağır
+-- Klasörlerindeki alt dosyaları sırasıyla yükler:
 InjectModule("combat/autoaim.lua")
 InjectModule("combat/hitbox.lua")
 InjectModule("combat/autoclicker.lua")
-InjectModule("player/movement.lua")
+InjectModule("player/movement.lua") -- 🏃 Speed, Jump, Fly, Noclip, DoubleJump buraya gidiyor
 InjectModule("world/esp.lua")
 InjectModule("world/xray.lua")
 
 if _G.CurrentGame == "MM2" then
-    InjectModule("mm2/innocent.lua")
+    InjectModule("mm2/innocent.lua") -- 🛡️ Anti-Reset Safe Zone buraya gidiyor
     InjectModule("mm2/roles.lua")
     InjectModule("mm2/sheriff_murderer.lua")
 end
 
--- Alt Buton Sistemleri
+-- Diğer Sistem Butonları
 CreateSysButton(WorldPage, " [>] Inject Infinite Yield", Color3.fromRGB(255, 165, 0), function()
     InjectModule("other/inf_yield.lua")
 end)
