@@ -32,7 +32,7 @@
         }
 
         body {
-            background-color: #08080a; /* Yedek arka plan rengi */
+            background-color: #08080a;
             background: linear-gradient(rgba(8, 8, 10, 0.85), rgba(8, 8, 10, 0.95)), url('foto.png');
             background-size: cover;
             background-position: center;
@@ -49,7 +49,7 @@
             width: 100%;
             background-color: rgba(12, 12, 16, 0.85);
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px); /* Safari desteği */
+            -webkit-backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(31, 31, 41, 0.5);
             z-index: 1000;
             padding: 15px 5%;
@@ -96,7 +96,6 @@
             color: #ffcc00;
         }
 
-        /* Menüye tıklandığında başlıkların üstte sıkışmasını engeller */
         section {
             scroll-margin-top: 90px;
         }
@@ -180,7 +179,6 @@
             color: #ffffff;
         }
 
-        /* Yükleme Kodu Butonu */
         .btn-container {
             display: flex;
             justify-content: center;
@@ -262,7 +260,7 @@
             border-radius: 2px;
         }
 
-        /* Özellik Kartları (Grid Yapısı) */
+        /* Özellik Kartları */
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -305,7 +303,6 @@
             text-transform: uppercase;
         }
 
-        .tag-evade { background-color: rgba(234, 179, 8, 0.15); color: #eab308; }
         .tag-player { background-color: rgba(59, 130, 246, 0.15); color: #3b82f6; }
         .tag-exclusive { background-color: rgba(168, 85, 247, 0.15); color: #a855f7; }
         .tag-mm2 { background-color: rgba(236, 72, 153, 0.15); color: #ec4899; }
@@ -411,7 +408,6 @@
             color: #a1a1aa;
         }
 
-        /* Alt Bilgi */
         footer {
             text-align: center;
             padding: 40px 0;
@@ -434,37 +430,37 @@
         <nav>
             <ul>
                 <li><a href="#ozellikler">Özellikler</a></li>
-                <li><a href="#komut-listesi">Komut Tablosu</a></li>
+                <li><a href="#komut-listesi">Neler Var?</a></li>
                 <li><a href="#rehber">Nasıl Çalışır?</a></li>
             </ul>
         </nav>
     </header>
 
     <section class="hero">
-        <h1>Yeni Geldik <span>Ama Bilgimizle</span></h1>
-        <p>QeatHub v2.1, optimize edilmiş altyapısı, kusursuz 360° kamera yönlü uçma motoru ve akıllı MM2 korumalarıyla oyun deneyimini en üst seviyeye taşı!</p>
+        <h1>Yeni Geldik <span>Ama Fena Geldik</span></h1>
+        <p>Buralarda kasıntılığa gerek yok, icraata bak hele! Optimize altyapı, fena kaçan 360° uçma motoru ve deli dehşet özelliklerle oyunu tek tuşla domine et.</p>
         
         <div class="script-box-container">
             <div class="script-code" id="scriptCode">loadstring(game:HttpGet("https://raw.githubusercontent.com/qeats-tec/QeatHub/refs/heads/main/main.lua"))()</div>
-            <button class="copy-btn" onclick="copyScript()" id="copyBtn">Kodu Kopyala</button>
+            <button class="copy-btn" onclick="copyScript()" id="copyBtn">Kodu Kap</button>
         </div>
 
         <div class="btn-container">
-            <a href="#rehber" class="btn btn-primary">Kurulum Rehberi</a>
+            <a href="#rehber" class="btn btn-primary">Nasıl Kurulur?</a>
         </div>
 
         <div class="stats">
             <div class="stat-item">
                 <h3>20+</h3>
-                <p>Aktif Özellik</p>
+                <p>Canavar Özellik</p>
             </div>
             <div class="stat-item">
                 <h3>%100</h3>
-                <p>Mobil / PC Uyumlu</p>
+                <p>Mobil / PC Akıyor</p>
             </div>
             <div class="stat-item">
                 <h3>0ms</h3>
-                <p>Gecikme Oranı (Abartı)</p>
+                <p>Gecikme (Sıfır Şaka)</p>
             </div>
         </div>
     </section>
@@ -472,31 +468,31 @@
     <main class="container">
 
         <section id="ozellikler">
-            <h2 class="section-title">Öne Çıkan Sistemler</h2>
+            <h2 class="section-title">Buna Bak Hele (Dehşet Sistemler)</h2>
             <div class="features-grid">
                 
                 <div class="feature-card">
                     <div class="feature-header">
-                        <span class="feature-name">Akıllı Kill Aura</span>
-                        <span class="tag tag-mm2">MM2 Özel</span>
+                        <span class="feature-name">Kusursuz ESP Süzgeci</span>
+                        <span class="tag tag-player">Görsel</span>
                     </div>
-                    <div class="feature-desc">Lobideki ve izleyici modundaki ölü oyuncuları filtreleyen, sadece haritadaki canlı masumların arkasına sinsi gibi ışınlanıp saniyede vuran devrimsel aura sistemi.</div>
+                    <div class="feature-desc">Duvarların arkasını falan unut, haritadaki herkesi, her şeyi neon parlamalar ve kalın kutularla anında önüne seriyor. Kaçarı imkansız!</div>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-header">
-                        <span class="feature-name">Garantili Gun Drop ESP</span>
-                        <span class="tag tag-mm2">MM2 Özel</span>
+                        <span class="feature-name">Duvardan Geçme (Noclip)</span>
+                        <span class="tag tag-player">Karakter</span>
                     </div>
-                    <div class="feature-desc">Şerif öldüğünde yere düşen silahı, harita ve model isminden bağımsız olarak anında tarayan ve duvar arkasından neon turuncu parlamayla (Highlight) gösteren takip sistemi.</div>
+                    <div class="feature-desc">Bütün harita senin için bomboş araziye dönüşüyor. Parçaların çarpışmasını kapatıp duvarların içinden tereyağından kıl çeker gibi geçiyorsun.</div>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-header">
                         <span class="feature-name">Kamera Yönlü 360° Fly</span>
-                        <span class="tag tag-player">Evrensel</span>
+                        <span class="tag tag-player">Hareket</span>
                     </div>
-                    <div class="feature-desc">Hem bilgisayarda hem de mobil dokunmatik joysticklerde kamerayı çevirdiğiniz yöne (Yukarı, Aşağı, Çapraz) dikey eksende pürüzsüzce uçmanızı sağlayan gelişmiş uçma motoru.</div>
+                    <div class="feature-desc">Buna bak hele; hem PC'de hem mobilde kamerayı nereye çevirirsen (yukarı, aşağı, çapraz fark etmez) pürüzsüzce oraya uçuran deli bir motor.</div>
                 </div>
 
                 <div class="feature-card">
@@ -504,140 +500,128 @@
                         <span class="feature-name">Predictive Aim (Şerif)</span>
                         <span class="tag tag-mm2">MM2 Özel</span>
                     </div>
-                    <div class="feature-desc">Şerif olduğunuzda katilin hızını ve hareket yönünü hesaplayarak kamerayı doğrudan katilin kafasına kitleyen ve mermilerin asla sekmemesini sağlayan kilit sistemi.</div>
+                    <div class="feature-desc">Şerif olduğunda katilin hızını ve nereye gideceğini önceden hesaplayıp direkt kafasına kilitleniyor, mermiler asla ıskalamıyor.</div>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-header">
-                        <span class="feature-name">Otomatik Canlandırma</span>
-                        <span class="tag tag-evade">Evade</span>
+                        <span class="feature-name">Akıllı Kill Aura</span>
+                        <span class="tag tag-mm2">MM2 Özel</span>
                     </div>
-                    <div class="feature-desc">Yere düşen takım arkadaşlarınızın yanına yaklaştığınız an, tuş kilidine basmanıza gerek kalmadan server tabanlı otomatik ayağa kaldırma protokolü.</div>
+                    <div class="feature-desc">Lobidekileri veya izleyicileri boş ver, sadece canlı hedefleri ayıklayıp arkalarına sinsi gibi ışınlanarak saniyede indiren tehlikeli bir şey.</div>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-header">
-                        <span class="feature-name">Nextbot ESP</span>
-                        <span class="tag tag-evade">Evade</span>
+                        <span class="feature-name">Garantili Gun Drop ESP</span>
+                        <span class="tag tag-mm2">MM2 Özel</span>
                     </div>
-                    <div class="feature-desc">Haritadaki tüm Nextbot'ların anlık koordinatlarını tarayarak duvar arkasından kalın kırmızı 3D kutularla görünür hale getirir.</div>
+                    <div class="feature-desc">Şerif elendiği an yere düşen silahı harita ne olursa olsun anında tarayıp parıl parıl gösteriyor, direkt gidip alıyorsun.</div>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-header">
-                        <span class="feature-name">Akıllı Auto Clicker</span>
+                        <span class="feature-name">Sanal Auto Clicker</span>
                         <span class="tag tag-exclusive">Özel</span>
                     </div>
-                    <div class="feature-desc">Ekranda serbestçe sürüklenebilen, aktifliğe göre renk değiştiren şeffaf sanal buton sistemi. İstediğin koordinata milisaniyelik tıklama sinyali gönderir.</div>
+                    <div class="feature-desc">Ekranda istediğin yere sürükle, bırak. Aktifliğe göre renk değiştiren bu şeffaf buton milisaniyede tıklama basıp işini görüyor.</div>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-header">
-                        <span class="feature-name">Safe Zone TP</span>
+                        <span class="feature-name">Güvenli Bölge TP</span>
                         <span class="tag tag-player">Karakter</span>
                     </div>
-                    <div class="feature-desc">Sıkıştığınız veya köşeye kapana kısıldığınız acil durumlarda haritanın rakipler tarafından erişilemeyen en uç tepe noktasına anlık ışınlanma.</div>
+                    <div class="feature-desc">Köşeye mi sıkıştın? Tek tuşla haritanın kimsenin ulaşamayacağı en uç noktasına anlık ışınlanıp keyfine bakıyorsun.</div>
                 </div>
 
             </div>
         </section>
 
         <section id="komut-listesi">
-            <h2 class="section-title">Detaylı Komut & Arayüz Tablosu</h2>
+            <h2 class="section-title">İçeride Neler Var? (Tam Liste)</h2>
             <div class="commands-section">
                 <table>
                     <thead>
                         <tr>
-                            <th>Özellik / Komut</th>
-                            <th>Arayüz Sekmesi</th>
-                            <th>Çalısma Mantığı & Açıklama</th>
-                            <th>Platform</th>
+                            <th>Hile / Özellik</th>
+                            <th>Menü Sekmesi</th>
+                            <th>Arka Plandaki Olayı</th>
+                            <th>Durum</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
+                            <td><span class="cmd-name">Full Bright & ESP</span></td>
+                            <td>Visuals</td>
+                            <td>Haritayı aydınlatır, oyuncuları kalın kırmızı 3D kutularla görünür yapar.</td>
+                            <td>Aktif</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cmd-name">Gelişmiş Noclip</span></td>
+                            <td>Karakter</td>
+                            <td>Karakter parçalarının CanCollide verisini silerek engelleri yok eder.</td>
+                            <td>Aktif</td>
+                        </tr>
+                        <tr>
                             <td><span class="cmd-name">Akıllı Kill Aura</span></td>
                             <td>MM2 Combat</td>
-                            <td>Karakterleri lobi yüksekliği ve şeffaflık durumuna göre süzerek yaşayan hedeflere ışınlanıp bıçak sallar.</td>
-                            <td>Mobil / PC</td>
+                            <td>Yaşayan masumları süzüp arkalarına ışınlanır ve direkt bıçağı takar.</td>
+                            <td>Aktif</td>
                         </tr>
                         <tr>
                             <td><span class="cmd-name">Gun Drop ESP</span></td>
                             <td>MM2 Visuals</td>
-                            <td>Yere düşen sahipsiz silah modellerine duvar arkasından parlayan Turuncu Highlight ve 3D Metin ekler.</td>
-                            <td>Mobil / PC</td>
+                            <td>Yerdeki sahipsiz silahı duvar arkasından turuncu parlamayla gösterir.</td>
+                            <td>Aktif</td>
                         </tr>
                         <tr>
                             <td><span class="cmd-name">Counter Teleport</span></td>
                             <td>MM2 Combat</td>
-                            <td>Katil bıçakla yaklaştığı an otomatik olarak arkasına ışınlanıp şerif koruması sağlar.</td>
-                            <td>Mobil / PC</td>
+                            <td>Katil bıçakla yaklaştığı an otomatik arkasına geçip şerife koruma sağlar.</td>
+                            <td>Aktif</td>
                         </tr>
                         <tr>
                             <td><span class="cmd-name">Predictive Aim</span></td>
                             <td>MM2 Aimbot</td>
-                            <td>Katilin anlık hareket vektörlerini hesaplayarak kamera açısını doğrudan hedefe kilitler.</td>
-                            <td>Mobil / PC</td>
+                            <td>Katilin anlık hareket vektörlerini hesaplayıp kamerayı kitler.</td>
+                            <td>Aktif</td>
                         </tr>
                         <tr>
                             <td><span class="cmd-name">Kamera Fly (360°)</span></td>
-                            <td>Karakter / Movement</td>
-                            <td>Joystick ve WASD girdilerini kameranın LookVector verisine bağlayarak bakılan yöne uçurur.</td>
-                            <td>Mobil / PC</td>
+                            <td>Movement</td>
+                            <td>Joystick ve WASD girdilerini kameranın LookVector verisine bağlayıp uçurur.</td>
+                            <td>Aktif</td>
                         </tr>
                         <tr>
                             <td><span class="cmd-name">Yürüme Hızı</span></td>
                             <td>Karakter</td>
-                            <td>Slider üzerinden karakterin WalkSpeed değerini anlık günceller.</td>
-                            <td>Mobil / PC</td>
+                            <td>Slider üzerinden karakterin WalkSpeed değerini anlık uçurur.</td>
+                            <td>Aktif</td>
                         </tr>
                         <tr>
                             <td><span class="cmd-name">Sonsuz Zıplama</span></td>
                             <td>Karakter</td>
-                            <td>JumpRequest eventini dinleyerek havada sınırsız zıplama sağlar.</td>
-                            <td>Mobil / PC</td>
-                        </tr>
-                        <tr>
-                            <td><span class="cmd-name">Noclip</span></td>
-                            <td>Karakter</td>
-                            <td>Karakter parçalarının CanCollide özelliğini kapatarak duvarlardan geçmeyi sağlar.</td>
-                            <td>Mobil / PC</td>
-                        </tr>
-                        <tr>
-                            <td><span class="cmd-name">Otomatik Canlandırma</span></td>
-                            <td>Evade Özel</td>
-                            <td>ReviveRemote eventini 15 birim menzildeki Downed oyuncular için tetikler.</td>
-                            <td>Mobil / PC</td>
-                        </tr>
-                        <tr>
-                            <td><span class="cmd-name">Anında Yeniden Doğma</span></td>
-                            <td>Evade Özel</td>
-                            <td>Öldüğünüz an lobi bekleme süresini atlayarak Respawn sinyali gönderir.</td>
-                            <td>Mobil / PC</td>
+                            <td>JumpRequest eventini dinleyerek havada sınırsız zıplatır.</td>
+                            <td>Aktif</td>
                         </tr>
                         <tr>
                             <td><span class="cmd-name">Akıllı Auto Clicker</span></td>
                             <td>Auto Clicker</td>
-                            <td>Ekrandaki bağımsız hareketli butonun merkez koordinatına tıklama basar.</td>
-                            <td>Mobil / PC</td>
+                            <td>Ekrandaki bağımsız hareketli butonun merkezine çılgınlar gibi tıklar.</td>
+                            <td>Aktif</td>
                         </tr>
                         <tr>
                             <td><span class="cmd-name">Hitbox Genişletici</span></td>
                             <td>Aimbot</td>
-                            <td>Diğer oyuncuların HumanoidRootPart boyutlarını büyüterek hedef almayı kolaylaştırır.</td>
-                            <td>Mobil / PC</td>
-                        </tr>
-                        <tr>
-                            <td><span class="cmd-name">Nextbot ESP</span></td>
-                            <td>Görsel ESP</td>
-                            <td>Haritadaki "Bot" modellerine kırmızı BoxHandleAdornment objesi ekler.</td>
-                            <td>Mobil / PC</td>
+                            <td>Rakiplerin HumanoidRootPart boyutlarını büyüterek vurmayı kolaylaştırır.</td>
+                            <td>Aktif</td>
                         </tr>
                         <tr>
                             <td><span class="cmd-name">Anti-AFK</span></td>
                             <td>Ekstra</td>
-                            <td>Idled eventini dinleyerek oyundan düşmenizi (Error 267) engeller.</td>
-                            <td>Mobil / PC</td>
+                            <td>Idled eventini bozarak oyundan düşmeni (Error 267) tamamen engeller.</td>
+                            <td>Aktif</td>
                         </tr>
                     </tbody>
                 </table>
@@ -645,38 +629,38 @@
         </section>
 
         <section id="rehber" class="guide-box">
-            <h2 class="section-title">Kurulum ve Çalıştırma Rehberi</h2>
+            <h2 class="section-title">Hemen Çalıştır (2 Dakikalık Olay)</h2>
             <div class="step-list">
                 
                 <div class="step-item">
                     <div class="step-number">1</div>
                     <div class="step-text">
-                        <h4>Güvenilir Bir Executor Seçin</h4>
-                        <p>Mobil cihazınızda (Tablet/Telefon) veya bilgisayarınızda Roblox üzerinde script çalıştırabilen güncel bir entegratör (Executor) açın.</p>
+                        <h4>Executor'ı Ateşle</h4>
+                        <p>İster mobilde ol ister PC'de, scriptleri sorunsuz çalıştıran güncel bir entegratörünü (Executor) arkada aç.</p>
                     </div>
                 </div>
 
                 <div class="step-item">
                     <div class="step-number">2</div>
                     <div class="step-text">
-                        <h4>Ana Kodu Kopyalayın ve Çalıştırın</h4>
-                        <p>Yukarıdaki kopyalama alanından tek tıkla script kodunu alın, executor içerisine yapıştırın ve 'Execute' butonuna basın.</p>
+                        <h4>Kodu Kap ve Yapıştır</h4>
+                        <p>Yukarıdaki alandan tek tıkla kodu kopyala, executor'ın içine at ve 'Execute' tuşuna bas geç.</p>
                     </div>
                 </div>
 
                 <div class="step-item">
                     <div class="step-number">3</div>
                     <div class="step-text">
-                        <h4>Arayüzü Yönetin</h4>
-                        <p>Ekranın sol üst köşesine gelen <strong>⚽ (Futbol Topu)</strong> ikonuna dokunarak Rayfield hile menüsünü dilediğiniz an açıp kapatabilirsiniz.</p>
+                        <h4>Arayüze Hükmet</h4>
+                        <p>Ekranın sol üstüne düşen <strong>⚽ (Futbol Topu)</strong> ikonuna dokunarak Rayfield menüsünü istediğin an açıp gizle.</p>
                     </div>
                 </div>
 
                 <div class="step-item">
                     <div class="step-number">4</div>
                     <div class="step-text">
-                        <h4>Akıllı Butonu Sürükleyin</h4>
-                        <p>Auto Clicker sekmesinden sistemi açtığınızda gelen yeşil/kırmızı yuvarlak butonu parmağınızla ekrandaki hedef noktanın üzerine taşıyıp tek dokunuşla başlatın.</p>
+                        <h4>Clicker'ı Sürükle Yerleştir</h4>
+                        <p>Auto Clicker'ı açınca gelen yuvarlak butonu parmağınla tıklatmak istediğin yere çek, tek tıkla canavarı başlat.</p>
                     </div>
                 </div>
 
@@ -686,7 +670,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 Qeat Hub. Tüm hakları saklıdır. Geliştirici: <a href="#">Qeat</a></p>
+        <p>&copy; 2026 Qeat Hub. Geliştirici: <a href="#">Qeat</a></p>
     </footer>
 
     <script>
@@ -695,15 +679,15 @@
             var btn = document.getElementById("copyBtn");
             
             navigator.clipboard.writeText(codeText).then(function() {
-                btn.innerText = "Kopyalandı! ✓";
+                btn.innerText = "Kapıldı! ✓";
                 btn.classList.add("copied");
                 
                 setTimeout(function() {
-                    btn.innerText = "Kodu Kopyala";
+                    btn.innerText = "Kodu Kap";
                     btn.classList.remove("copied");
                 }, 2000);
             }).catch(function(err) {
-                console.error("Kod kopyalanamadı: ", err);
+                console.error("Kopyalanamadı: ", err);
             });
         }
     </script>
