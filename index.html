@@ -6,18 +6,18 @@
     <title>QeatHub v2.1 | Official</title>
     <style>
         
-/*    ====================================================================
+/* ====================================================================
 
 	
- █████████▄     ▄████████    ▄████████  ▀███████████▀  ███    ███▀ ███    ███▀ █████████▄   
- ███    ███    ███    ███   ███    ███       ███       ███    ███  ███    ███  ███    ███  
- ███    ███    ███    █▀    ███    ███       ███       ███    ███  ███    ███  ███    ███  
- ███    ███   ▄███▄▄▄       ███    ███       ███       ██████████  ███    ███ ▄███▄▄▄██▀   
- ███    ███  ▀▀███▀▀▀     ▀███████████       ███       ███    ███  ███    ███ ▀███▀▀▀██▄   
- ███    ███    ███    █▄    ███    ███       ███       ███    ███  ███    ███  ███    ███  
- ███  ▄ ███    ███    ███   ███    ███       ███       ███    ███  ███    ███  ███    ███  
- ▀████████▀     ██████████   ███    █▀      ▄███▄      ███    ███  ▀████████▀ ▄█████████▀   
-      ▀▀
+ █████████▄      ▄████████    ▄████████  ▀███████████▀  ███    ███▀ ███    ███▀ █████████▄   
+ ███    ███     ███    ███   ███    ███       ███       ███    ███  ███    ███  ███    ███  
+ ███    ███     ███    █▀    ███    ███       ███       ███    ███  ███    ███  ███    ███  
+ ███    ███    ▄███▄▄▄       ███    ███       ███       ██████████  ███    ███ ▄███▄▄▄██▀   
+ ███    ███   ▀▀███▀▀▀     ▀███████████       ███       ███    ███  ███    ███ ▀███▀▀▀██▄   
+ ███    ███     ███    █▄    ███    ███       ███       ███    ███  ███    ███  ███    ███  
+ ███  ▄ ███     ███    ███   ███    ███       ███       ███    ███  ███    ███  ███    ███  
+ ▀████████▀      ██████████   ███    █▀      ▄███▄      ███    ███  ▀████████▀ ▄█████████▀   
+       ▀▀
 	====================================================================
 	  - QeatHub Universal
 	====================================================================
@@ -228,12 +228,12 @@
             border-radius: 12px;
         }
 
-        .stat-item h3 {
+        .stats .stat-item h3 {
             font-size: 28px;
             color: #ffcc00;
         }
 
-        .stat-item p {
+        .stats .stat-item p {
             font-size: 12px;
             color: #71717a;
             text-transform: uppercase;
@@ -313,6 +313,7 @@
         .tag-evade { background-color: rgba(234, 179, 8, 0.15); color: #eab308; }
         .tag-player { background-color: rgba(59, 130, 246, 0.15); color: #3b82f6; }
         .tag-exclusive { background-color: rgba(168, 85, 247, 0.15); color: #a855f7; }
+        .tag-mm2 { background-color: rgba(236, 72, 153, 0.15); color: #ec4899; }
 
         .feature-desc {
             font-size: 14px;
@@ -446,7 +447,7 @@
 
     <section class="hero">
         <h1>Yeni Geldik <span>Ama Bilgimizle</span></h1>
-        <p>QeatHub v2.1, optimize edilmiş altyapısı ve akıllı mobil buton teknolojisiyle oyun deneyimini en üst seviyeye taşı!</p>
+        <p>QeatHub v2.1, optimize edilmiş altyapısı, kusursuz 360° kamera yönlü uçma motoru ve akıllı MM2 korumalarıyla oyun deneyimini en üst seviyeye taşı!</p>
         
         <div class="script-box-container">
             <div class="script-code" id="scriptCode">loadstring(game:HttpGet("https://raw.githubusercontent.com/qeats-tec/QeatHub/refs/heads/main/main.lua"))()</div>
@@ -459,12 +460,12 @@
 
         <div class="stats">
             <div class="stat-item">
-                <h3>7+</h3>
-                <p>Aktif Sekme</p>
+                <h3>20+</h3>
+                <p>Aktif Özellik</p>
             </div>
             <div class="stat-item">
                 <h3>%100</h3>
-                <p>Mobil Uyumlu</p>
+                <p>Mobil / PC Uyumlu</p>
             </div>
             <div class="stat-item">
                 <h3>0ms</h3>
@@ -481,10 +482,34 @@
                 
                 <div class="feature-card">
                     <div class="feature-header">
-                        <span class="feature-name">Akıllı Auto Clicker</span>
-                        <span class="tag tag-exclusive">Özel</span>
+                        <span class="feature-name">Akıllı Kill Aura</span>
+                        <span class="tag tag-mm2">MM2 Özel</span>
                     </div>
-                    <p class="feature-desc">Ekranda serbestçe sürüklenebilen, aktifliğe göre renk değiştiren şeffaf sanal buton sistemi. İstediğin koordinata milisaniyelik tıklama sinyali gönderir.</p>
+                    <div class="feature-desc">Lobideki ve izleyici modundaki ölü oyuncuları filtreleyen, sadece haritadaki canlı masumların arkasına sinsi gibi ışınlanıp saniyede vuran devrimsel aura sistemi.</div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <span class="feature-name">Garantili Gun Drop ESP</span>
+                        <span class="tag tag-mm2">MM2 Özel</span>
+                    </div>
+                    <div class="feature-desc">Şerif öldüğünde yere düşen silahı, harita ve model isminden bağımsız olarak anında tarayan ve duvar arkasından neon turuncu parlamayla (Highlight) gösteren takip sistemi.</div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <span class="feature-name">Kamera Yönlü 360° Fly</span>
+                        <span class="tag tag-player">Evrensel</span>
+                    </div>
+                    <div class="feature-desc">Hem bilgisayarda hem de mobil dokunmatik joysticklerde kamerayı çevirdiğiniz yöne (Yukarı, Aşağı, Çapraz) dikey eksende pürüzsüzce uçmanızı sağlayan gelişmiş uçma motoru.</div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <span class="feature-name">Predictive Aim (Şerif)</span>
+                        <span class="tag tag-mm2">MM2 Özel</span>
+                    </div>
+                    <div class="feature-desc">Şerif olduğunuzda katilin hızını ve hareket yönünü hesaplayarak kamerayı doğrudan katilin kafasına kitleyen ve mermilerin asla sekmemesini sağlayan kilit sistemi.</div>
                 </div>
 
                 <div class="feature-card">
@@ -492,7 +517,7 @@
                         <span class="feature-name">Otomatik Canlandırma</span>
                         <span class="tag tag-evade">Evade</span>
                     </div>
-                    <p class="feature-desc">Yere düşen takım arkadaşlarınızın yanına yaklaştığınız an, tuş kilidine basmanıza gerek kalmadan server tabanlı otomatik ayağa kaldırma protokolü.</p>
+                    <div class="feature-desc">Yere düşen takım arkadaşlarınızın yanına yaklaştığınız an, tuş kilidine basmanıza gerek kalmadan server tabanlı otomatik ayağa kaldırma protokolü.</div>
                 </div>
 
                 <div class="feature-card">
@@ -500,23 +525,15 @@
                         <span class="feature-name">Nextbot ESP</span>
                         <span class="tag tag-evade">Evade</span>
                     </div>
-                    <p class="feature-desc">Haritadaki tüm Nextbot'ların anlık koordinatlarını tarayarak duvar arkasından kalın kırmızı 3D kutularla görünür hale getirir.</p>
+                    <div class="feature-desc">Haritadaki tüm Nextbot'ların anlık koordinatlarını tarayarak duvar arkasından kalın kırmızı 3D kutularla görünür hale getirir.</div>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-header">
-                        <span class="feature-name">Air Strafe</span>
-                        <span class="tag tag-player">EVADE</span>
+                        <span class="feature-name">Akıllı Auto Clicker</span>
+                        <span class="tag tag-exclusive">Özel</span>
                     </div>
-                    <p class="feature-desc">Zıplama ve serbest düşüş anlarında karakterin yön değiştirme ivmesini arttırarak nextbot havada kıvrak manevralarla kaçmanızı sağlar.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-header">
-                        <span class="feature-name">Otomatik Ödül Toplama</span>
-                        <span class="tag tag-evade">Evade</span>
-                    </div>
-                    <p class="feature-desc">Harita üzerinde rastgele beliren Ticket ve Token objelerinin dokunma eventlerini simüle ederek oturduğunuz yerden hepsini envanterinize çeker.</p>
+                    <div class="feature-desc">Ekranda serbestçe sürüklenebilen, aktifliğe göre renk değiştiren şeffaf sanal buton sistemi. İstediğin koordinata milisaniyelik tıklama sinyali gönderir.</div>
                 </div>
 
                 <div class="feature-card">
@@ -524,7 +541,7 @@
                         <span class="feature-name">Safe Zone TP</span>
                         <span class="tag tag-player">Karakter</span>
                     </div>
-                    <p class="feature-desc">Sıkıştığınız veya köşeye kapana kısıldığınız acil durumlarda haritanın rakipler tarafından erişilemeyen en uç tepe noktasına anlık ışınlanma.</p>
+                    <div class="feature-desc">Sıkıştığınız veya köşeye kapana kısıldığınız acil durumlarda haritanın rakipler tarafından erişilemeyen en uç tepe noktasına anlık ışınlanma.</div>
                 </div>
 
             </div>
@@ -543,6 +560,36 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <tr>
+                            <td><span class="cmd-name">Akıllı Kill Aura</span></td>
+                            <td>MM2 Combat</td>
+                            <td>Karakterleri lobi yüksekliği ve şeffaflık durumuna göre süzerek yaşayan hedeflere ışınlanıp bıçak sallar.</td>
+                            <td>Mobil / PC</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cmd-name">Gun Drop ESP</span></td>
+                            <td>MM2 Visuals</td>
+                            <td>Yere düşen sahipsiz silah modellerine duvar arkasından parlayan Turuncu Highlight ve 3D Metin ekler.</td>
+                            <td>Mobil / PC</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cmd-name">Counter Teleport</span></td>
+                            <td>MM2 Combat</td>
+                            <td>Katil bıçakla yaklaştığı an otomatik olarak arkasına ışınlanıp şerif koruması sağlar.</td>
+                            <td>Mobil / PC</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cmd-name">Predictive Aim</span></td>
+                            <td>MM2 Aimbot</td>
+                            <td>Katilin anlık hareket vektörlerini hesaplayarak kamera açısını doğrudan hedefe kilitler.</td>
+                            <td>Mobil / PC</td>
+                        </tr>
+                        <tr>
+                            <td><span class="cmd-name">Kamera Fly (360°)</span></td>
+                            <td>Karakter / Movement</td>
+                            <td>Joystick ve WASD girdilerini kameranın LookVector verisine bağlayarak bakılan yöne uçurur.</td>
+                            <td>Mobil / PC</td>
+                        </tr>
                         <tr>
                             <td><span class="cmd-name">Yürüme Hızı</span></td>
                             <td>Karakter</td>
