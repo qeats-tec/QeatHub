@@ -1,3 +1,10 @@
+--[[
+	====================================================================
+	  - QeatHub Universal Premium // Murder Mystery 2 Module
+	  - File: games/mm2.lua [GUN DROP ESP, SAFE ZONE & AUTO GRAB + RETURN]
+	====================================================================
+]]
+
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local Workspace = game:GetService("Workspace")
@@ -6,6 +13,7 @@ local LocalPlayer = Players.LocalPlayer
 local SafePlatform = nil
 local GunDropAlerted = false
 local ActiveGunHighlight = nil
+local GrabCooldown = false -- Silahı aldıktan sonra sonsuz döngüye girmeyi engelleyen kilit
 
 -- 🔍 ASLA KAÇIRMAYAN AGRESİF SİLAH TARAYICI
 local function UltimateFindGun()
@@ -96,6 +104,38 @@ RunService.Heartbeat:Connect(function()
                 end
                 GunDropAlerted = true
             end
+
+            -- ==========================================================
+            -- ⚡ 3️⃣ GUN DROP AUTO-TP & INSTANT RETURN MOTORU (YENİ)
+            -- ==========================================================
+            if _G.Config.Toggles.AutoGrabGun and not GrabCooldown and LocalPlayer.Character then
+                local hrp = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+                local hum = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+                
+                if hrp and hum and hum.Health > 0 then
+                    -- Kilidi aktif et ki işlem bitene kadar döngü burayı tekrar tetiklemesin
+                    GrabCooldown = true
+                    
+                    -- A-1: Işınlanmadan önceki tam güvenli konumunu hafızaya kaydet
+                    local previousCFrame = hrp.CFrame
+                    print("[QeatHub]: Silah kapma operasyonu başladı. Eski yer kilitlendi.")
+                    
+                    -- A-2: Silahın tam üzerine milisaniyede ışınlan (0.5 sapma ile tam üstü)
+                    hrp.CFrame = gunPart.CFrame + Vector3.new(0, 1, 0)
+                    
+                    -- A-3: Silahı envantere çekebilmek için milisaniyelik ping/dokunma payı bekle
+                    task.wait(0.18) 
+                    
+                    -- A-4: Silahı aldın! Şimdi milisaniyede başladığın eski güvenli yerine geri fırlat!
+                    hrp.CFrame = previousCFrame
+                    print("[QeatHub]: Silah envanterde! Eski konuma geri dönüldü.")
+                    
+                    -- Aynı silah için sürekli döngü yapıp karakteri bozmasın diye kısa bir koruma beklemesi
+                    task.delay(2, function()
+                        GrabCooldown = false
+                    end)
+                end
+            end
         else
             -- Silah lobiye döndüyse veya birisi aldıysa ESP'yi temizle
             if ActiveGunHighlight then ActiveGunHighlight:Destroy() ActiveGunHighlight = nil end
@@ -109,6 +149,7 @@ end)
 Workspace.ChildAdded:Connect(function(child)
     if child.Name == "Normal" or child:IsA("Model") then
         GunDropAlerted = false
+        GrabCooldown = false
         if ActiveGunHighlight then ActiveGunHighlight:Destroy() ActiveGunHighlight = nil end
     end
 end)
