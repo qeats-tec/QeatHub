@@ -1,7 +1,7 @@
 --[[
 	====================================================================
-	  - QeatHub Premium // Modern Key Auth Interface
-	  - File: key.lua (Render Integrated)
+	  - QeatHub Premium // Modern Key Auth Interface + Loadstring Loader
+	  - File: key.lua (Render & GitHub Integrated)
 	====================================================================
 ]]
 
@@ -11,9 +11,14 @@ local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
 local LocalPlayer = Players.LocalPlayer
 
--- 🌍 RENDER SUNUCU ADRESİN (Aktif Edildi)
+-- 🌍 ADRESLER (Render ve GitHub Bağlantıların)
 local serverUrl = "https://qh-key.onrender.com/api/verify"
 local discordLink = "https://discord.gg/cQwh3Fhq"
+-- Ana hilenin GitHub üzerindeki RAW (ham metin) bağlantısı:
+local mainScriptUrl = "https://raw.githubusercontent.com/qeats-tec/QeatHub/refs/heads/main/main.lua"
+
+-- 🔑 KULLANICI KEY GİRİŞİ (Oyuncu anahtarını buraya yapıştıracak veya UI'dan girecek)
+local user_key_input = "KEY_BURAYA_GELECEK"
 
 -- ==========================================================
 -- 🎬 ARAYÜZ KURULUMU (SİBER / HACKER TEMALI)
@@ -27,18 +32,17 @@ ScreenGui.Name = "QeatHUB_AuthSystem"
 ScreenGui.ResetOnSpawn = false
 ScreenGui.Parent = LocalPlayer.PlayerGui
 
--- Ana Panel Frame
 local MainAuthFrame = Instance.new("Frame", ScreenGui)
 MainAuthFrame.Size = UDim2.new(0, 360, 0, 240)
 MainAuthFrame.Position = UDim2.new(0.5, -180, 0.5, -120)
-MainAuthFrame.BackgroundColor3 = Color3.fromRGB(6, 6, 8) -- Cyber Dark Arka Plan
+MainAuthFrame.BackgroundColor3 = Color3.fromRGB(6, 6, 8)
 MainAuthFrame.BorderSizePixel = 0
 
 local FrameCorner = Instance.new("UICorner", MainAuthFrame)
 FrameCorner.CornerRadius = UDim.new(0, 10)
 
 local FrameStroke = Instance.new("UIStroke", MainAuthFrame)
-FrameStroke.Color = Color3.fromRGB(255, 204, 0) -- Neon Sarı Accent
+FrameStroke.Color = Color3.fromRGB(255, 204, 0)
 FrameStroke.Thickness = 1.5
 
 -- Sürükleme Motoru (UIS)
@@ -57,7 +61,6 @@ UserInputService.InputChanged:Connect(function(input)
     end
 end)
 
--- Başlık Yazısı
 local TitleLabel = Instance.new("TextLabel", MainAuthFrame)
 TitleLabel.Size = UDim2.new(1, 0, 0, 40)
 TitleLabel.BackgroundTransparency = 1
@@ -66,7 +69,6 @@ TitleLabel.TextColor3 = Color3.fromRGB(255, 204, 0)
 TitleLabel.Font = Enum.Font.Code
 TitleLabel.TextSize = 16
 
--- Discord Bilgilendirme Alanı
 local DiscordLabel = Instance.new("TextLabel", MainAuthFrame)
 DiscordLabel.Size = UDim2.new(0.9, 0, 0, 35)
 DiscordLabel.Position = UDim2.new(0.05, 0, 0.22, 0)
@@ -77,7 +79,6 @@ DiscordLabel.Font = Enum.Font.Code
 DiscordLabel.TextSize = 11
 DiscordLabel.TextWrapped = true
 
--- Discord Link Kopyalama Butonu
 local CopyBtn = Instance.new("TextButton", MainAuthFrame)
 CopyBtn.Size = UDim2.new(0.5, 0, 0, 24)
 CopyBtn.Position = UDim2.new(0.25, 0, 0.38, 0)
@@ -90,12 +91,11 @@ Instance.new("UICorner", CopyBtn).CornerRadius = UDim.new(0, 4)
 Instance.new("UIStroke", CopyBtn).Color = Color3.fromRGB(40, 40, 50)
 
 CopyBtn.MouseButton1Click:Connect(function()
-    setclipboard(discordLink)
+    if setclipboard then setclipboard(discordLink) end
     CopyBtn.Text = "Kopyalandı!"
     task.delay(2, function() CopyBtn.Text = "Linki Kopyala" end)
 end)
 
--- Key Giriş Kutusu (TextBox)
 local KeyInputBox = Instance.new("TextBox", MainAuthFrame)
 KeyInputBox.Size = UDim2.new(0.8, 0, 0, 36)
 KeyInputBox.Position = UDim2.new(0.1, 0, 0.55, 0)
@@ -110,7 +110,6 @@ Instance.new("UICorner", KeyInputBox).CornerRadius = UDim.new(0, 6)
 local BoxStroke = Instance.new("UIStroke", KeyInputBox)
 BoxStroke.Color = Color3.fromRGB(40, 40, 50)
 
--- Durum Bildirim Yazısı (Hataları veya Başarıyı Gösterecek)
 local StatusLabel = Instance.new("TextLabel", MainAuthFrame)
 StatusLabel.Size = UDim2.new(1, 0, 0, 20)
 StatusLabel.Position = UDim2.new(0, 0, 0.72, 0)
@@ -120,7 +119,6 @@ StatusLabel.TextColor3 = Color3.fromRGB(255, 204, 0)
 StatusLabel.Font = Enum.Font.Code
 StatusLabel.TextSize = 11
 
--- Onayla Butonu (Submit Button)
 local SubmitBtn = Instance.new("TextButton", MainAuthFrame)
 SubmitBtn.Size = UDim2.new(0.4, 0, 0, 32)
 SubmitBtn.Position = UDim2.new(0.3, 0, 0.82, 0)
@@ -134,7 +132,7 @@ local BtnStroke = Instance.new("UIStroke", SubmitBtn)
 BtnStroke.Color = Color3.fromRGB(255, 204, 0)
 
 -- ==========================================================
--- 🔒 BACKEND API SORGULAMA MOTORU
+-- 🔒 API SORGULAMA MOTORU
 -- ==========================================================
 local function checkKeyWithRender(enteredKey)
     local data = { key = enteredKey }
@@ -152,7 +150,7 @@ local function checkKeyWithRender(enteredKey)
             return false, responseData.message or "Geçersiz anahtar!"
         end
     else
-        return false, "Sunucu hatası veya geçersiz port bağlantısı!"
+        return false, "Sunucu hatası veya sunucu şu an kapalı!"
     end
 end
 
@@ -168,29 +166,35 @@ SubmitBtn.MouseButton1Click:Connect(function()
     StatusLabel.Text = "⚡ Doğrulanıyor..."
     StatusLabel.TextColor3 = Color3.fromRGB(255, 204, 0)
 
-    task.wait(0.5) -- Gerçekçi bir sorgu hissi için ufak bir bekleme
+    task.wait(0.5)
 
     local isValid, msg = checkKeyWithRender(enteredKey)
 
     if isValid then
-        -- BAŞARILI DURUMU
         StatusLabel.Text = "✅ " .. msg
         StatusLabel.TextColor3 = Color3.fromRGB(0, 255, 120)
         FrameStroke.Color = Color3.fromRGB(0, 255, 120)
         BtnStroke.Color = Color3.fromRGB(0, 255, 120)
         
-        task.wait(1.5)
+        task.wait(1)
         ScreenGui:Destroy() -- Giriş ekranını kapat
 
         -- ==========================================================
-        -- 🚀 MAİN SCRIPT TETİKLEME (QeatHub v4.1 Girişi)
+        -- 🚀 LOADSTRING KÖPRÜSÜ (GitHub'dan main.lua Çekiliyor)
         -- ==========================================================
-        -- Buraya testlerin tamamen bittiğinde senin main.lua kodlarını
-        -- veya GitHub raw üzerinden yükleme motorunu bağlayacağız.
-        print("[QeatHub Auth]: Başarılı! Sistem arayüze geçiş yapıyor.")
+        local loadSuccess, loadResult = pcall(function()
+            -- GitHub'dan ana menü kodunu string olarak indirip çalıştırır
+            return loadstring(game:HttpGet(mainScriptUrl))()
+        end)
+
+        if loadSuccess then
+            print("[QeatHub]: Ana menü internetten başarıyla yüklendi ve tetiklendi.")
+        else
+            -- Eğer GitHub linkinde hata varsa veya loadstring desteklenmiyorsa konsola basar
+            warn("🔴 [QeatHub Yükleme Hatası]: Ana script yüklenirken hata oluştu: " .. tostring(loadResult))
+        end
         
     else
-        -- BAŞARISIZ DURUMU
         StatusLabel.Text = "❌ " .. msg
         StatusLabel.TextColor3 = Color3.fromRGB(255, 60, 60)
         FrameStroke.Color = Color3.fromRGB(255, 60, 60)
