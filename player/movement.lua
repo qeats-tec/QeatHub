@@ -24,28 +24,39 @@ RunService.Heartbeat:Connect(function()
     end
 end)
 
--- 🔒 KUSURSUZ VE GÜNCEL NOCLIP MOTORU (YENİLENDİ)
+-- 🔒 KUSURSUZ VE GÜNCEL NOCLIP MOTORU (Tamamen Yenilendi)
 RunService.Stepped:Connect(function()
     if _G.Config.Toggles.Noclip and LocalPlayer.Character then
-        local hum = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+        local char = LocalPlayer.Character
+        local hum = char:FindFirstChildOfClass("Humanoid")
+        local hrp = char:FindFirstChild("HumanoidRootPart")
         
-        -- Karakterin tüm parçalarının (HumanoidRootPart dahil) çarpışmasını kapatıyoruz
-        for _, part in ipairs(LocalPlayer.Character:GetDescendants()) do
+        -- Karakterin tüm parçalarının çarpışmasını kapatıyoruz
+        for _, part in ipairs(char:GetDescendants()) do
             if part:IsA("BasePart") then
                 part.CanCollide = false
             end
         end
         
-        -- Fizik motorunun karakteri yukarı itmesini engellemek için durumu sabitliyoruz
-        if hum and not hum.PlatformStand then
-            hum.PlatformStand = true
+        -- Karakterin durumunu NoClip moduna zorluyoruz (Yürüme kabiliyetini kaybetmez)
+        if hum then
+            if hum:GetState() ~= Enum.HumanoidStateType.NoClip then
+                hum:ChangeState(Enum.HumanoidStateType.NoClip)
+            end
+        end
+        
+        -- Karakter kalın duvarların içinde takılmasın veya geriye fırlatılmasın diye 
+        -- eğer Fly aktif değilse ve yürüyorsa, hareket yönüne doğru CFrame itmesi uyguluyoruz.
+        if hrp and hum and not _G.Config.Toggles.Fly and hum.MoveDirection.Magnitude > 0 then
+            local speedFactor = hum.WalkSpeed * 0.016
+            hrp.CFrame = hrp.CFrame + (hum.MoveDirection * speedFactor)
         end
     else
-        -- Noclip kapatıldığında veya kapalıysa, PlatformStand'i eski haline getir (Fly açık değilse)
+        -- Noclip kapatıldığında karakteri normal fizik durumuna döndür (Fly açık değilse)
         if LocalPlayer.Character and not _G.Config.Toggles.Fly then
             local hum = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-            if hum wholesalers and hum.PlatformStand then
-                hum.PlatformStand = false
+            if hum and hum:GetState() == Enum.HumanoidStateType.NoClip then
+                hum:ChangeState(Enum.HumanoidStateType.Running)
             end
         end
     end
