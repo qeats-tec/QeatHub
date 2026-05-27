@@ -1,7 +1,7 @@
 --[[
 	====================================================================
 	  - QeatHub Universal Premium
-	  - Edition: v4.0 [DEHŞET ANIMATED & MODERN SIBER UI]
+	  - Edition: v4.1 [MINI MODE & ANIMATED MODERN UI]
 	====================================================================
 ]]
 
@@ -44,7 +44,6 @@ ScreenGui.ResetOnSpawn = false
 ScreenGui.Parent = LocalPlayer.PlayerGui
 _G.MainGuiInstance = ScreenGui
 
--- Kulakları Çınlatan Bildirim Sistemi
 local WarningSound = Instance.new("Sound", Workspace)
 WarningSound.SoundId = "rbxassetid://1222213261"
 WarningSound.Volume = 2
@@ -67,7 +66,7 @@ _G.ShowWarning = function(text)
 end
 
 -- ==========================================================
--- 🎬 1. İŞ: DEHŞET AÇILIŞ VE LOGO ANİMASYONU (INTRO)
+-- 🎬 İNTRO & LOGO ANİMASYONU
 -- ==========================================================
 local IntroFrame = Instance.new("Frame", ScreenGui)
 IntroFrame.Size = UDim2.new(0, 300, 0, 150)
@@ -105,13 +104,13 @@ IntroSubText.TextSize = 14
 IntroSubText.TextTransparency = 1
 
 -- ==========================================================
--- 🛠️ 2. İŞ: MODERN SİBER ANA MENÜ (BAŞLANGIÇTA GİZLİ)
+-- 🛠️ ANA PANEL (MODERN SİBER TEMALI)
 -- ==========================================================
 local MainFrame = Instance.new("Frame", ScreenGui)
 MainFrame.Size = UDim2.new(0, 440, 0, 320)
-MainFrame.Position = UDim2.new(0.5, -220, 1.2, 0) -- Ekranın altından fırlayacak animasyon için
-MainFrame.BackgroundColor3 = Color3.fromRGB(8, 8, 10) -- Modern siber derin siyah arka plan
-MainFrame.BackgroundTransparency = 0.05 -- Hafif şeffaf mat cam efekti
+MainFrame.Position = UDim2.new(0.5, -220, 1.2, 0) -- Giriş animasyonu için aşağıda başlıyor
+MainFrame.BackgroundColor3 = Color3.fromRGB(8, 8, 10)
+MainFrame.BackgroundTransparency = 0.05
 MainFrame.BorderSizePixel = 0
 MainFrame.Active = false
 MainFrame.Visible = false
@@ -129,14 +128,24 @@ TitleBar.BackgroundColor3 = Color3.fromRGB(14, 14, 18)
 Instance.new("UICorner", TitleBar).CornerRadius = UDim.new(0, 12)
 
 local TitleText = Instance.new("TextLabel", TitleBar)
-TitleText.Size = UDim2.new(0.8, 0, 1, 0)
+TitleText.Size = UDim2.new(0.7, 0, 1, 0)
 TitleText.Position = UDim2.new(0.04, 0, 0, 0)
 TitleText.BackgroundTransparency = 1
-TitleText.Text = "⚽ QEATHUB v4.0 // " .. string.upper(_G.CurrentGame) .. " PREMIUM"
+TitleText.Text = "⚡ QEATHUB v4.1 // " .. string.upper(_G.CurrentGame) .. " PREMIUM"
 TitleText.TextColor3 = Color3.fromRGB(255, 204, 0)
 TitleText.Font = Enum.Font.Code
-TitleText.TextSize = 14
+TitleText.TextSize = 13
 TitleText.TextXAlignment = Enum.TextXAlignment.Left
+
+-- [ New ] Mini Mode Butonu (Kare)
+local MiniModeBtn = Instance.new("TextButton", TitleBar)
+MiniModeBtn.Size = UDim2.new(0, 32, 0, 32)
+MiniModeBtn.Position = UDim2.new(1, -72, 0, 3)
+MiniModeBtn.BackgroundTransparency = 1
+MiniModeBtn.Text = "[▢]"
+MiniModeBtn.TextColor3 = Color3.fromRGB(255, 204, 0)
+MiniModeBtn.Font = Enum.Font.Code
+MiniModeBtn.TextSize = 14
 
 local MinimizeBtn = Instance.new("TextButton", TitleBar)
 MinimizeBtn.Size = UDim2.new(0, 32, 0, 32)
@@ -158,13 +167,77 @@ TabBar.BackgroundColor3 = Color3.fromRGB(12, 12, 16)
 Instance.new("UICorner", TabBar).CornerRadius = UDim.new(0, 8)
 local TabListLayout = Instance.new("UIListLayout", TabBar); TabListLayout.Padding = UDim.new(0, 5)
 
+-- ==========================================================
+-- 🔄 [ YENİ ÖZELLİK ] MİNİ BUTON MODU (WIDGET OLUŞTURMA)
+-- ==========================================================
+local MiniWidget = Instance.new("TextButton", ScreenGui)
+MiniWidget.Size = UDim2.new(0, 45, 0, 45)
+MiniWidget.Position = UDim2.new(0.02, 0, 0.2, 0)
+MiniWidget.BackgroundColor3 = Color3.fromRGB(8, 8, 10)
+MiniWidget.BorderSizePixel = 0
+MiniWidget.Text = "Q"
+MiniWidget.TextColor3 = Color3.fromRGB(255, 204, 0)
+MiniWidget.Font = Enum.Font.Code
+MiniWidget.TextSize = 24
+MiniWidget.Visible = false
+MiniWidget.Active = true
+MiniWidget.Draggable = true
+
+local MiniWidgetCorner = Instance.new("UICorner", MiniWidget)
+MiniWidgetCorner.CornerRadius = UDim.new(0, 10)
+
+local MiniWidgetStroke = Instance.new("UIStroke", MiniWidget)
+MiniWidgetStroke.Color = Color3.fromRGB(255, 204, 0)
+MiniWidgetStroke.Thickness = 2
+
+-- ==========================================================
+-- 🎛️ PANEL KÜÇÜLTME & MİNİ MOD KONTROLLERİ
+-- ==========================================================
+local isMinimized = false
+
+-- Klasik Satır Haline Getirme Tuşu
+MinimizeBtn.MouseButton1Click:Connect(function()
+    isMinimized = not isMinimized
+    if isMinimized then
+        ContentFrame.Visible = false; TabBar.Visible = false; MiniModeBtn.Visible = false
+        MainFrame:TweenSize(UDim2.new(0, 440, 0, 38), "Out", "Quad", 0.15, true)
+        MinimizeBtn.Text = "[+]"
+    else
+        MainFrame:TweenSize(UDim2.new(0, 440, 0, 320), "Out", "Quad", 0.15, true, function() 
+            ContentFrame.Visible = true; TabBar.Visible = true; MiniModeBtn.Visible = true 
+        end)
+        MinimizeBtn.Text = "[-]"
+    end
+end)
+
+-- Dehşet Kare Tuşu: Tamamen Ufacık Butona Çevirme
+MiniModeBtn.MouseButton1Click:Connect(function()
+    MainFrame.Visible = false
+    MiniWidget.Visible = true
+    -- Dönüşürken ufak bir parlayış efekti
+    MiniWidget.Size = UDim2.new(0, 55, 0, 55)
+    TweenService:Create(MiniWidget, TweenInfo.new(0.2, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Size = UDim2.new(0, 45, 0, 45)}):Play()
+end)
+
+-- Ufalan Butondan Eski Haline Geri Dönme Tuşu
+MiniWidget.MouseButton1Click:Connect(function()
+    MiniWidget.Visible = false
+    MainFrame.Visible = true
+    -- Aşağıdan yukarı açılma efektini tekrar tetikle
+    MainFrame.Size = UDim2.new(0, 440, 0, 320)
+    local oldPos = MainFrame.Position
+    MainFrame.Position = UDim2.new(oldPos.X.Scale, oldPos.X.Offset, oldPos.Y.Scale, oldPos.Y.Offset + 50)
+    TweenService:Create(MainFrame, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Position = oldPos}):Play()
+end)
+
+-- ==========================================================
+-- SAYFA VE ÖZELLİK EKLEME FONKSİYONLARI
+-- ==========================================================
 local Pages, Tabs = {}, {}
 local function CreatePage(name)
     local Page = Instance.new("ScrollingFrame", ContentFrame)
-    Page.Size = UDim2.new(1, 0, 1, 0)
-    Page.BackgroundTransparency = 1
-    Page.CanvasSize = UDim2.new(0, 0, 0, 550)
-    Page.ScrollBarThickness = 3
+    Page.Size = UDim2.new(1, 0, 1, 0); Page.BackgroundTransparency = 1
+    Page.CanvasSize = UDim2.new(0, 0, 0, 550); Page.ScrollBarThickness = 3
     Page.ScrollBarImageColor3 = Color3.fromRGB(255, 204, 0)
     Page.Visible = false
     Instance.new("UIListLayout", Page).Padding = UDim.new(0, 7)
@@ -179,40 +252,19 @@ local MM2Page = CreatePage("MM2")
 
 local function AddTab(name, displayName)
     local Btn = Instance.new("TextButton", TabBar)
-    Btn.Size = UDim2.new(1, 0, 0, 34)
-    Btn.BackgroundColor3 = Color3.fromRGB(18, 18, 24)
-    Btn.Text = "  " .. displayName
-    Btn.TextColor3 = Color3.fromRGB(140, 140, 150)
-    Btn.Font = Enum.Font.Code
-    Btn.TextXAlignment = Enum.TextXAlignment.Left
+    Btn.Size = UDim2.new(1, 0, 0, 34); Btn.BackgroundColor3 = Color3.fromRGB(18, 18, 24)
+    Btn.Text = "  " .. displayName; Btn.TextColor3 = Color3.fromRGB(140, 140, 150); Btn.Font = Enum.Font.Code; Btn.TextXAlignment = Enum.TextXAlignment.Left
     Instance.new("UICorner", Btn).CornerRadius = UDim.new(0, 6)
     Tabs[name] = Btn
-    
     Btn.MouseButton1Click:Connect(function()
         for k, p in pairs(Pages) do p.Visible = false; Tabs[k].TextColor3 = Color3.fromRGB(140, 140, 150) end
         Pages[name].Visible = true; Btn.TextColor3 = Color3.fromRGB(255, 204, 0)
     end)
 end
 
-AddTab("Combat", "Çatışma")
-AddTab("Player", "Karakter")
-AddTab("World", "Çevre / ESP")
+AddTab("Combat", "Çatışma"); AddTab("Player", "Karakter"); AddTab("World", "Çevre / ESP")
 if _G.CurrentGame == "MM2" then AddTab("MM2", "MM2 Özel"); Pages["MM2"].Visible = true else Pages["Combat"].Visible = true end
 
-local isMinimized = false
-MinimizeBtn.MouseButton1Click:Connect(function()
-    isMinimized = not isMinimized
-    if isMinimized then
-        ContentFrame.Visible = false; TabBar.Visible = false
-        MainFrame:TweenSize(UDim2.new(0, 440, 0, 38), "Out", "Quad", 0.15, true)
-        MinimizeBtn.Text = "[+]"
-    else
-        MainFrame:TweenSize(UDim2.new(0, 440, 0, 320), "Out", "Quad", 0.15, true, function() ContentFrame.Visible = true; TabBar.Visible = true end)
-        MinimizeBtn.Text = "[-]"
-    end
-end)
-
--- TOGGLE & SLIDER KURULUMLARI
 local function CreateToggle(parent, text, configKey, callback)
     local Frame = Instance.new("Frame", parent)
     Frame.Size = UDim2.new(1, -10, 0, 36); Frame.BackgroundColor3 = Color3.fromRGB(14, 14, 18)
@@ -339,29 +391,25 @@ CreateSysButton(WorldPage, " [!] TERMINATE QEATHUB", Color3.fromRGB(255, 50, 50)
 end)
 
 -- ==========================================================
--- ⚡ ŞOV BAŞLIYOR: ANİMASYON AKIŞI TWEEN MOTORU
+-- ⚡ AÇILIŞ TWEEN AKIŞI
 -- ==========================================================
 task.spawn(function()
-    -- Adım 1: Logoyu ve Arka Planını Yavaşça Belirt
     TweenService:Create(IntroFrame, TweenInfo.new(0.6, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 0.1}):Play()
     TweenService:Create(IntroStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Transparency = 0}):Play()
     TweenService:Create(IntroText, TweenInfo.new(0.8, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {TextTransparency = 0}):Play()
     task.wait(0.4)
     TweenService:Create(IntroSubText, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextTransparency = 0}):Play()
     
-    -- Adım 2: 2.2 Saniye Boyunca Ekranda Yükleniyor Havası Ver
     task.wait(2.2)
     
-    -- Adım 3: Logoyu Pürüzsüzce Kapat
     TweenService:Create(IntroFrame, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {BackgroundTransparency = 1}):Play()
     TweenService:Create(IntroStroke, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {Transparency = 1}):Play()
     TweenService:Create(IntroText, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {TextTransparency = 1}):Play()
     TweenService:Create(IntroSubText, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {TextTransparency = 1}):Play()
     
     task.wait(0.5)
-    IntroFrame:Destroy() -- İntro bitti, RAM kaplamasın diye uçurduk
+    IntroFrame:Destroy()
     
-    -- Adım 4: Esas Menüyü Aktif Et ve Aşağıdan Yukarıya Doğru Kaydırarak Getir!
     MainFrame.Visible = true
     MainFrame.Active = true; MainFrame.Draggable = true
     MainFrame:TweenPosition(UDim2.new(0.15, 0, 0.25, 0), "Out", "Back", 0.7, true)
