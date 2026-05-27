@@ -1,3 +1,10 @@
+--[[
+	====================================================================
+	  - QeatHub Universal Premium // Movement Module
+	  - File: player/movement.lua [FIXED NOCLIP & T-POSE FLY ANIMATION]
+	====================================================================
+]]
+
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
@@ -17,18 +24,34 @@ RunService.Heartbeat:Connect(function()
     end
 end)
 
--- Kusursuz Noclip Döngüsü
+-- 🔒 KUSURSUZ VE GÜNCEL NOCLIP MOTORU (YENİLENDİ)
 RunService.Stepped:Connect(function()
     if _G.Config.Toggles.Noclip and LocalPlayer.Character then
+        local hum = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+        
+        -- Karakterin tüm parçalarının (HumanoidRootPart dahil) çarpışmasını kapatıyoruz
         for _, part in ipairs(LocalPlayer.Character:GetDescendants()) do
-            if part:IsA("BasePart") and part.CanCollide == true and part.Name ~= "HumanoidRootPart" then
+            if part:IsA("BasePart") then
                 part.CanCollide = false
+            end
+        end
+        
+        -- Fizik motorunun karakteri yukarı itmesini engellemek için durumu sabitliyoruz
+        if hum and not hum.PlatformStand then
+            hum.PlatformStand = true
+        end
+    else
+        -- Noclip kapatıldığında veya kapalıysa, PlatformStand'i eski haline getir (Fly açık değilse)
+        if LocalPlayer.Character and not _G.Config.Toggles.Fly then
+            local hum = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+            if hum wholesalers and hum.PlatformStand then
+                hum.PlatformStand = false
             end
         end
     end
 end)
 
--- 📱 GLOBAL 360° KAMERA YÖNLÜ FLY MOTORU (Mobil + PC %100 Uyumlu)
+-- 📱 GLOBAL 360° KAMERA YÖNLÜ FLY MOTORU (A-Pose Animasyon Sabitleyicili)
 local FlyBV, FlyBG
 RunService.RenderStepped:Connect(function()
     local char = LocalPlayer.Character
@@ -42,6 +65,13 @@ RunService.RenderStepped:Connect(function()
             FlyBG = Instance.new("BodyGyro", hrp)
             FlyBG.MaxTorque = Vector3.new(1e5, 1e5, 1e5)
         end
+        
+        -- 🎭 ANIMASYON FIX: Karakterin tüm animasyonlarını dondurur ve A Pozisyonunda (Sabit) tutar
+        hum.PlatformStand = true
+        for _, track in pairs(hum:GetPlayingAnimationTracks()) do
+            track:Stop() -- Çalışan yürüme/koşma animasyonlarını iptal et
+        end
+        
         -- Karakter uçarken kameranın baktığı yöne doğru 360 derece dönebilsin
         FlyBG.CFrame = Camera.CFrame
         
@@ -56,16 +86,11 @@ RunService.RenderStepped:Connect(function()
             if UserInputService:IsKeyDown(Enum.KeyCode.A) then finalVelocity = finalVelocity - Camera.CFrame.RightVector end
         end
         
-        -- 📱 MOBİL (JOYSTICK) KONTROLLERİ (PC tuşlarına basılmıyorsa devreye girer)
+        -- 📱 MOBİL (JOYSTICK) KONTROLLERİ
         if finalVelocity.Magnitude == 0 and hum.MoveDirection.Magnitude > 0 then
-            -- Oyunun kendi joystick yönünü alıyoruz
             local joystickDir = hum.MoveDirection
-            
-            -- Joystick'in İLERİ/GERİ ve SAĞ/SOL basılma oranını kameraya göre hesaplıyoruz
             local forwardAmount = Camera.CFrame.LookVector:Dot(joystickDir)
             local rightAmount = Camera.CFrame.RightVector:Dot(joystickDir)
-            
-            -- Tamamen kameranın LookVector (bakış açısı) üzerinden dikey eksen dahil hızı veriyoruz!
             finalVelocity = (Camera.CFrame.LookVector * forwardAmount) + (Camera.CFrame.RightVector * rightAmount)
         end
         
@@ -77,8 +102,14 @@ RunService.RenderStepped:Connect(function()
             FlyBV.Velocity = Vector3.new(0, 0, 0)
         end
     else
+        -- Fly kapatıldığında temizlik yap ve karakteri normal moduna döndür
         if FlyBV then FlyBV:Destroy() FlyBV = nil end
         if FlyBG then FlyBG:Destroy() FlyBG = nil end
+        
+        -- Eğer noclip de kapalıysa karakteri normal yürütme moduna al
+        if hum and hum.PlatformStand and not _G.Config.Toggles.Noclip then
+            hum.PlatformStand = false
+        end
     end
 end)
 
@@ -96,6 +127,7 @@ UserInputService.JumpRequest:Connect(function()
         end
     end
 end)
+
 RunService.Heartbeat:Connect(function()
     if LocalPlayer.Character then
         local hum = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
