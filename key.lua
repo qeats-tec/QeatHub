@@ -1,7 +1,7 @@
 --[[
 	====================================================================
-	  - QeatHub Premium // Modern Key Auth Interface + Loadstring Loader
-	  - File: key.lua (Render & GitHub Integrated)
+	  - QeatHub Premium // Modern Key Auth Interface
+	  - File: key.lua (Dynamic Project URL & JSONBin Integrated)
 	====================================================================
 ]]
 
@@ -11,14 +11,13 @@ local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
 local LocalPlayer = Players.LocalPlayer
 
--- 🌍 ADRESLER (Render ve GitHub Bağlantıların)
-local serverUrl = "https://qh-key.onrender.com/api/verify"
-local discordLink = "https://discord.gg/cQwh3Fhq"
--- Ana hilenin GitHub üzerindeki RAW (ham metin) bağlantısı:
-local mainScriptUrl = "https://raw.githubusercontent.com/qeats-tec/QeatHub/refs/heads/main/main.lua"
+-- 🌍 CONFIG / ADRESLER (Gemini Direktifine Göre Dinamik Hale Getirildi)
+local projeAdi = "qh-key" -- Kullanıcı sadece Render proje adını buraya yazacak
+local serverUrl = "https://" .. projeAdi .. ".onrender.com/api/verify" -- Dinamik Endpoint URL
 
--- 🔑 KULLANICI KEY GİRİŞİ (Oyuncu anahtarını buraya yapıştıracak veya UI'dan girecek)
-local user_key_input = "KEY_BURAYA_GELECEK"
+local discordLink = "https://discord.gg/cQwh3Fhq"
+-- Ana hilenin GitHub üzerindeki RAW bağlantısı:
+local mainScriptUrl = "https://raw.githubusercontent.com/qeats-tec/QeatHub/refs/heads/main/main.lua"
 
 -- ==========================================================
 -- 🎬 ARAYÜZ KURULUMU (SİBER / HACKER TEMALI)
@@ -132,25 +131,41 @@ local BtnStroke = Instance.new("UIStroke", SubmitBtn)
 BtnStroke.Color = Color3.fromRGB(255, 204, 0)
 
 -- ==========================================================
--- 🔒 API SORGULAMA MOTORU
+-- 🔒 API SORGULAMA MOTORU (POST METODU VE JSON BODY AYARLANDI)
 -- ==========================================================
 local function checkKeyWithRender(enteredKey)
+    -- İstek (Request) Body'si: {"key": "kullanıcının-girdiği-anahtar"}
     local data = { key = enteredKey }
     local jsonData = HttpService:JSONEncode(data)
 
-    local success, result = pcall(function()
-        return HttpService:PostAsync(serverUrl, jsonData, Enum.HttpContentType.ApplicationJson)
+    -- POST metodu ve application/json Content-Type ayarlarıyla RequestAsync tetiklenir
+    local success, response = pcall(function()
+        return HttpService:RequestAsync({
+            Url = serverUrl,
+            Method = "POST",
+            Headers = {
+                ["Content-Type"] = "application/json"
+            },
+            Body = jsonData
+        })
     end)
 
-    if success then
-        local responseData = HttpService:JSONDecode(result)
-        if responseData.success == true then
-            return true, "Erişim Onaylandı! QeatHub yükleniyor..."
+    if success and response then
+        local decodeSuccess, responseData = pcall(function()
+            return HttpService:JSONDecode(response.Body)
+        end)
+
+        if decodeSuccess and responseData then
+            if response.StatusCode == 200 and responseData.success == true then
+                return true, responseData.message or "Erişim Onaylandı!"
+            else
+                return false, responseData.message or "Geçersiz anahtar."
+            end
         else
-            return false, responseData.message or "Geçersiz anahtar!"
+            return false, "Sunucu yanıtı okunamadı."
         end
     else
-        return false, "Sunucu hatası veya sunucu şu an kapalı!"
+        return false, "Sunucuya bağlanılamadı. Proje adını veya Render durumunu kontrol edin."
     end
 end
 
@@ -166,7 +181,7 @@ SubmitBtn.MouseButton1Click:Connect(function()
     StatusLabel.Text = "⚡ Doğrulanıyor..."
     StatusLabel.TextColor3 = Color3.fromRGB(255, 204, 0)
 
-    task.wait(0.5)
+    task.wait(0.4)
 
     local isValid, msg = checkKeyWithRender(enteredKey)
 
@@ -177,21 +192,19 @@ SubmitBtn.MouseButton1Click:Connect(function()
         BtnStroke.Color = Color3.fromRGB(0, 255, 120)
         
         task.wait(1)
-        ScreenGui:Destroy() -- Giriş ekranını kapat
+        ScreenGui:Destroy()
 
         -- ==========================================================
-        -- 🚀 LOADSTRING KÖPRÜSÜ (GitHub'dan main.lua Çekiliyor)
+        -- 🚀 LOADSTRING KÖPRÜSÜ
         -- ==========================================================
         local loadSuccess, loadResult = pcall(function()
-            -- GitHub'dan ana menü kodunu string olarak indirip çalıştırır
             return loadstring(game:HttpGet(mainScriptUrl))()
         end)
 
         if loadSuccess then
-            print("[QeatHub]: Ana menü internetten başarıyla yüklendi ve tetiklendi.")
+            print("[QeatHub]: Ana menü başarıyla yüklendi.")
         else
-            -- Eğer GitHub linkinde hata varsa veya loadstring desteklenmiyorsa konsola basar
-            warn("🔴 [QeatHub Yükleme Hatası]: Ana script yüklenirken hata oluştu: " .. tostring(loadResult))
+            warn("🔴 [QeatHub Yükleme Hatası]: Ana script çalıştırılamadı: " .. tostring(loadResult))
         end
         
     else
