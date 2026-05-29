@@ -1,7 +1,7 @@
 --[[
 	====================================================================
-	  - QeatHub Premium // Modern Key Auth Interface
-	  - File: key.lua (Dynamic Project URL & JSONBin Integrated)
+	  - QeatHub Premium // Modern Key Auth Interface (IDX VIP FILTER)
+	  - File: key.lua
 	====================================================================
 ]]
 
@@ -12,14 +12,12 @@ local UserInputService = game:GetService("UserInputService")
 local LocalPlayer = Players.LocalPlayer
 
 -- 🌍 CONFIG / ADRESLER
-local projeAdi = "qh-key" 
-local serverUrl = "https://" .. projeAdi .. ".onrender.com/api/verify" 
-
+local serverUrl = "https://qh-key.onrender.com/api/verify" 
 local discordLink = "https://discord.gg/cQwh3Fhq"
 local mainScriptUrl = "https://raw.githubusercontent.com/qeats-tec/QeatHub/refs/heads/main/main.lua"
 local BaseURL = "https://raw.githubusercontent.com/qeats-tec/QeatHub/refs/heads/main/"
 
--- GitHub'dan 2. Fotoğrafı (logo.png) Çekme Motoru
+-- GitHub'dan Logo Görselini Çekme Motoru
 local BachiraLogoAsset
 local success, err = pcall(function()
     if not isfile("bachira_logo.png") then
@@ -28,7 +26,7 @@ local success, err = pcall(function()
     BachiraLogoAsset = getcustomasset("bachira_logo.png")
 end)
 if not success then
-    BachiraLogoAsset = "rbxassetid://0" -- Fallback
+    BachiraLogoAsset = "rbxassetid://0"
 end
 
 -- Eski UI Temizliği
@@ -54,7 +52,7 @@ local FrameStroke = Instance.new("UIStroke", MainAuthFrame)
 FrameStroke.Color = Color3.fromRGB(255, 204, 0)
 FrameStroke.Thickness = 1.5
 
--- Key Menüsü Sağ Üst Köşe Logo Alanı (logo.png)
+-- Key Menüsü Sağ Üst Köşe Logo Alanı
 local LogoImage = Instance.new("ImageLabel", MainAuthFrame)
 LogoImage.Size = UDim2.new(0, 42, 0, 42)
 LogoImage.Position = UDim2.new(1, -52, 0, 8)
@@ -69,7 +67,7 @@ local LogoStroke = Instance.new("UIStroke", LogoImage)
 LogoStroke.Color = Color3.fromRGB(255, 204, 0)
 LogoStroke.Thickness = 1
 
--- Sürükleme Motoru (UIS)
+-- Sürükleme Motoru
 local dragging, dragInput, dragStart, startPos
 MainAuthFrame.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
@@ -157,7 +155,7 @@ Instance.new("UICorner", SubmitBtn).CornerRadius = UDim.new(0, 6)
 local BtnStroke = Instance.new("UIStroke", SubmitBtn)
 BtnStroke.Color = Color3.fromRGB(255, 204, 0)
 
--- API Sorgulama
+-- API Doğrulama Fonksiyonu
 local function checkKeyWithRender(enteredKey)
     local data = { key = enteredKey }
     local jsonData = HttpService:JSONEncode(data)
@@ -175,7 +173,7 @@ local function checkKeyWithRender(enteredKey)
         local decodeSuccess, responseData = pcall(function() return HttpService:JSONDecode(response.Body) end)
         if decodeSuccess and responseData then
             if response.StatusCode == 200 and responseData.success == true then
-                return true, responseData.message or "Erişim Onaylandı!"
+                return true, responseData.message or "Giriş başarılı."
             else
                 return false, responseData.message or "Geçersiz anahtar."
             end
@@ -187,6 +185,7 @@ local function checkKeyWithRender(enteredKey)
     end
 end
 
+-- Buton Tetikleyicisi ve İstediğin Filtre Mantığı
 SubmitBtn.MouseButton1Click:Connect(function()
     local enteredKey = KeyInputBox.Text
     if enteredKey == "" then
@@ -202,12 +201,32 @@ SubmitBtn.MouseButton1Click:Connect(function()
     local isValid, msg = checkKeyWithRender(enteredKey)
 
     if isValid then
-        StatusLabel.Text = "✅ " .. msg
-        StatusLabel.TextColor3 = Color3.fromRGB(0, 255, 120)
-        FrameStroke.Color = Color3.fromRGB(0, 255, 120)
-        BtnStroke.Color = Color3.fromRGB(0, 255, 120)
-        LogoStroke.Color = Color3.fromRGB(0, 255, 120)
+        -- 🌟 ISTEDIĞIN KONTROL BURADA BAŞLIYOR:
+        if string.find(msg, "VIP") then
+            -- 👑 VIP Kullanıcı Filtresi (Mesajda "VIP" geçiyorsa)
+            _G.IsVipUser = true -- main.lua'nın okuması için global veri aktarımı
+            
+            StatusLabel.Text = "👑 VIP Girişi Başarılı!"
+            StatusLabel.TextColor3 = Color3.fromRGB(255, 0, 255) -- Macenta rengi
+            
+            -- Çerçeveleri Macenta yapma
+            FrameStroke.Color = Color3.fromRGB(255, 0, 255)
+            BtnStroke.Color = Color3.fromRGB(255, 0, 255)
+            LogoStroke.Color = Color3.fromRGB(255, 0, 255)
+        else
+            -- ✅ Normal Kullanıcı Filtresi
+            _G.IsVipUser = false
+            
+            StatusLabel.Text = "✅ Giriş Onaylandı!"
+            StatusLabel.TextColor3 = Color3.fromRGB(0, 255, 120) -- Standart yeşil
+            
+            -- Çerçeveleri Yeşil yapma
+            FrameStroke.Color = Color3.fromRGB(0, 255, 120)
+            BtnStroke.Color = Color3.fromRGB(0, 255, 120)
+            LogoStroke.Color = Color3.fromRGB(0, 255, 120)
+        end
         
+        -- Her iki başarılı durumda da 1 saniye bekle, temizle ve ana scripti çalıştır
         task.wait(1)
         ScreenGui:Destroy()
 
@@ -215,6 +234,7 @@ SubmitBtn.MouseButton1Click:Connect(function()
             return loadstring(game:HttpGet(mainScriptUrl))()
         end)
     else
+        -- ❌ Giriş Başarısız Durumu (Değişmeyen eski hata mantığı)
         StatusLabel.Text = "❌ " .. msg
         StatusLabel.TextColor3 = Color3.fromRGB(255, 60, 60)
         FrameStroke.Color = Color3.fromRGB(255, 60, 60)
