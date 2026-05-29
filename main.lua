@@ -1,7 +1,7 @@
 --[[
 	====================================================================
 	  - QeatHub Universal Premium
-	  - Edition: v4.1 [MINI MODE & ANIMATED MODERN UI]
+	  - Edition: v4.1 [MINI MODE & ANIMATED MODERN UI WITH BACHIRA BACKGROUND]
 	====================================================================
 ]]
 
@@ -15,6 +15,9 @@ local Camera = Workspace.CurrentCamera
 
 -- Senin Net GitHub Raw Bağlantın
 local BaseURL = "https://raw.githubusercontent.com/qeats-tec/QeatHub/refs/heads/main/"
+
+-- Fotoğraf Asset ID'leri (1. Fotoğraf: BLEH! Bachira)
+local BachiraBlehAsset = "rbxassetid://134139871142502" -- Buraya kendi yüklediğin Decal/Image ID'sini yazabilirsin
 
 -- Oyun Tespiti
 _G.CurrentGame = "Universal"
@@ -104,16 +107,34 @@ IntroSubText.TextSize = 14
 IntroSubText.TextTransparency = 1
 
 -- ==========================================================
--- 🛠️ ANA PANEL (MODERN SİBER TEMALI)
+-- 🛠️ ANA PANEL (MODERN SİBER TEMALI + FOTOĞRAF ARKA PLANLI)
 -- ==========================================================
 local MainFrame = Instance.new("Frame", ScreenGui)
 MainFrame.Size = UDim2.new(0, 440, 0, 320)
-MainFrame.Position = UDim2.new(0.5, -220, 1.2, 0) -- Giriş animasyonu için aşağıda başlıyor
+MainFrame.Position = UDim2.new(0.5, -220, 1.2, 0)
 MainFrame.BackgroundColor3 = Color3.fromRGB(8, 8, 10)
-MainFrame.BackgroundTransparency = 0.05
+MainFrame.BackgroundTransparency = 0.1
 MainFrame.BorderSizePixel = 0
 MainFrame.Active = false
 MainFrame.Visible = false
+
+-- [ YENİ ] 1. Fotoğrafın Arka Plana Entegre Edilmesi (Hafifletilmiş ve Koyulaştırılmış)
+local BgImage = Instance.new("ImageLabel", MainFrame)
+BgImage.Size = UDim2.new(1, 0, 1, 0)
+BgImage.Position = UDim2.new(0, 0, 0, 0)
+BgImage.Image = BachiraBlehAsset
+BgImage.ImageTransparency = 0.82 -- Hafifletilmiş (Arka planda sırıtmaması için)
+BgImage.ScaleType = Enum.ScaleType.Crop
+BgImage.BackgroundTransparency = 1
+BgImage.ZIndex = 0
+
+-- Yazıların ve butonların görselin üstünde kalması için koyu bir gölgeleme katmanı
+local DarkOverlay = Instance.new("Frame", MainFrame)
+DarkOverlay.Size = UDim2.new(1, 0, 1, 0)
+DarkOverlay.BackgroundColor3 = Color3.fromRGB(4, 4, 6)
+DarkOverlay.BackgroundTransparency = 0.45 -- Koyulaştırma efekti
+DarkOverlay.BorderSizePixel = 0
+DarkOverlay.ZIndex = 1
 
 local MainCorner = Instance.new("UICorner", MainFrame)
 MainCorner.CornerRadius = UDim.new(0, 12)
@@ -125,6 +146,7 @@ UIStroke.Thickness = 1.5
 local TitleBar = Instance.new("Frame", MainFrame)
 TitleBar.Size = UDim2.new(1, 0, 0, 38)
 TitleBar.BackgroundColor3 = Color3.fromRGB(14, 14, 18)
+TitleBar.ZIndex = 2
 Instance.new("UICorner", TitleBar).CornerRadius = UDim.new(0, 12)
 
 local TitleText = Instance.new("TextLabel", TitleBar)
@@ -136,8 +158,8 @@ TitleText.TextColor3 = Color3.fromRGB(255, 204, 0)
 TitleText.Font = Enum.Font.Code
 TitleText.TextSize = 13
 TitleText.TextXAlignment = Enum.TextXAlignment.Left
+TitleText.ZIndex = 3
 
--- [ New ] Mini Mode Butonu (Kare)
 local MiniModeBtn = Instance.new("TextButton", TitleBar)
 MiniModeBtn.Size = UDim2.new(0, 32, 0, 32)
 MiniModeBtn.Position = UDim2.new(1, -72, 0, 3)
@@ -146,6 +168,7 @@ MiniModeBtn.Text = "[▢]"
 MiniModeBtn.TextColor3 = Color3.fromRGB(255, 204, 0)
 MiniModeBtn.Font = Enum.Font.Code
 MiniModeBtn.TextSize = 14
+MiniModeBtn.ZIndex = 3
 
 local MinimizeBtn = Instance.new("TextButton", TitleBar)
 MinimizeBtn.Size = UDim2.new(0, 32, 0, 32)
@@ -154,21 +177,25 @@ MinimizeBtn.BackgroundTransparency = 1
 MinimizeBtn.Text = "[-]"
 MinimizeBtn.TextColor3 = Color3.fromRGB(255, 204, 0)
 MinimizeBtn.Font = Enum.Font.Code
+MinimizeBtn.ZIndex = 3
 
 local ContentFrame = Instance.new("Frame", MainFrame)
 ContentFrame.Size = UDim2.new(1, -145, 1, -48)
 ContentFrame.Position = UDim2.new(0, 135, 0, 44)
 ContentFrame.BackgroundTransparency = 1
+ContentFrame.ZIndex = 2
 
 local TabBar = Instance.new("Frame", MainFrame)
 TabBar.Size = UDim2.new(0, 115, 1, -52)
 TabBar.Position = UDim2.new(0, 10, 0, 44)
 TabBar.BackgroundColor3 = Color3.fromRGB(12, 12, 16)
+TabBar.BackgroundTransparency = 0.3 -- Arka planın hafif sızması için ayarladık
+TabBar.ZIndex = 2
 Instance.new("UICorner", TabBar).CornerRadius = UDim.new(0, 8)
 local TabListLayout = Instance.new("UIListLayout", TabBar); TabListLayout.Padding = UDim.new(0, 5)
 
 -- ==========================================================
--- 🔄 [ YENİ ÖZELLİK ] MİNİ BUTON MODU (WIDGET OLUŞTURMA)
+-- 🔄 MİNİ BUTON MODU (WIDGET OLUŞTURMA)
 -- ==========================================================
 local MiniWidget = Instance.new("TextButton", ScreenGui)
 MiniWidget.Size = UDim2.new(0, 45, 0, 45)
@@ -195,35 +222,30 @@ MiniWidgetStroke.Thickness = 2
 -- ==========================================================
 local isMinimized = false
 
--- Klasik Satır Haline Getirme Tuşu
 MinimizeBtn.MouseButton1Click:Connect(function()
     isMinimized = not isMinimized
     if isMinimized then
-        ContentFrame.Visible = false; TabBar.Visible = false; MiniModeBtn.Visible = false
+        ContentFrame.Visible = false; TabBar.Visible = false; MiniModeBtn.Visible = false; BgImage.Visible = false; DarkOverlay.Visible = false
         MainFrame:TweenSize(UDim2.new(0, 440, 0, 38), "Out", "Quad", 0.15, true)
         MinimizeBtn.Text = "[+]"
     else
         MainFrame:TweenSize(UDim2.new(0, 440, 0, 320), "Out", "Quad", 0.15, true, function() 
-            ContentFrame.Visible = true; TabBar.Visible = true; MiniModeBtn.Visible = true 
+            ContentFrame.Visible = true; TabBar.Visible = true; MiniModeBtn.Visible = true; BgImage.Visible = true; DarkOverlay.Visible = true
         end)
         MinimizeBtn.Text = "[-]"
     end
 end)
 
--- Dehşet Kare Tuşu: Tamamen Ufacık Butona Çevirme
 MiniModeBtn.MouseButton1Click:Connect(function()
     MainFrame.Visible = false
     MiniWidget.Visible = true
-    -- Dönüşürken ufak bir parlayış efekti
     MiniWidget.Size = UDim2.new(0, 55, 0, 55)
     TweenService:Create(MiniWidget, TweenInfo.new(0.2, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Size = UDim2.new(0, 45, 0, 45)}):Play()
 end)
 
--- Ufalan Butondan Eski Haline Geri Dönme Tuşu
 MiniWidget.MouseButton1Click:Connect(function()
     MiniWidget.Visible = false
     MainFrame.Visible = true
-    -- Aşağıdan yukarı açılma efektini tekrar tetikle
     MainFrame.Size = UDim2.new(0, 440, 0, 320)
     local oldPos = MainFrame.Position
     MainFrame.Position = UDim2.new(oldPos.X.Scale, oldPos.X.Offset, oldPos.Y.Scale, oldPos.Y.Offset + 50)
@@ -240,6 +262,7 @@ local function CreatePage(name)
     Page.CanvasSize = UDim2.new(0, 0, 0, 550); Page.ScrollBarThickness = 3
     Page.ScrollBarImageColor3 = Color3.fromRGB(255, 204, 0)
     Page.Visible = false
+    Page.ZIndex = 3
     Instance.new("UIListLayout", Page).Padding = UDim.new(0, 7)
     Pages[name] = Page
     return Page
@@ -254,6 +277,7 @@ local function AddTab(name, displayName)
     local Btn = Instance.new("TextButton", TabBar)
     Btn.Size = UDim2.new(1, 0, 0, 34); Btn.BackgroundColor3 = Color3.fromRGB(18, 18, 24)
     Btn.Text = "  " .. displayName; Btn.TextColor3 = Color3.fromRGB(140, 140, 150); Btn.Font = Enum.Font.Code; Btn.TextXAlignment = Enum.TextXAlignment.Left
+    Btn.ZIndex = 3
     Instance.new("UICorner", Btn).CornerRadius = UDim.new(0, 6)
     Tabs[name] = Btn
     Btn.MouseButton1Click:Connect(function()
@@ -268,18 +292,24 @@ if _G.CurrentGame == "MM2" then AddTab("MM2", "MM2 Özel"); Pages["MM2"].Visible
 local function CreateToggle(parent, text, configKey, callback)
     local Frame = Instance.new("Frame", parent)
     Frame.Size = UDim2.new(1, -10, 0, 36); Frame.BackgroundColor3 = Color3.fromRGB(14, 14, 18)
+    Frame.BackgroundTransparency = 0.15
+    Frame.ZIndex = 3
     Instance.new("UICorner", Frame).CornerRadius = UDim.new(0, 6)
     local Label = Instance.new("TextLabel", Frame)
     Label.Size = UDim2.new(0.7, 0, 1, 0); Label.Position = UDim2.new(0.04, 0, 0, 0)
     Label.BackgroundTransparency = 1; Label.Text = text; Label.TextColor3 = Color3.fromRGB(230, 230, 235); Label.Font = Enum.Font.Code; Label.TextXAlignment = Enum.TextXAlignment.Left
+    Label.ZIndex = 4
     local Indicator = Instance.new("Frame", Frame)
     Indicator.Size = UDim2.new(0, 32, 0, 16); Indicator.Position = UDim2.new(0.95, -32, 0.5, -8); Indicator.BackgroundColor3 = Color3.fromRGB(30, 10, 10)
+    Indicator.ZIndex = 4
     Instance.new("UICorner", Indicator).CornerRadius = UDim.new(1, 0)
     local Dot = Instance.new("Frame", Indicator)
     Dot.Size = UDim2.new(0, 12, 0, 12); Dot.Position = UDim2.new(0, 2, 0.5, -6); Dot.BackgroundColor3 = Color3.fromRGB(160, 40, 40)
+    Dot.ZIndex = 5
     Instance.new("UICorner", Dot).CornerRadius = UDim.new(1, 0)
     local btn = Instance.new("TextButton", Frame)
     btn.Size = UDim2.new(1, 0, 1, 0); btn.BackgroundTransparency = 1; btn.Text = ""
+    btn.ZIndex = 5
     btn.MouseButton1Click:Connect(function()
         _G.Config.Toggles[configKey] = not _G.Config.Toggles[configKey]
         local active = _G.Config.Toggles[configKey]
@@ -297,15 +327,16 @@ end
 local function CreateSlider(parent, text, min, max, default, callback)
     local Frame = Instance.new("Frame", parent)
     Frame.Size = UDim2.new(1, -10, 0, 44); Frame.BackgroundColor3 = Color3.fromRGB(14, 14, 18)
+    Frame.BackgroundTransparency = 0.15; Frame.ZIndex = 3
     Instance.new("UICorner", Frame).CornerRadius = UDim.new(0, 6)
     local Label = Instance.new("TextLabel", Frame)
-    Label.Size = UDim2.new(0.6, 0, 0, 20); Label.Position = UDim2.new(0.04, 0, 0, 4); Label.BackgroundTransparency = 1; Label.Text = text; Label.TextColor3 = Color3.fromRGB(170, 170, 180); Label.Font = Enum.Font.Code; Label.TextXAlignment = Enum.TextXAlignment.Left
+    Label.Size = UDim2.new(0.6, 0, 0, 20); Label.Position = UDim2.new(0.04, 0, 0, 4); Label.BackgroundTransparency = 1; Label.Text = text; Label.TextColor3 = Color3.fromRGB(170, 170, 180); Label.Font = Enum.Font.Code; Label.TextXAlignment = Enum.TextXAlignment.Left; Label.ZIndex = 4
     local ValueLabel = Instance.new("TextLabel", Frame)
-    ValueLabel.Size = UDim2.new(0.3, 0, 0, 20); ValueLabel.Position = UDim2.new(0.65, 0, 0, 4); ValueLabel.BackgroundTransparency = 1; ValueLabel.Text = tostring(default); ValueLabel.TextColor3 = Color3.fromRGB(255, 204, 0); ValueLabel.Font = Enum.Font.Code; ValueLabel.TextXAlignment = Enum.TextXAlignment.Right
+    ValueLabel.Size = UDim2.new(0.3, 0, 0, 20); ValueLabel.Position = UDim2.new(0.65, 0, 0, 4); ValueLabel.BackgroundTransparency = 1; ValueLabel.Text = tostring(default); ValueLabel.TextColor3 = Color3.fromRGB(255, 204, 0); ValueLabel.Font = Enum.Font.Code; ValueLabel.TextXAlignment = Enum.TextXAlignment.Right; ValueLabel.ZIndex = 4
     local SliderBar = Instance.new("TextButton", Frame)
-    SliderBar.Size = UDim2.new(0.92, 0, 0, 4); SliderBar.Position = UDim2.new(0.04, 0, 0.76, -2); SliderBar.BackgroundColor3 = Color3.fromRGB(30, 30, 35); SliderBar.Text = ""
+    SliderBar.Size = UDim2.new(0.92, 0, 0, 4); SliderBar.Position = UDim2.new(0.04, 0, 0.76, -2); SliderBar.BackgroundColor3 = Color3.fromRGB(30, 30, 35); SliderBar.Text = ""; SliderBar.ZIndex = 4
     local SliderFill = Instance.new("Frame", SliderBar)
-    SliderFill.Size = UDim2.new((default - min) / (max - min), 0, 1, 0); SliderFill.BackgroundColor3 = Color3.fromRGB(255, 204, 0)
+    SliderFill.Size = UDim2.new((default - min) / (max - min), 0, 1, 0); SliderFill.BackgroundColor3 = Color3.fromRGB(255, 204, 0); SliderFill.ZIndex = 5
     
     local function UpdateSlider(input)
         local ratio = math.clamp(input.Position.X - SliderBar.AbsolutePosition.X, 0, SliderBar.AbsoluteSize.X) / SliderBar.AbsoluteSize.X
@@ -320,7 +351,7 @@ end
 
 local function CreateSysButton(parent, text, color, callback)
     local Btn = Instance.new("TextButton", parent)
-    Btn.Size = UDim2.new(1, -10, 0, 34); Btn.BackgroundColor3 = Color3.fromRGB(20, 20, 26); Btn.Text = text; Btn.TextColor3 = color; Btn.Font = Enum.Font.Code
+    Btn.Size = UDim2.new(1, -10, 0, 34); Btn.BackgroundColor3 = Color3.fromRGB(20, 20, 26); Btn.Text = text; Btn.TextColor3 = color; Btn.Font = Enum.Font.Code; Btn.ZIndex = 3
     Instance.new("UICorner", Btn).CornerRadius = UDim.new(0, 6)
     Btn.MouseButton1Click:Connect(callback)
 end
@@ -344,7 +375,7 @@ CreateToggle(WorldPage, "Visual ESP Box", "ESP")
 CreateToggle(WorldPage, "X-Ray Vision", "Xray")
 
 if _G.CurrentGame == "MM2" then
-    local function AddTitle(txt) local l = Instance.new("TextLabel", MM2Page) l.Size = UDim2.new(1,-10,0,24); l.BackgroundTransparency = 1; l.Text = "// " .. txt .. " //"; l.TextColor3 = Color3.fromRGB(255, 204, 0); l.Font = Enum.Font.Code end
+    local function AddTitle(txt) local l = Instance.new("TextLabel", MM2Page) l.Size = UDim2.new(1,-10,0,24); l.BackgroundTransparency = 1; l.Text = "// " .. txt .. " //"; l.TextColor3 = Color3.fromRGB(255, 204, 0); l.Font = Enum.Font.Code; l.ZIndex = 3 end
     AddTitle("INNOCENT FEATURES")
     CreateToggle(MM2Page, "Anti-Reset Safe Zone", "MM2SafeZone")
     CreateToggle(MM2Page, "Dynamic Role ESP", "MM2RoleESP")
