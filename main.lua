@@ -13,11 +13,20 @@ local Workspace = game:GetService("Workspace")
 local LocalPlayer = Players.LocalPlayer
 local Camera = Workspace.CurrentCamera
 
--- Senin Net GitHub Raw Bağlantın
+-- GitHub Raw Bağlantısı
 local BaseURL = "https://raw.githubusercontent.com/qeats-tec/QeatHub/refs/heads/main/"
 
--- Fotoğraf Asset ID'leri (1. Fotoğraf: BLEH! Bachira)
-local BachiraBlehAsset = "rbxassetid://134139871142502" -- Buraya kendi yüklediğin Decal/Image ID'sini yazabilirsin
+-- GitHub'dan 1. Fotoğrafı (image_fe9741.png) Çekme Motoru
+local BachiraBlehAsset
+local success, err = pcall(function()
+    if not isfile("bachira_bleh.png") then
+        writefile("bachira_bleh.png", game:HttpGet(BaseURL .. "image_fe9741.png"))
+    end
+    BachiraBlehAsset = getcustomasset("bachira_bleh.png")
+end)
+if not success then
+    BachiraBlehAsset = "rbxassetid://0" -- Fallback
+end
 
 -- Oyun Tespiti
 _G.CurrentGame = "Universal"
@@ -107,7 +116,7 @@ IntroSubText.TextSize = 14
 IntroSubText.TextTransparency = 1
 
 -- ==========================================================
--- 🛠️ ANA PANEL (MODERN SİBER TEMALI + FOTOĞRAF ARKA PLANLI)
+-- 🛠️ ANA PANEL (MODERN SİBER TEMALI + GİTHUB FOTOĞRAFI ARKA PLANLI)
 -- ==========================================================
 local MainFrame = Instance.new("Frame", ScreenGui)
 MainFrame.Size = UDim2.new(0, 440, 0, 320)
@@ -118,17 +127,17 @@ MainFrame.BorderSizePixel = 0
 MainFrame.Active = false
 MainFrame.Visible = false
 
--- [ YENİ ] 1. Fotoğrafın Arka Plana Entegre Edilmesi (Hafifletilmiş ve Koyulaştırılmış)
+-- GitHub'dan çekilen resmin arka plana tam ekran (watermark) gömülmesi
 local BgImage = Instance.new("ImageLabel", MainFrame)
 BgImage.Size = UDim2.new(1, 0, 1, 0)
 BgImage.Position = UDim2.new(0, 0, 0, 0)
 BgImage.Image = BachiraBlehAsset
-BgImage.ImageTransparency = 0.82 -- Hafifletilmiş (Arka planda sırıtmaması için)
+BgImage.ImageTransparency = 0.82 -- Hafifletilmiş opaklık
 BgImage.ScaleType = Enum.ScaleType.Crop
 BgImage.BackgroundTransparency = 1
 BgImage.ZIndex = 0
 
--- Yazıların ve butonların görselin üstünde kalması için koyu bir gölgeleme katmanı
+-- Yazıların okunması için koyulaştırma katmanı
 local DarkOverlay = Instance.new("Frame", MainFrame)
 DarkOverlay.Size = UDim2.new(1, 0, 1, 0)
 DarkOverlay.BackgroundColor3 = Color3.fromRGB(4, 4, 6)
@@ -189,13 +198,13 @@ local TabBar = Instance.new("Frame", MainFrame)
 TabBar.Size = UDim2.new(0, 115, 1, -52)
 TabBar.Position = UDim2.new(0, 10, 0, 44)
 TabBar.BackgroundColor3 = Color3.fromRGB(12, 12, 16)
-TabBar.BackgroundTransparency = 0.3 -- Arka planın hafif sızması için ayarladık
+TabBar.BackgroundTransparency = 0.3
 TabBar.ZIndex = 2
 Instance.new("UICorner", TabBar).CornerRadius = UDim.new(0, 8)
 local TabListLayout = Instance.new("UIListLayout", TabBar); TabListLayout.Padding = UDim.new(0, 5)
 
 -- ==========================================================
--- 🔄 MİNİ BUTON MODU (WIDGET OLUŞTURMA)
+-- 🔄 MİNİ BUTON MODU (WIDGET)
 -- ==========================================================
 local MiniWidget = Instance.new("TextButton", ScreenGui)
 MiniWidget.Size = UDim2.new(0, 45, 0, 45)
@@ -217,11 +226,8 @@ local MiniWidgetStroke = Instance.new("UIStroke", MiniWidget)
 MiniWidgetStroke.Color = Color3.fromRGB(255, 204, 0)
 MiniWidgetStroke.Thickness = 2
 
--- ==========================================================
--- 🎛️ PANEL KÜÇÜLTME & MİNİ MOD KONTROLLERİ
--- ==========================================================
+-- Küçültme Kontrolleri
 local isMinimized = false
-
 MinimizeBtn.MouseButton1Click:Connect(function()
     isMinimized = not isMinimized
     if isMinimized then
@@ -237,32 +243,27 @@ MinimizeBtn.MouseButton1Click:Connect(function()
 end)
 
 MiniModeBtn.MouseButton1Click:Connect(function()
-    MainFrame.Visible = false
-    MiniWidget.Visible = true
+    MainFrame.Visible = false; MiniWidget.Visible = true
     MiniWidget.Size = UDim2.new(0, 55, 0, 55)
     TweenService:Create(MiniWidget, TweenInfo.new(0.2, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Size = UDim2.new(0, 45, 0, 45)}):Play()
 end)
 
 MiniWidget.MouseButton1Click:Connect(function()
-    MiniWidget.Visible = false
-    MainFrame.Visible = true
+    MiniWidget.Visible = false; MainFrame.Visible = true
     MainFrame.Size = UDim2.new(0, 440, 0, 320)
     local oldPos = MainFrame.Position
     MainFrame.Position = UDim2.new(oldPos.X.Scale, oldPos.X.Offset, oldPos.Y.Scale, oldPos.Y.Offset + 50)
     TweenService:Create(MainFrame, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Position = oldPos}):Play()
 end)
 
--- ==========================================================
--- SAYFA VE ÖZELLİK EKLEME FONKSİYONLARI
--- ==========================================================
+-- Sayfa Motoru
 local Pages, Tabs = {}, {}
 local function CreatePage(name)
     local Page = Instance.new("ScrollingFrame", ContentFrame)
     Page.Size = UDim2.new(1, 0, 1, 0); Page.BackgroundTransparency = 1
     Page.CanvasSize = UDim2.new(0, 0, 0, 550); Page.ScrollBarThickness = 3
     Page.ScrollBarImageColor3 = Color3.fromRGB(255, 204, 0)
-    Page.Visible = false
-    Page.ZIndex = 3
+    Page.Visible = false; Page.ZIndex = 3
     Instance.new("UIListLayout", Page).Padding = UDim.new(0, 7)
     Pages[name] = Page
     return Page
@@ -292,24 +293,19 @@ if _G.CurrentGame == "MM2" then AddTab("MM2", "MM2 Özel"); Pages["MM2"].Visible
 local function CreateToggle(parent, text, configKey, callback)
     local Frame = Instance.new("Frame", parent)
     Frame.Size = UDim2.new(1, -10, 0, 36); Frame.BackgroundColor3 = Color3.fromRGB(14, 14, 18)
-    Frame.BackgroundTransparency = 0.15
-    Frame.ZIndex = 3
+    Frame.BackgroundTransparency = 0.15; Frame.ZIndex = 3
     Instance.new("UICorner", Frame).CornerRadius = UDim.new(0, 6)
     local Label = Instance.new("TextLabel", Frame)
     Label.Size = UDim2.new(0.7, 0, 1, 0); Label.Position = UDim2.new(0.04, 0, 0, 0)
-    Label.BackgroundTransparency = 1; Label.Text = text; Label.TextColor3 = Color3.fromRGB(230, 230, 235); Label.Font = Enum.Font.Code; Label.TextXAlignment = Enum.TextXAlignment.Left
-    Label.ZIndex = 4
+    Label.BackgroundTransparency = 1; Label.Text = text; Label.TextColor3 = Color3.fromRGB(230, 230, 235); Label.Font = Enum.Font.Code; Label.TextXAlignment = Enum.TextXAlignment.Left; Label.ZIndex = 4
     local Indicator = Instance.new("Frame", Frame)
-    Indicator.Size = UDim2.new(0, 32, 0, 16); Indicator.Position = UDim2.new(0.95, -32, 0.5, -8); Indicator.BackgroundColor3 = Color3.fromRGB(30, 10, 10)
-    Indicator.ZIndex = 4
+    Indicator.Size = UDim2.new(0, 32, 0, 16); Indicator.Position = UDim2.new(0.95, -32, 0.5, -8); Indicator.BackgroundColor3 = Color3.fromRGB(30, 10, 10); Indicator.ZIndex = 4
     Instance.new("UICorner", Indicator).CornerRadius = UDim.new(1, 0)
     local Dot = Instance.new("Frame", Indicator)
-    Dot.Size = UDim2.new(0, 12, 0, 12); Dot.Position = UDim2.new(0, 2, 0.5, -6); Dot.BackgroundColor3 = Color3.fromRGB(160, 40, 40)
-    Dot.ZIndex = 5
+    Dot.Size = UDim2.new(0, 12, 0, 12); Dot.Position = UDim2.new(0, 2, 0.5, -6); Dot.BackgroundColor3 = Color3.fromRGB(160, 40, 40); Dot.ZIndex = 5
     Instance.new("UICorner", Dot).CornerRadius = UDim.new(1, 0)
     local btn = Instance.new("TextButton", Frame)
-    btn.Size = UDim2.new(1, 0, 1, 0); btn.BackgroundTransparency = 1; btn.Text = ""
-    btn.ZIndex = 5
+    btn.Size = UDim2.new(1, 0, 1, 0); btn.BackgroundTransparency = 1; btn.Text = ""; btn.ZIndex = 5
     btn.MouseButton1Click:Connect(function()
         _G.Config.Toggles[configKey] = not _G.Config.Toggles[configKey]
         local active = _G.Config.Toggles[configKey]
@@ -356,7 +352,7 @@ local function CreateSysButton(parent, text, color, callback)
     Btn.MouseButton1Click:Connect(callback)
 end
 
--- ÖZELLİKLERİ HARİTALA
+-- Özellikler
 CreateToggle(CombatPage, "Rivals Auto Aim 2.0", "AutoAim")
 CreateToggle(CombatPage, "Hitbox Extender", "Hitbox")
 CreateSlider(CombatPage, "Hitbox Size Slider", 2, 50, 12, function(v) _G.Config.HitboxSize = v end)
@@ -388,15 +384,13 @@ if _G.CurrentGame == "MM2" then
     CreateToggle(MM2Page, "Highlight Sheriff (Green)", "MM2HighlightSheriff")
 end
 
--- ==========================================================
--- 🚀 MODÜL ENJEKTE MOTORU
--- ==========================================================
+-- Modül Yükleme Motoru
 local function InjectModule(path)
     local success, result = pcall(function()
         return loadstring(game:HttpGet(BaseURL .. path))()
     end)
     if not success then
-        warn("🔴 QeatHub Klasör Motoru Hatası [" .. path .. "]: " .. tostring(result))
+        warn("🔴 [QeatHub Klasör Motoru Hatası] [" .. path .. "]: " .. tostring(result))
     end
 end
 
@@ -421,9 +415,7 @@ CreateSysButton(WorldPage, " [!] TERMINATE QEATHUB", Color3.fromRGB(255, 50, 50)
     InjectModule("other/terminate.lua")
 end)
 
--- ==========================================================
--- ⚡ AÇILIŞ TWEEN AKIŞI
--- ==========================================================
+-- 🎬 Açılış Animasyonu Akışı
 task.spawn(function()
     TweenService:Create(IntroFrame, TweenInfo.new(0.6, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 0.1}):Play()
     TweenService:Create(IntroStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Transparency = 0}):Play()
