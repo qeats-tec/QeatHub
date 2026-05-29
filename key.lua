@@ -11,13 +11,15 @@ local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
 local LocalPlayer = Players.LocalPlayer
 
--- 🌍 CONFIG / ADRESLER (Gemini Direktifine Göre Dinamik Hale Getirildi)
-local projeAdi = "qh-key" -- Kullanıcı sadece Render proje adını buraya yazacak
-local serverUrl = "https://" .. projeAdi .. ".onrender.com/api/verify" -- Dinamik Endpoint URL
+-- 🌍 CONFIG / ADRESLER
+local projeAdi = "qh-key" 
+local serverUrl = "https://" .. projeAdi .. ".onrender.com/api/verify" 
 
 local discordLink = "https://discord.gg/cQwh3Fhq"
--- Ana hilenin GitHub üzerindeki RAW bağlantısı:
 local mainScriptUrl = "https://raw.githubusercontent.com/qeats-tec/QeatHub/refs/heads/main/main.lua"
+
+-- Fotoğraf Asset ID'leri (2. Fotoğraf: Heyecanlı Bachira Logo/Avatar)
+local BachiraLogoAsset = "rbxassetid://134139871168401" -- Buraya kendi yüklediğin Decal/Image ID'sini yazabilirsin
 
 -- ==========================================================
 -- 🎬 ARAYÜZ KURULUMU (SİBER / HACKER TEMALI)
@@ -44,6 +46,21 @@ local FrameStroke = Instance.new("UIStroke", MainAuthFrame)
 FrameStroke.Color = Color3.fromRGB(255, 204, 0)
 FrameStroke.Thickness = 1.5
 
+-- [ YENİ ] Key Sisteminin Sağ Üst Köşesine Eklenen 2. Fotoğraf (Bachira Avatar)
+local LogoImage = Instance.new("ImageLabel", MainAuthFrame)
+LogoImage.Size = UDim2.new(0, 42, 0, 42)
+LogoImage.Position = UDim2.new(1, -52, 0, 8) -- Sağ üst köşe konumu
+LogoImage.Image = BachiraLogoAsset
+LogoImage.BackgroundTransparency = 1
+LogoImage.ScaleType = Enum.ScaleType.Fit
+
+local LogoCorner = Instance.new("UICorner", LogoImage)
+LogoCorner.CornerRadius = UDim.new(0, 8)
+
+local LogoStroke = Instance.new("UIStroke", LogoImage)
+LogoStroke.Color = Color3.fromRGB(255, 204, 0)
+LogoStroke.Thickness = 1
+
 -- Sürükleme Motoru (UIS)
 local dragging, dragInput, dragStart, startPos
 MainAuthFrame.InputBegan:Connect(function(input)
@@ -61,12 +78,14 @@ UserInputService.InputChanged:Connect(function(input)
 end)
 
 local TitleLabel = Instance.new("TextLabel", MainAuthFrame)
-TitleLabel.Size = UDim2.new(1, 0, 0, 40)
+TitleLabel.Size = UDim2.new(0.75, 0, 0, 40) -- Logo sığsın diye genişliği kısalttık
+TitleLabel.Position = UDim2.new(0.05, 0, 0, 0)
 TitleLabel.BackgroundTransparency = 1
 TitleLabel.Text = "⚡ QEATHUB PREMIUM // AUTH"
 TitleLabel.TextColor3 = Color3.fromRGB(255, 204, 0)
 TitleLabel.Font = Enum.Font.Code
-TitleLabel.TextSize = 16
+TitleLabel.TextSize = 15
+TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
 
 local DiscordLabel = Instance.new("TextLabel", MainAuthFrame)
 DiscordLabel.Size = UDim2.new(0.9, 0, 0, 35)
@@ -130,15 +149,11 @@ Instance.new("UICorner", SubmitBtn).CornerRadius = UDim.new(0, 6)
 local BtnStroke = Instance.new("UIStroke", SubmitBtn)
 BtnStroke.Color = Color3.fromRGB(255, 204, 0)
 
--- ==========================================================
--- 🔒 API SORGULAMA MOTORU (POST METODU VE JSON BODY AYARLANDI)
--- ==========================================================
+-- API SORGULAMA MOTORU
 local function checkKeyWithRender(enteredKey)
-    -- İstek (Request) Body'si: {"key": "kullanıcının-girdiği-anahtar"}
     local data = { key = enteredKey }
     local jsonData = HttpService:JSONEncode(data)
 
-    -- POST metodu ve application/json Content-Type ayarlarıyla RequestAsync tetiklenir
     local success, response = pcall(function()
         return HttpService:RequestAsync({
             Url = serverUrl,
@@ -169,7 +184,6 @@ local function checkKeyWithRender(enteredKey)
     end
 end
 
--- Buton Tetikleme İşlemi
 SubmitBtn.MouseButton1Click:Connect(function()
     local enteredKey = KeyInputBox.Text
     if enteredKey == "" then
@@ -190,13 +204,11 @@ SubmitBtn.MouseButton1Click:Connect(function()
         StatusLabel.TextColor3 = Color3.fromRGB(0, 255, 120)
         FrameStroke.Color = Color3.fromRGB(0, 255, 120)
         BtnStroke.Color = Color3.fromRGB(0, 255, 120)
+        LogoStroke.Color = Color3.fromRGB(0, 255, 120)
         
         task.wait(1)
         ScreenGui:Destroy()
 
-        -- ==========================================================
-        -- 🚀 LOADSTRING KÖPRÜSÜ
-        -- ==========================================================
         local loadSuccess, loadResult = pcall(function()
             return loadstring(game:HttpGet(mainScriptUrl))()
         end)
@@ -211,5 +223,6 @@ SubmitBtn.MouseButton1Click:Connect(function()
         StatusLabel.Text = "❌ " .. msg
         StatusLabel.TextColor3 = Color3.fromRGB(255, 60, 60)
         FrameStroke.Color = Color3.fromRGB(255, 60, 60)
+        LogoStroke.Color = Color3.fromRGB(255, 60, 60)
     end
 end)
