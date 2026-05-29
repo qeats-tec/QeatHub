@@ -16,11 +16,11 @@ local Camera = Workspace.CurrentCamera
 -- GitHub Raw Bağlantısı
 local BaseURL = "https://raw.githubusercontent.com/qeats-tec/QeatHub/refs/heads/main/"
 
--- GitHub'dan 1. Fotoğrafı (image_fe9741.png) Çekme Motoru
+-- GitHub'dan 1. Fotoğrafı (foto.png) Çekme Motoru
 local BachiraBlehAsset
 local success, err = pcall(function()
     if not isfile("bachira_bleh.png") then
-        writefile("bachira_bleh.png", game:HttpGet(BaseURL .. "image_fe9741.png"))
+        writefile("bachira_bleh.png", game:HttpGet(BaseURL .. "foto.png"))
     end
     BachiraBlehAsset = getcustomasset("bachira_bleh.png")
 end)
