@@ -17,13 +17,21 @@ local serverUrl = "https://" .. projeAdi .. ".onrender.com/api/verify"
 
 local discordLink = "https://discord.gg/cQwh3Fhq"
 local mainScriptUrl = "https://raw.githubusercontent.com/qeats-tec/QeatHub/refs/heads/main/main.lua"
+local BaseURL = "https://raw.githubusercontent.com/qeats-tec/QeatHub/refs/heads/main/"
 
--- Fotoğraf Asset ID'leri (2. Fotoğraf: Heyecanlı Bachira Logo/Avatar)
-local BachiraLogoAsset = "rbxassetid://134139871168401" -- Buraya kendi yüklediğin Decal/Image ID'sini yazabilirsin
+-- GitHub'dan 2. Fotoğrafı (logo.png) Çekme Motoru
+local BachiraLogoAsset
+local success, err = pcall(function()
+    if not isfile("bachira_logo.png") then
+        writefile("bachira_logo.png", game:HttpGet(BaseURL .. "logo.png"))
+    end
+    BachiraLogoAsset = getcustomasset("bachira_logo.png")
+end)
+if not success then
+    BachiraLogoAsset = "rbxassetid://0" -- Fallback
+end
 
--- ==========================================================
--- 🎬 ARAYÜZ KURULUMU (SİBER / HACKER TEMALI)
--- ==========================================================
+-- Eski UI Temizliği
 if LocalPlayer:WaitForChild("PlayerGui"):FindFirstChild("QeatHUB_AuthSystem") then
     LocalPlayer.PlayerGui.QeatHUB_AuthSystem:Destroy()
 end
@@ -46,10 +54,10 @@ local FrameStroke = Instance.new("UIStroke", MainAuthFrame)
 FrameStroke.Color = Color3.fromRGB(255, 204, 0)
 FrameStroke.Thickness = 1.5
 
--- [ YENİ ] Key Sisteminin Sağ Üst Köşesine Eklenen 2. Fotoğraf (Bachira Avatar)
+-- Key Menüsü Sağ Üst Köşe Logo Alanı (logo.png)
 local LogoImage = Instance.new("ImageLabel", MainAuthFrame)
 LogoImage.Size = UDim2.new(0, 42, 0, 42)
-LogoImage.Position = UDim2.new(1, -52, 0, 8) -- Sağ üst köşe konumu
+LogoImage.Position = UDim2.new(1, -52, 0, 8)
 LogoImage.Image = BachiraLogoAsset
 LogoImage.BackgroundTransparency = 1
 LogoImage.ScaleType = Enum.ScaleType.Fit
@@ -78,7 +86,7 @@ UserInputService.InputChanged:Connect(function(input)
 end)
 
 local TitleLabel = Instance.new("TextLabel", MainAuthFrame)
-TitleLabel.Size = UDim2.new(0.75, 0, 0, 40) -- Logo sığsın diye genişliği kısalttık
+TitleLabel.Size = UDim2.new(0.75, 0, 0, 40)
 TitleLabel.Position = UDim2.new(0.05, 0, 0, 0)
 TitleLabel.BackgroundTransparency = 1
 TitleLabel.Text = "⚡ QEATHUB PREMIUM // AUTH"
@@ -149,7 +157,7 @@ Instance.new("UICorner", SubmitBtn).CornerRadius = UDim.new(0, 6)
 local BtnStroke = Instance.new("UIStroke", SubmitBtn)
 BtnStroke.Color = Color3.fromRGB(255, 204, 0)
 
--- API SORGULAMA MOTORU
+-- API Sorgulama
 local function checkKeyWithRender(enteredKey)
     local data = { key = enteredKey }
     local jsonData = HttpService:JSONEncode(data)
@@ -158,18 +166,13 @@ local function checkKeyWithRender(enteredKey)
         return HttpService:RequestAsync({
             Url = serverUrl,
             Method = "POST",
-            Headers = {
-                ["Content-Type"] = "application/json"
-            },
+            Headers = { ["Content-Type"] = "application/json" },
             Body = jsonData
         })
     end)
 
     if success and response then
-        local decodeSuccess, responseData = pcall(function()
-            return HttpService:JSONDecode(response.Body)
-        end)
-
+        local decodeSuccess, responseData = pcall(function() return HttpService:JSONDecode(response.Body) end)
         if decodeSuccess and responseData then
             if response.StatusCode == 200 and responseData.success == true then
                 return true, responseData.message or "Erişim Onaylandı!"
@@ -180,7 +183,7 @@ local function checkKeyWithRender(enteredKey)
             return false, "Sunucu yanıtı okunamadı."
         end
     else
-        return false, "Sunucuya bağlanılamadı. Proje adını veya Render durumunu kontrol edin."
+        return false, "Sunucuya bağlanılamadı."
     end
 end
 
@@ -194,7 +197,6 @@ SubmitBtn.MouseButton1Click:Connect(function()
 
     StatusLabel.Text = "⚡ Doğrulanıyor..."
     StatusLabel.TextColor3 = Color3.fromRGB(255, 204, 0)
-
     task.wait(0.4)
 
     local isValid, msg = checkKeyWithRender(enteredKey)
@@ -212,13 +214,6 @@ SubmitBtn.MouseButton1Click:Connect(function()
         local loadSuccess, loadResult = pcall(function()
             return loadstring(game:HttpGet(mainScriptUrl))()
         end)
-
-        if loadSuccess then
-            print("[QeatHub]: Ana menü başarıyla yüklendi.")
-        else
-            warn("🔴 [QeatHub Yükleme Hatası]: Ana script çalıştırılamadı: " .. tostring(loadResult))
-        end
-        
     else
         StatusLabel.Text = "❌ " .. msg
         StatusLabel.TextColor3 = Color3.fromRGB(255, 60, 60)
